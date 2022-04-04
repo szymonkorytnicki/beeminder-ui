@@ -1,7 +1,7 @@
 .goals {display: flex; font-family: -apple-system, system-ui; font-weight: bold;
     align-items: center;
     flex-wrap: wrap;}
-.goal {position:relative; padding: 15px 5px 16px 5px; box-sizing:border-box; border-radius: 5px; background-color: gray; color: white; width: calc(50% - 10px); text-align: center; margin: 5px; text-overflow:ellipsis; overflow:hidden; white-space: nowrap;}
+.goal {display:block; text-decoration:none; position:relative; padding: 15px 5px 16px 5px; box-sizing:border-box; border-radius: 5px; background-color: gray; color: white; width: calc(50% - 10px); text-align: center; margin: 5px; text-overflow:ellipsis; overflow:hidden; white-space: nowrap;}
 .goal--green {background: green}
 .goal--blue {background: blue}
 .goal--orange {background: orange}

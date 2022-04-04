@@ -1,4 +1,15 @@
-# Getting Started with Create React App
+# beeminder-ui
+
+Alternative UI for beeminder.
+
+## Configuration
+
+Add .env file with params:
+
+```
+REACT_APP_BEEMINDER_USERNAME=
+REACT_APP_BEEMINDER_APIKEY=
+```
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
