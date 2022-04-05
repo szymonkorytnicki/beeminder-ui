@@ -29,9 +29,9 @@ export function GoalPage() {
     
     return <>
         <h1><Link to="/">{process.env.REACT_APP_BEEMINDER_USERNAME}</Link> / {goalSlug}</h1>
-        <div className="goal-page__graph-wrapper">
+        {/* <div className="goal-page__graph-wrapper">
         <img src={data.graph_url} alt="Graph" className="goal-page__graph"/>
-        </div>
+        </div> */}
         
         {data.recent_data.map(datapoint => {
             return <div key={datapoint.created_at}>{datapoint.comment} <span className="datapoint__light">{formatRelative(new Date(datapoint.created_at), BASE_DATE)}</span></div>

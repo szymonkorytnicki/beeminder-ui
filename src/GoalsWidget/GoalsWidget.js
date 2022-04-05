@@ -31,10 +31,21 @@ export function GoalsWidget() {
     </div>
 }
 
-function Goal({slug, roadstatuscolor, curval, limsum, todayta, gunits}) {
+function Goal({slug, roadstatuscolor, curval, safebuf, todayta, gunits}) {
     return <Link to={"/g/" + slug}  className={`goal goal--${slug} goal--${roadstatuscolor}`}>
-        {slug} 
-        <header className='goal__topbar'>{curval} {gunits} {todayta ? "●" : ""}</header>
-        <footer className='goal__footer'>{limsum}</footer>
+        <span className='goal__slug'>{slug}</span>
+        {/* <header className='goal__topbar'>{curval} {gunits} {todayta ? "●" : ""}</header> */}
+        <header className='goal__topbar'>{todayta ? "●" : ""}</header>
+        <footer className='goal__footer'>{getSafebufCopy(safebuf)} </footer>
     </Link>
+}
+
+function getSafebufCopy(num) {
+    if (num === 0) {
+        return 'due today';
+    }
+    if (num === 1) {
+        return 'due tomorrow';
+    }
+    return num + ' days';
 }
