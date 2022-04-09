@@ -169,17 +169,23 @@ function DatapointRow({ datapoint, onDelete }) {
                 setSwipeStart(event.changedTouches[0].clientX) // TODO changed vs targetTouches
             }}
             onTouchMove={(event) => {
-                const clientY = event.changedTouches[0].clientY
-                if (swipeStart && swipeStart < clientY) {
+                const { clientX } = event.changedTouches[0]
+                if (
+                    swipeStart &&
+                    swipeStart < clientX &&
+                    clientX - swipeStart > 20
+                ) {
                     setTouching(true)
                 }
             }}
             onTouchEnd={(event) => {
-                const clientY = event.changedTouches[0].clientY
-                if (swipeStart && swipeStart < clientY) {
-                    onDelete({ datapoint })
+                const { clientX } = event.changedTouches[0]
+                if (swipeStart && swipeStart < clientX) {
                     setSwipeStart(null)
                     setTouching(false)
+                    if (clientX - swipeStart > 20) {
+                        onDelete({ datapoint })
+                    }
                 }
             }}
             className="recent-data__datapoint"
@@ -191,7 +197,7 @@ function DatapointRow({ datapoint, onDelete }) {
             <span className="recent-data__datapoint__data">
                 {format(new Date(datapoint.created_at), 'yyyy-MM-dd')}
             </span>{' '}
-            {datapoint.comment}
+            {Math.round(datapoint.value * 100) / 100} / {datapoint.comment}
         </div>
     )
 }
