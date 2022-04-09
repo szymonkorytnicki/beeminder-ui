@@ -35,6 +35,10 @@
     color: gray;
     background: white;
 }
+.goal-tile--left {
+    /*TODO names*/
+    padding-left: 15px;
+}
 .goal-tile--green {
     border: 2px solid green;
     color: green;
@@ -70,4 +74,12 @@
     right: 3px;
     font-size: 0.625rem;
 }
-/* .goal:hover .goal__topbar {opacity: 1;}  */
+
+.goal-tile__pledge {
+    /* TODO name*/
+    font-size: 3rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-1.5rem);
+    right: 10px;
+}

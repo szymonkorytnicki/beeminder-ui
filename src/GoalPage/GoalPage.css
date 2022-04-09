@@ -20,4 +20,5 @@
 
 .recent-data__datapoint {
     margin-bottom: 8px;
+    touch-action: none;
 }
