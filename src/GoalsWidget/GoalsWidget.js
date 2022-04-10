@@ -1,7 +1,5 @@
 import { useQuery } from 'react-query'
 import './GoalsWidget.css'
-import { FAKE_DATA } from './FAKE_DATA'
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { getSafebufCopy } from '../utils'
 
@@ -14,22 +12,13 @@ function fetchGoals() {
 export function GoalsWidget() {
     const { isLoading, isError, data } = useQuery(['goals'], () => fetchGoals())
 
-    useEffect(() => {
-        if (data) {
-            window.localStorage.setItem(
-                'beeminder-ui-items',
-                data.filter((g) => !g.secret).length
-            )
-        }
-    }, [data])
-
     if (isError) {
         return 'Loading error'
     }
 
     return (
         <div className="goals">
-            {(isLoading ? FAKE_DATA : data.filter((goal) => !goal.secret)).map(
+            {(isLoading ? [] : data.filter((goal) => !goal.secret)).map(
                 (goal) => {
                     return <Goal key={goal.slug} {...goal} />
                 }

@@ -7,10 +7,6 @@
 
 .recent-data {
     margin-top: 20px; /* TODO */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
     color: rgb(108, 108, 108);
 }
 
@@ -19,6 +15,10 @@
 }
 
 .recent-data__datapoint {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
     margin-bottom: 8px;
     touch-action: none;
 }
