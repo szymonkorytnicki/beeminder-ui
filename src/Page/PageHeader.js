@@ -6,11 +6,11 @@ export function PageHeader({ children }) {
     return (
         <div className="page-header">
             {children}
-            {isFetching ? (
-                <div class="page-header__fetching-indicator"></div>
-            ) : (
-                ''
-            )}
+            <div
+                className={`page-header__fetching-indicator ${
+                    isFetching ? 'page-header__fetching-indicator--visible' : ''
+                }`}
+            ></div>
         </div>
     )
 }

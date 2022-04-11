@@ -9,10 +9,32 @@
 
 .page-header__fetching-indicator {
     position: absolute;
-    top: 2px;
-    right: 10px;
-    border-radius: 50%;
-    background: rgb(134, 133, 133);
+    top: -5px;
+    right: 2px;
+    opacity: 0;
+    transition: opacity 100ms linear;
+}
+
+.page-header__fetching-indicator--visible {
+    opacity: 1;
+}
+
+.page-header__fetching-indicator:after {
+    content: ' ';
+    display: block;
     width: 10px;
     height: 10px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 2px solid #555;
+    border-color: #555 transparent #555 transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
