@@ -1,7 +1,18 @@
 .page-header {
     padding-bottom: 10px;
     color: rgb(172, 172, 172);
+    position: relative;
 }
 .page-header a {
     color: rgb(134, 133, 133);
+}
+
+.page-header__fetching-indicator {
+    position: absolute;
+    top: 2px;
+    right: 10px;
+    border-radius: 50%;
+    background: rgb(134, 133, 133);
+    width: 10px;
+    height: 10px;
 }
