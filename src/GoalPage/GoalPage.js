@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import './GoalPage.css'
 import { PageHeader } from '../Page/PageHeader'
 import { RecentDatapoints } from '../RecentDatapoints/RecentDatapoints'
+import { CreateDatapoint } from '../CreateDatapoint/CreateDatapoint'
 
 function fetchGoal(slug) {
     return fetch(
@@ -19,7 +20,7 @@ export function GoalPage() {
     )
 
     if (isError) {
-        return 'Loading error'
+        return 'Loading error' // TODO app-wide solution
     }
 
     if (isLoading) {
@@ -44,7 +45,7 @@ export function GoalPage() {
             </PageHeader>
 
             <div
-                className={`goal-tile goal-tile--left goal-tile--${data.roadstatuscolor}`}
+                className={`goal-tile goal-tile--left goal-tile--${data.roadstatuscolor}`} // TODO extract to styled components / composed components
             >
                 <header className="goal-tile__topbar">
                     {data.todayta ? '●' : ''}
@@ -61,6 +62,10 @@ export function GoalPage() {
                 </footer>
                 <div className="goal-tile__pledge">${data.pledge}</div>
             </div>
+            <CreateDatapoint
+                goalSlug={data.slug}
+                onCreate={() => setTimeout(refetch, 1500)}
+            />
             <RecentDatapoints
                 goalSlug={data.slug}
                 datapoints={data.recent_data}
