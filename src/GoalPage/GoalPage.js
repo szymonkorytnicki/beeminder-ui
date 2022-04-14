@@ -2,12 +2,8 @@ import { useParams } from 'react-router'
 import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
 import './GoalPage.css'
-import { format } from 'date-fns'
 import { PageHeader } from '../Page/PageHeader'
-import { getSafebufCopy } from '../utils'
-import { Heatmap } from '@ant-design/plots'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { RecentDatapoints } from '../RecentDatapoints/RecentDatapoints'
 
 function fetchGoal(slug) {
     return fetch(
@@ -17,8 +13,9 @@ function fetchGoal(slug) {
 
 export function GoalPage() {
     const { goalSlug } = useParams()
-    const { isLoading, isError, data } = useQuery(['goal-' + goalSlug], () =>
-        fetchGoal(goalSlug)
+    const { isLoading, isError, data, refetch } = useQuery(
+        ['goal-' + goalSlug],
+        () => fetchGoal(goalSlug)
     )
 
     if (isError) {
@@ -38,72 +35,6 @@ export function GoalPage() {
             </>
         )
     }
-
-    const config = {
-        data: data.datapoints,
-        xField: 'time',
-        yField: 'week',
-        colorField: 'value',
-        legend: true,
-        color: '#BAE7FF-#1890FF-#1028ff',
-        coordinate: {
-            type: 'polar',
-            cfg: {
-                innerRadius: 0.2,
-            },
-        },
-        heatmapStyle: {
-            stroke: '#f5f5f5',
-            opacity: 0.8,
-        },
-        meta: {
-            time: {
-                type: 'cat',
-            },
-            value: {
-                min: 0,
-                max: 1,
-            },
-        },
-        xAxis: {
-            line: null,
-            grid: null,
-            tickLine: null,
-            label: {
-                offset: 12,
-                style: {
-                    fill: '#666',
-                    fontSize: 12,
-                    textBaseline: 'top',
-                },
-            },
-        },
-        yAxis: {
-            top: true,
-            line: null,
-            grid: null,
-            tickLine: null,
-            label: {
-                offset: 0,
-                style: {
-                    fill: '#fff',
-                    textAlign: 'center',
-                    shadowBlur: 2,
-                    shadowColor: 'rgba(0, 0, 0, .45)',
-                },
-            },
-        },
-        tooltip: {
-            showMarkers: false,
-        },
-        interactions: [
-            {
-                type: 'element-active',
-            },
-        ],
-    }
-
-    // return <Heatmap {...config} />
 
     return (
         <>
@@ -130,74 +61,11 @@ export function GoalPage() {
                 </footer>
                 <div className="goal-tile__pledge">${data.pledge}</div>
             </div>
-            {/* <div className="goal-page__graph-wrapper">
-        <img src={data.graph_url} alt="Graph" className="goal-page__graph"/>
-        </div> */}
-            <div className="recent-data">
-                {data.recent_data.map((datapoint) => {
-                    return (
-                        <DatapointRow
-                            key={datapoint.created_at}
-                            onDelete={({ datapoint }) =>
-                                alert(
-                                    'Sure you wanna delete datapoint ' +
-                                        datapoint.created_at
-                                )
-                            }
-                            datapoint={datapoint}
-                        />
-                    )
-                })}
-            </div>
+            <RecentDatapoints
+                goalSlug={data.slug}
+                datapoints={data.recent_data}
+                onDelete={() => setTimeout(refetch, 1500)} // TODO dummy workaround; instant refetch returns removed datapoint
+            />
         </>
-    )
-}
-
-function DatapointRow({ datapoint, onDelete }) {
-    const [swipeStart, setSwipeStart] = useState(null)
-    const [isTouching, setTouching] = useState(false)
-
-    useEffect(() => {
-        setTimeout(() => {
-            setTouching(false)
-        }, 1000)
-    }, [isTouching])
-
-    return (
-        <div
-            onTouchStart={(event) => {
-                setSwipeStart(event.changedTouches[0].clientX) // TODO changed vs targetTouches
-            }}
-            onTouchMove={(event) => {
-                const { clientX } = event.changedTouches[0]
-                if (
-                    swipeStart &&
-                    swipeStart < clientX &&
-                    clientX - swipeStart > 20
-                ) {
-                    setTouching(true)
-                }
-            }}
-            onTouchEnd={(event) => {
-                const { clientX } = event.changedTouches[0]
-                if (swipeStart && swipeStart < clientX) {
-                    setSwipeStart(null)
-                    setTouching(false)
-                    if (clientX - swipeStart > 20) {
-                        onDelete({ datapoint })
-                    }
-                }
-            }}
-            className="recent-data__datapoint"
-            style={{
-                transform: `translateX(${isTouching ? '20px' : '0px'})`,
-                transition: 'transform 100ms linear',
-            }}
-        >
-            <span className="recent-data__datapoint__data">
-                {format(new Date(datapoint.created_at), 'yyyy-MM-dd')}
-            </span>{' '}
-            {Math.round(datapoint.value * 100) / 100} / {datapoint.comment}
-        </div>
     )
 }
