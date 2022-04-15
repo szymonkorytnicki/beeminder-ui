@@ -2,6 +2,7 @@ import { useQuery } from 'react-query'
 import './GoalsWidget.css'
 import { Link } from 'react-router-dom'
 import { getSafebufCopy } from '../utils'
+import { FiCheckCircle } from 'react-icons/fi'
 
 function fetchGoals() {
     return fetch(
@@ -19,6 +20,7 @@ export function GoalsWidget() {
     return (
         <div className="goals">
             {(isLoading ? [] : data.filter((goal) => !goal.secret)).map(
+                // TODO ugly condition
                 (goal) => {
                     return <Goal key={goal.slug} {...goal} />
                 }
@@ -36,7 +38,9 @@ function Goal({ slug, roadstatuscolor, curval, safebuf, todayta, gunits }) {
             <span className="goal-tile__slug goal-tile__slug--center">
                 {slug}
             </span>
-            <header className="goal-tile__topbar">{todayta ? '●' : ''}</header>
+            <header className="goal-tile__topbar">
+                {todayta ? <FiCheckCircle /> : ''}
+            </header>
             <footer className="goal-tile__footer goal-tile__footer--center">
                 due {getSafebufCopy(safebuf)}{' '}
             </footer>

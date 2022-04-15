@@ -5,6 +5,9 @@ import './GoalPage.css'
 import { PageHeader } from '../Page/PageHeader'
 import { RecentDatapoints } from '../RecentDatapoints/RecentDatapoints'
 import { CreateDatapoint } from '../CreateDatapoint/CreateDatapoint'
+import { useState } from 'react'
+import { CreateButton } from '../CreateButton/CreateButton'
+import { Line } from '@ant-design/plots'
 
 function fetchGoal(slug) {
     return fetch(
@@ -13,6 +16,7 @@ function fetchGoal(slug) {
 }
 
 export function GoalPage() {
+    const [showCreateDatapoint, setShowCreateDatapoint] = useState(false)
     const { goalSlug } = useParams()
     const { isLoading, isError, data, refetch } = useQuery(
         ['goal-' + goalSlug],
@@ -43,14 +47,10 @@ export function GoalPage() {
                 <Link to="/">{process.env.REACT_APP_BEEMINDER_USERNAME}</Link> /{' '}
                 {goalSlug}
             </PageHeader>
-
+            <CreateButton onClick={() => setShowCreateDatapoint(true)} />
             <div
                 className={`goal-tile goal-tile--left goal-tile--${data.roadstatuscolor}`} // TODO extract to styled components / composed components
             >
-                <header className="goal-tile__topbar">
-                    {data.todayta ? '●' : ''}
-                </header>
-
                 <h2 className={`goal-tile__slug goal-tile__slug--big`}>
                     {data.slug}
                 </h2>
@@ -59,13 +59,18 @@ export function GoalPage() {
                     <br />
                     total: {Math.round(data.curval * 100) / 100} {data.gunits}{' '}
                     <br />
+                    {data.todayta
+                        ? `Has datapoint today (${data.recent_data[0].value})`
+                        : 'No datapoints today'}
                 </footer>
                 <div className="goal-tile__pledge">${data.pledge}</div>
             </div>
-            <CreateDatapoint
-                goalSlug={data.slug}
-                onCreate={() => setTimeout(refetch, 1500)}
-            />
+            {showCreateDatapoint && ( // TODO modal
+                <CreateDatapoint
+                    goalSlug={data.slug}
+                    onCreate={() => setTimeout(refetch, 1500)}
+                />
+            )}
             <RecentDatapoints
                 goalSlug={data.slug}
                 datapoints={data.recent_data}
