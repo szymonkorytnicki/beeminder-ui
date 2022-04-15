@@ -2,25 +2,6 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { format } from 'date-fns'
 import { useMutation } from 'react-query'
-import { TinyColumn, TinyLine } from '@ant-design/plots'
-import { differenceInCalendarDays } from 'date-fns'
-
-function getLastFiveDays(datapoints) {
-    // TODO broken -> separate component with its own data
-    let result = []
-    result.length = 5
-    result.fill(0, 0, 5)
-
-    const now = new Date()
-    datapoints.forEach(({ created_at, value }) => {
-        const index = differenceInCalendarDays(now, new Date(created_at))
-        if (index <= 4) {
-            result[index] += parseInt(value)
-        }
-    })
-
-    return result.reverse()
-}
 
 export function RecentDatapoints({ goalSlug, datapoints, onDelete }) {
     // TODO goal as context
@@ -34,20 +15,8 @@ export function RecentDatapoints({ goalSlug, datapoints, onDelete }) {
         )
     )
 
-    const config = {
-        height: 64,
-        autoFit: false,
-        data: getLastFiveDays(datapoints),
-        tooltip: {
-            customContent: function (x, data) {
-                return `NO.${x}: ${data[0]?.data?.y.toFixed(2)}`
-            },
-        },
-    }
-
     return (
         <div className="recent-data">
-            <TinyLine {...config} />
             {datapoints.map((datapoint) => {
                 return (
                     <DatapointRow

@@ -7,7 +7,7 @@ import { RecentDatapoints } from '../RecentDatapoints/RecentDatapoints'
 import { CreateDatapoint } from '../CreateDatapoint/CreateDatapoint'
 import { useState } from 'react'
 import { CreateButton } from '../CreateButton/CreateButton'
-import { Line } from '@ant-design/plots'
+import { CalendarHeatmap } from '../CalendarHeatmap/CalendarHeatmap'
 
 function fetchGoal(slug) {
     return fetch(
@@ -71,6 +71,7 @@ export function GoalPage() {
                     onCreate={() => setTimeout(refetch, 1500)}
                 />
             )}
+            <CalendarHeatmap goalSlug={data.slug} />
             <RecentDatapoints
                 goalSlug={data.slug}
                 datapoints={data.recent_data}
