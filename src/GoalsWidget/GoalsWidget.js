@@ -10,21 +10,52 @@ function fetchGoals() {
     ).then((r) => r.json())
 }
 
+function createTags(goals) {
+    const tags = new Set()
+    goals.forEach((goal) => {
+        goal.tags.forEach((tag) => {
+            tags.add(tag)
+        })
+    })
+    return Array.from(tags).sort((a, z) => a.localeCompare(z))
+}
+
 export function GoalsWidget() {
-    const { isLoading, isError, data } = useQuery(['goals'], () => fetchGoals())
+    const { isError, data } = useQuery(['goals'], () => fetchGoals())
 
     if (isError) {
         return 'Loading error'
     }
 
+    if (!data) {
+        return ''
+    }
+
+    const tags = createTags(data)
+
     return (
-        <div className="goals">
-            {(isLoading ? [] : data.filter((goal) => !goal.secret)).map(
-                // TODO ugly condition
-                (goal) => {
-                    return <Goal key={goal.slug} {...goal} />
-                }
-            )}
+        <div>
+            <div className="goals">
+                {data
+                    .filter((goal) => goal.tags.length === 0)
+                    .map((goal) => {
+                        return <Goal key={goal.slug} {...goal} />
+                    })}
+            </div>
+            {tags.map((tag) => {
+                return (
+                    <div key={tag}>
+                        <header className="goals-tag">{tag}</header>
+                        <div className="goals">
+                            {data
+                                .filter((goal) => goal.tags.includes(tag))
+                                .map((goal) => {
+                                    return <Goal key={goal.slug} {...goal} />
+                                })}
+                        </div>
+                    </div>
+                )
+            })}
         </div>
     )
 }

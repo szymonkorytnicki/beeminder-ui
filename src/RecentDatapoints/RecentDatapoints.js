@@ -94,7 +94,7 @@ function DatapointRow({ datapoint, onDelete }) {
             }}
         >
             <span className="recent-data__datapoint__data">
-                {format(new Date(datapoint.created_at), 'yyyy-MM-dd')}
+                {format(new Date(datapoint.measured_at), 'yyyy-MM-dd')}
             </span>{' '}
             {Math.round(datapoint.value * 100) / 100} / {datapoint.comment}
         </div>

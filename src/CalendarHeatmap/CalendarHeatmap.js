@@ -1,26 +1,27 @@
 /* global G2PlotCalendar, G2Plot */
 // TODO globals
-import { Heatmap, G2 } from '@ant-design/plots'
 import { useQuery } from 'react-query'
-import { differenceInWeeks, endOfWeek, format } from 'date-fns'
-import { P } from '@antv/g2plot'
+import { format } from 'date-fns'
 import { useRef } from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 function fetchDatapoints(slug) {
     return fetch(
-        `https://www.beeminder.com/api/v1/users/${process.env.REACT_APP_BEEMINDER_USERNAME}/goals/${slug}/datapoints.json?auth_token=${process.env.REACT_APP_BEEMINDER_APIKEY}`
+        `https://www.beeminder.com/api/v1/users/${process.env.REACT_APP_BEEMINDER_USERNAME}/goals/${slug}/datapoints.json?auth_token=${process.env.REACT_APP_BEEMINDER_APIKEY}&count=250`
+        // TODO magic number count
     ).then((r) => r.json())
 }
 
 export function CalendarHeatmap({ goalSlug }) {
     const chartEl = useRef(null)
     const { isLoading, data } = useQuery(['datapoints-' + goalSlug], () =>
+        // TODO use consistent naming of queries / some dictionary
         fetchDatapoints(goalSlug)
     )
 
     useEffect(() => {
         if (data && chartEl.current) {
+            chartEl.current.innerHTML = ''
             var calendarPlot = new G2Plot.P(
                 chartEl.current,
                 {},
@@ -44,21 +45,27 @@ export function CalendarHeatmap({ goalSlug }) {
                     })),
                 }
             )
-            calendarPlot.render()
+            calendarPlot.render() // TODO update when datapoints updated
             chartEl.current.scrollTo(800, 0)
         }
-    }, [])
+    }, [data])
 
     if (isLoading) {
-        return 'Loading'
+        return (
+            <div
+                style={{
+                    minHeight: '140px',
+                }}
+            />
+        )
     }
 
     return (
         <div
             style={{
-                'overflow-x': 'scroll',
-                'padding-bottom': '15px',
-                'padding-top': '20px',
+                minHeight: '140px',
+                overflowX: 'scroll',
+                paddingTop: '20px',
             }}
             ref={chartEl}
         />

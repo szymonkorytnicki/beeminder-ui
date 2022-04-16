@@ -75,7 +75,7 @@ export function GoalPage() {
             <RecentDatapoints
                 goalSlug={data.slug}
                 datapoints={data.recent_data}
-                onDelete={() => setTimeout(refetch, 1500)} // TODO dummy workaround; instant refetch returns removed datapoint
+                onDelete={() => setTimeout(refetch, 1500)} // TODO dummy workaround; instant refetch returns results which include removed datapoint
             />
         </>
     )

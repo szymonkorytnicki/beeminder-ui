@@ -3,6 +3,14 @@
     align-items: center;
     flex-wrap: wrap;
 }
+.goals-tag {
+    font-size: 0.9rem;
+    color: #999;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
 /* TODO move to separate component */
 .goal-tile {
     display: block;
