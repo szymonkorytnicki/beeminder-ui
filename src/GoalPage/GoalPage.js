@@ -2,10 +2,10 @@ import { useParams } from 'react-router'
 import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
 import { PageHeader } from '../Page/PageHeader'
-import { RecentDatapoints } from '../RecentDatapoints/RecentDatapoints'
-import { CreateDatapoint } from '../CreateDatapoint/CreateDatapoint'
+import { RecentDatapoints } from '../RecentDatapoints/RecentDatapoints.tsx'
+import { CreateDatapoint } from '../CreateDatapoint/CreateDatapoint.tsx'
 import { useState } from 'react'
-import { CreateButton } from '../CreateButton/CreateButton'
+import { CreateButton } from '../CreateButton/CreateButton.tsx'
 import { CalendarHeatmap } from '../CalendarHeatmap/CalendarHeatmap'
 import { TilePledge, TileTitle, Tile, TileFooter } from '../Tile/Tile'
 
@@ -20,7 +20,11 @@ export function GoalPage() {
     const { goalSlug } = useParams()
     const { isLoading, isError, data, refetch } = useQuery(
         ['goal-' + goalSlug],
-        () => fetchGoal(goalSlug)
+        () => fetchGoal(goalSlug),
+        {
+            refetchInterval: 15000,
+            refetchOnWindowFocus: true,
+        }
     )
 
     if (isError) {

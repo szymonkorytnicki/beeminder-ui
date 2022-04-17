@@ -4,6 +4,7 @@ import { useQuery } from 'react-query'
 import { format } from 'date-fns'
 import { useRef } from 'react'
 import { useEffect } from 'react'
+import { Area, Scatter, Line, TinyArea } from '@ant-design/charts'
 
 function fetchDatapoints(slug) {
     return fetch(
@@ -60,14 +61,47 @@ export function CalendarHeatmap({ goalSlug }) {
         )
     }
 
+    const config = {
+        smooth: true,
+        data: data
+            .sort((a, z) => (a.timestamp < z.timestamp ? -1 : 1))
+            .reduce((acc, current, index) => {
+                acc.push({
+                    ...current,
+                    total:
+                        current.value + (index > 0 ? acc[index - 1].total : 0),
+                })
+                return acc
+            }, []),
+        xField: 'timestamp',
+        yField: 'total',
+        sizeField: 'value',
+        size: [4, 20],
+        xAxis: {
+            label: {
+                formatter: (v) => {
+                    console.log(v)
+                    return format(new Date(v * 1000), 'yyyy-MM-dd')
+                },
+            },
+        },
+        regressionLine: {
+            type: 'loess', // linear, exp, loess, log, poly, pow, quad
+        },
+    }
+
     return (
-        <div
-            style={{
-                minHeight: '140px',
-                overflowX: 'scroll',
-                paddingTop: '20px',
-            }}
-            ref={chartEl}
-        />
+        <>
+            <br />
+            <Scatter {...config} />
+            <div
+                style={{
+                    minHeight: '140px',
+                    overflowX: 'scroll',
+                    paddingTop: '20px',
+                }}
+                ref={chartEl}
+            />
+        </>
     )
 }

@@ -20,6 +20,9 @@ const queryClient = new QueryClient({
             queries: {
                 cacheTime: 1000 * 60 * 60 * 24 * 3, // 3 days
             },
+            // queryFn: ({ queryKey }) => {
+            //     return fetch(queryKey[0]).then((response) => response.json()) // TODO build robust logic&dictionaries for APIs
+            // },
         },
     },
 })

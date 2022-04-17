@@ -2,7 +2,7 @@ import { useQuery } from 'react-query'
 import css from './GoalsWidget.module.css'
 import { Link } from 'react-router-dom'
 import { getSafebufCopy } from '../utils'
-import { FiCheckCircle } from 'react-icons/fi'
+import { FaCheck } from 'react-icons/fa'
 import { TileHeader, TileFooter, Tile, TileTitle } from '../Tile/Tile'
 
 function fetchGoals() {
@@ -22,7 +22,9 @@ function createTags(goals) {
 }
 
 export function GoalsWidget() {
-    const { isError, data } = useQuery(['goals'], () => fetchGoals())
+    const { isError, data } = useQuery(['goals'], () => fetchGoals(), {
+        refetchInterval: 30000,
+    })
 
     if (isError) {
         return 'Loading error'
@@ -39,6 +41,7 @@ export function GoalsWidget() {
             <div className={css.goals}>
                 {data
                     .filter((goal) => goal.tags.length === 0)
+                    .filter((goal) => goal.secret === false)
                     .map((goal) => {
                         return <Goal key={goal.slug} {...goal} />
                     })}
@@ -50,6 +53,7 @@ export function GoalsWidget() {
                         <div className={css.goals}>
                             {data
                                 .filter((goal) => goal.tags.includes(tag))
+                                .filter((goal) => goal.secret === false)
                                 .map((goal) => {
                                     return <Goal key={goal.slug} {...goal} />
                                 })}
@@ -71,7 +75,7 @@ function Goal({ slug, roadstatuscolor, safebuf, todayta }) {
             color={roadstatuscolor}
         >
             <TileTitle>{slug}</TileTitle>
-            <TileHeader>{todayta ? <FiCheckCircle /> : ''}</TileHeader>
+            <TileHeader>{todayta ? <FaCheck /> : ''}</TileHeader>
             <TileFooter>due {getSafebufCopy(safebuf)} </TileFooter>
         </Tile>
     )

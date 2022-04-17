@@ -11,7 +11,8 @@
 
     border: 2px solid grey;
     color: gray;
-    background: white;
+
+    transition: border 500ms linear, color 500ms linear;
 }
 .tileSplit {
     width: calc(50% - 10px);
@@ -21,6 +22,8 @@
 .title {
     display: block;
     font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .titleBig {
     font-size: 1.2rem;
