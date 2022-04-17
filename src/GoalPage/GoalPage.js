@@ -1,13 +1,13 @@
 import { useParams } from 'react-router'
 import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
-import './GoalPage.css'
 import { PageHeader } from '../Page/PageHeader'
 import { RecentDatapoints } from '../RecentDatapoints/RecentDatapoints'
 import { CreateDatapoint } from '../CreateDatapoint/CreateDatapoint'
 import { useState } from 'react'
 import { CreateButton } from '../CreateButton/CreateButton'
 import { CalendarHeatmap } from '../CalendarHeatmap/CalendarHeatmap'
+import { TilePledge, TileTitle, Tile, TileFooter } from '../Tile/Tile'
 
 function fetchGoal(slug) {
     return fetch(
@@ -48,13 +48,10 @@ export function GoalPage() {
                 {goalSlug}
             </PageHeader>
             <CreateButton onClick={() => setShowCreateDatapoint(true)} />
-            <div
-                className={`goal-tile goal-tile--left goal-tile--${data.roadstatuscolor}`} // TODO extract to styled components / composed components
-            >
-                <h2 className={`goal-tile__slug goal-tile__slug--big`}>
-                    {data.slug}
-                </h2>
-                <footer className="goal-tile__footer">
+            <Tile color={data.roadstatuscolor}>
+                <TileTitle big>{data.slug}</TileTitle>
+                {/* TODO more like content not footer*/}
+                <TileFooter>
                     {data.limsum}
                     <br />
                     total: {Math.round(data.curval * 100) / 100} {data.gunits}{' '}
@@ -62,9 +59,9 @@ export function GoalPage() {
                     {data.todayta
                         ? `Has datapoint today (${data.recent_data[0].value})`
                         : 'No datapoints today'}
-                </footer>
-                <div className="goal-tile__pledge">${data.pledge}</div>
-            </div>
+                </TileFooter>
+                <TilePledge>${data.pledge}</TilePledge>
+            </Tile>
             {showCreateDatapoint && ( // TODO modal
                 <CreateDatapoint
                     goalSlug={data.slug}

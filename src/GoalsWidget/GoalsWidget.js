@@ -1,8 +1,9 @@
 import { useQuery } from 'react-query'
-import './GoalsWidget.css'
+import css from './GoalsWidget.module.css'
 import { Link } from 'react-router-dom'
 import { getSafebufCopy } from '../utils'
 import { FiCheckCircle } from 'react-icons/fi'
+import { TileHeader, TileFooter, Tile, TileTitle } from '../Tile/Tile'
 
 function fetchGoals() {
     return fetch(
@@ -35,7 +36,7 @@ export function GoalsWidget() {
 
     return (
         <div>
-            <div className="goals">
+            <div className={css.goals}>
                 {data
                     .filter((goal) => goal.tags.length === 0)
                     .map((goal) => {
@@ -45,8 +46,8 @@ export function GoalsWidget() {
             {tags.map((tag) => {
                 return (
                     <div key={tag}>
-                        <header className="goals-tag">{tag}</header>
-                        <div className="goals">
+                        <header className={css.tag}>{tag}</header>
+                        <div className={css.goals}>
                             {data
                                 .filter((goal) => goal.tags.includes(tag))
                                 .map((goal) => {
@@ -60,21 +61,18 @@ export function GoalsWidget() {
     )
 }
 
-function Goal({ slug, roadstatuscolor, curval, safebuf, todayta, gunits }) {
+function Goal({ slug, roadstatuscolor, safebuf, todayta }) {
     return (
-        <Link
+        <Tile
+            split
+            center
+            component={Link}
             to={'/g/' + slug}
-            className={`goal-tile goal-tile--half goal-tile--${slug} goal-tile--${roadstatuscolor}`}
+            color={roadstatuscolor}
         >
-            <span className="goal-tile__slug goal-tile__slug--center">
-                {slug}
-            </span>
-            <header className="goal-tile__topbar">
-                {todayta ? <FiCheckCircle /> : ''}
-            </header>
-            <footer className="goal-tile__footer goal-tile__footer--center">
-                due {getSafebufCopy(safebuf)}{' '}
-            </footer>
-        </Link>
+            <TileTitle>{slug}</TileTitle>
+            <TileHeader>{todayta ? <FiCheckCircle /> : ''}</TileHeader>
+            <TileFooter>due {getSafebufCopy(safebuf)} </TileFooter>
+        </Tile>
     )
 }

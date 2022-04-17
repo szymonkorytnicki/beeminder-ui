@@ -1,24 +1,17 @@
-.goal-page__graph-wrapper {
-    height: 250px;
-}
-.goal-page__graph {
-    max-width: 100%;
-}
-
-.recent-data {
+.recentDatapoints {
     margin-top: 20px; /* TODO */
     color: rgb(108, 108, 108);
 }
 
-.recent-data__datapoint__data {
-    color: rgb(206, 206, 206);
-}
-
-.recent-data__datapoint {
+.row {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
     margin-bottom: 8px;
     touch-action: none;
+}
+
+.date {
+    color: rgb(206, 206, 206);
 }

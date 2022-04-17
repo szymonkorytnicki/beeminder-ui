@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { useEffect } from 'react'
 import { format } from 'date-fns'
+import { useEffect, useState } from 'react'
 import { useMutation } from 'react-query'
+import css from './RecentDatapoints.module.css'
 
 export function RecentDatapoints({ goalSlug, datapoints, onDelete }) {
     // TODO goal as context
@@ -16,7 +16,7 @@ export function RecentDatapoints({ goalSlug, datapoints, onDelete }) {
     )
 
     return (
-        <div className="recent-data">
+        <div className={css.recentDatapoints}>
             {datapoints.map((datapoint) => {
                 return (
                     <DatapointRow
@@ -87,13 +87,13 @@ function DatapointRow({ datapoint, onDelete }) {
                     }
                 }
             }}
-            className="recent-data__datapoint"
+            className={css.row}
             style={{
                 transform: `translateX(${isTouching ? '20px' : '0px'})`,
                 transition: 'transform 100ms linear',
             }}
         >
-            <span className="recent-data__datapoint__data">
+            <span className={css.date}>
                 {format(new Date(datapoint.measured_at), 'yyyy-MM-dd')}
             </span>{' '}
             {Math.round(datapoint.value * 100) / 100} / {datapoint.comment}

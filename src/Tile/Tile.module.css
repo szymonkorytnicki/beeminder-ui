@@ -1,0 +1,73 @@
+.tile {
+    display: block;
+    text-decoration: none;
+    position: relative;
+    padding: 15px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    border: 2px solid grey;
+    color: gray;
+    background: white;
+}
+.tileSplit {
+    width: calc(50% - 10px);
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.title {
+    display: block;
+    font-weight: 700;
+}
+.titleBig {
+    font-size: 1.2rem;
+}
+
+.footer {
+    font-size: 0.925rem;
+    line-height: 1.2rem;
+}
+
+.header {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    font-size: 0.825rem;
+}
+
+.pledge {
+    /* TODO name*/
+    font-size: 3rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-1.5rem);
+    right: 10px;
+}
+
+/* TOOD some utils?*/
+.center {
+    text-align: center;
+}
+.green {
+    border: 2px solid green;
+    color: green;
+    background: white;
+}
+.blue {
+    border: 2px solid blue;
+    color: blue;
+    background: white;
+}
+.orange {
+    border: 2px solid orange;
+    color: orange;
+    background: white;
+}
+.red {
+    border: 2px solid red;
+    color: red;
+    background: white;
+}

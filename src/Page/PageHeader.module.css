@@ -1,13 +1,13 @@
-.page-header {
+.pageHeader {
     padding-bottom: 10px;
     color: rgb(172, 172, 172);
     position: relative;
 }
-.page-header a {
+.pageHeader a {
     color: rgb(134, 133, 133);
 }
 
-.page-header__fetching-indicator {
+.loader {
     position: absolute;
     top: -5px;
     right: 2px;
@@ -15,11 +15,11 @@
     transition: opacity 100ms linear;
 }
 
-.page-header__fetching-indicator--visible {
+.loaderVisible {
     opacity: 1;
 }
 
-.page-header__fetching-indicator:after {
+.loader:after {
     content: ' ';
     display: block;
     width: 10px;

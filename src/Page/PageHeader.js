@@ -1,15 +1,17 @@
-import './PageHeader.css'
+import css from './PageHeader.module.css'
 import { useIsFetching } from 'react-query'
+import classNames from 'classnames'
 
 export function PageHeader({ children }) {
     const isFetching = useIsFetching()
     return (
-        <div className="page-header">
+        <div className={css.pageHeader}>
             {children}
             <div
-                className={`page-header__fetching-indicator ${
-                    isFetching ? 'page-header__fetching-indicator--visible' : ''
-                }`}
+                className={classNames(
+                    css.loader,
+                    isFetching && css.loaderVisible
+                )}
             ></div>
         </div>
     )

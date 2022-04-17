@@ -1,6 +1,6 @@
 import { FiPlusCircle } from 'react-icons/fi'
-import './CreateButton.css'
+import css from './CreateButton.module.css'
 export function CreateButton(props) {
     // TODO actual button
-    return <FiPlusCircle {...props} className="create-button" />
+    return <FiPlusCircle {...props} className={css.createButton} />
 }

@@ -26,7 +26,6 @@ export function CreateDatapoint({ onCreate, goalSlug }) {
             <input
                 type="range"
                 id="points"
-                name="points"
                 min="0"
                 max="10"
                 name="value"
