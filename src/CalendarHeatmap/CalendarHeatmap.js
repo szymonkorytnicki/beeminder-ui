@@ -77,6 +77,12 @@ export function CalendarHeatmap({ goalSlug }) {
         yField: 'total',
         sizeField: 'value',
         size: [4, 20],
+        color: ({ timestamp }) => {
+            if (new Date(timestamp * 1000).getHours() < 12) {
+                return 'red'
+            }
+            return 'blue'
+        },
         xAxis: {
             label: {
                 formatter: (v) => {
