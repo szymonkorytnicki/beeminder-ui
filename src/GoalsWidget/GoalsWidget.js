@@ -22,9 +22,7 @@ function createTags(goals) {
 }
 
 export function GoalsWidget() {
-    const { isError, data } = useQuery(['goals'], () => fetchGoals(), {
-        refetchInterval: 30000,
-    })
+    const { isError, data } = useQuery(['goals'], () => fetchGoals())
 
     if (isError) {
         return 'Loading error'

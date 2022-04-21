@@ -14,6 +14,7 @@ function fetchDatapoints(slug) {
 }
 
 export function CalendarHeatmap({ goalSlug }) {
+    // TODO renders uselessly watching data
     const chartEl = useRef(null)
     const { isLoading, data } = useQuery(['datapoints-' + goalSlug], () =>
         // TODO use consistent naming of queries / some dictionary
@@ -55,7 +56,7 @@ export function CalendarHeatmap({ goalSlug }) {
         return (
             <div
                 style={{
-                    minHeight: '140px',
+                    minHeight: '140px', // TODO
                 }}
             />
         )
@@ -85,10 +86,7 @@ export function CalendarHeatmap({ goalSlug }) {
         },
         xAxis: {
             label: {
-                formatter: (v) => {
-                    console.log(v)
-                    return format(new Date(v * 1000), 'yyyy-MM-dd')
-                },
+                formatter: (v) => format(new Date(v * 1000), 'yyyy-MM-dd'),
             },
         },
         regressionLine: {
@@ -96,6 +94,8 @@ export function CalendarHeatmap({ goalSlug }) {
         },
     }
 
+    // TODO split scatter and heatmap
+    // TODO lazy load / lazy render them
     return (
         <>
             <br />

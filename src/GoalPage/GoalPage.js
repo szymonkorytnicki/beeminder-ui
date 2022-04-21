@@ -8,6 +8,7 @@ import { useState } from 'react'
 import { CreateButton } from '../CreateButton/CreateButton.tsx'
 import { CalendarHeatmap } from '../CalendarHeatmap/CalendarHeatmap'
 import { TilePledge, TileTitle, Tile, TileFooter } from '../Tile/Tile'
+import { Modal } from '../Modal/Modal'
 
 function fetchGoal(slug) {
     return fetch(
@@ -20,11 +21,7 @@ export function GoalPage() {
     const { goalSlug } = useParams()
     const { isLoading, isError, data, refetch } = useQuery(
         ['goal-' + goalSlug],
-        () => fetchGoal(goalSlug),
-        {
-            refetchInterval: 15000,
-            refetchOnWindowFocus: true,
-        }
+        () => fetchGoal(goalSlug)
     )
 
     if (isError) {
@@ -61,16 +58,18 @@ export function GoalPage() {
                     total: {Math.round(data.curval * 100) / 100} {data.gunits}{' '}
                     <br />
                     {data.todayta
-                        ? `Has datapoint today (${data.recent_data[0].value})`
-                        : 'No datapoints today'}
+                        ? `has datapoint today (${data.recent_data[0].value})`
+                        : 'no datapoints today'}
                 </TileFooter>
                 <TilePledge>${data.pledge}</TilePledge>
             </Tile>
             {showCreateDatapoint && ( // TODO modal
-                <CreateDatapoint
-                    goalSlug={data.slug}
-                    onCreate={() => setTimeout(refetch, 1500)}
-                />
+                <Modal>
+                    <CreateDatapoint
+                        goalSlug={data.slug}
+                        onCreate={() => setTimeout(refetch, 1500)}
+                    />
+                </Modal>
             )}
             <CalendarHeatmap goalSlug={data.slug} />
             <RecentDatapoints
