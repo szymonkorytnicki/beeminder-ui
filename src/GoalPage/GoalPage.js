@@ -7,8 +7,9 @@ import { CreateDatapoint } from '../CreateDatapoint/CreateDatapoint.tsx'
 import { useState } from 'react'
 import { CreateButton } from '../CreateButton/CreateButton.tsx'
 import { CalendarHeatmap } from '../CalendarHeatmap/CalendarHeatmap'
-import { TilePledge, TileTitle, Tile, TileFooter } from '../Tile/Tile'
+import { TilePledge, TileTitle, Tile, TileContent } from '../Tile/Tile'
 import { Modal } from '../Modal/Modal'
+import { ScatterChart } from '../ScatterChart/ScatterChart'
 
 function fetchGoal(slug) {
     return fetch(
@@ -17,6 +18,7 @@ function fetchGoal(slug) {
 }
 
 export function GoalPage() {
+    // TODO move to tile, not to whole view
     const [showCreateDatapoint, setShowCreateDatapoint] = useState(false)
     const { goalSlug } = useParams()
     const { isLoading, isError, data, refetch } = useQuery(
@@ -51,8 +53,7 @@ export function GoalPage() {
             <CreateButton onClick={() => setShowCreateDatapoint(true)} />
             <Tile color={data.roadstatuscolor}>
                 <TileTitle big>{data.slug}</TileTitle>
-                {/* TODO more like content not footer*/}
-                <TileFooter>
+                <TileContent>
                     {data.limsum}
                     <br />
                     total: {Math.round(data.curval * 100) / 100} {data.gunits}{' '}
@@ -60,7 +61,7 @@ export function GoalPage() {
                     {data.todayta
                         ? `has datapoint today (${data.recent_data[0].value})`
                         : 'no datapoints today'}
-                </TileFooter>
+                </TileContent>
                 <TilePledge>${data.pledge}</TilePledge>
             </Tile>
             {showCreateDatapoint && ( // TODO modal
@@ -71,12 +72,22 @@ export function GoalPage() {
                     />
                 </Modal>
             )}
-            <CalendarHeatmap goalSlug={data.slug} />
-            <RecentDatapoints
-                goalSlug={data.slug}
-                datapoints={data.recent_data}
-                onDelete={() => setTimeout(refetch, 1500)} // TODO dummy workaround; instant refetch returns results which include removed datapoint
-            />
+            <Tile>
+                <TileTitle>Chart</TileTitle>
+                <ScatterChart goalSlug={data.slug} />
+            </Tile>
+            <Tile>
+                <TileTitle>Calendar</TileTitle>
+                <CalendarHeatmap goalSlug={data.slug} />
+            </Tile>
+            <Tile>
+                <TileTitle>Recent datapoints</TileTitle>
+                <RecentDatapoints
+                    goalSlug={data.slug}
+                    datapoints={data.recent_data}
+                    onDelete={() => setTimeout(refetch, 1500)} // TODO dummy workaround; instant refetch returns results which include removed datapoint
+                />
+            </Tile>
         </>
     )
 }

@@ -4,12 +4,12 @@ import { useQuery } from 'react-query'
 import { format } from 'date-fns'
 import { useRef } from 'react'
 import { useEffect } from 'react'
-import { Area, Scatter, Line, TinyArea } from '@ant-design/charts'
 
 function fetchDatapoints(slug) {
     return fetch(
         `https://www.beeminder.com/api/v1/users/${process.env.REACT_APP_BEEMINDER_USERNAME}/goals/${slug}/datapoints.json?auth_token=${process.env.REACT_APP_BEEMINDER_APIKEY}&count=250`
         // TODO magic number count
+        // TODO reuse this data
     ).then((r) => r.json())
 }
 
@@ -62,52 +62,16 @@ export function CalendarHeatmap({ goalSlug }) {
         )
     }
 
-    const config = {
-        smooth: true,
-        data: data
-            .sort((a, z) => (a.timestamp < z.timestamp ? -1 : 1))
-            .reduce((acc, current, index) => {
-                acc.push({
-                    ...current,
-                    total:
-                        current.value + (index > 0 ? acc[index - 1].total : 0),
-                })
-                return acc
-            }, []),
-        xField: 'timestamp',
-        yField: 'total',
-        sizeField: 'value',
-        size: [4, 20],
-        color: ({ timestamp }) => {
-            if (new Date(timestamp * 1000).getHours() < 12) {
-                return 'red'
-            }
-            return 'blue'
-        },
-        xAxis: {
-            label: {
-                formatter: (v) => format(new Date(v * 1000), 'yyyy-MM-dd'),
-            },
-        },
-        regressionLine: {
-            type: 'loess', // linear, exp, loess, log, poly, pow, quad
-        },
-    }
-
     // TODO split scatter and heatmap
     // TODO lazy load / lazy render them
     return (
-        <>
-            <br />
-            <Scatter {...config} />
-            <div
-                style={{
-                    minHeight: '140px',
-                    overflowX: 'scroll',
-                    paddingTop: '20px',
-                }}
-                ref={chartEl}
-            />
-        </>
+        <div
+            style={{
+                minHeight: '140px',
+                overflowX: 'scroll',
+                paddingTop: '20px',
+            }}
+            ref={chartEl}
+        />
     )
 }

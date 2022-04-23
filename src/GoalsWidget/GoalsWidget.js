@@ -3,7 +3,7 @@ import css from './GoalsWidget.module.css'
 import { Link } from 'react-router-dom'
 import { getSafebufCopy } from '../utils'
 import { FaCheck } from 'react-icons/fa'
-import { TileHeader, TileFooter, Tile, TileTitle } from '../Tile/Tile'
+import { TileHeader, TileContent, Tile, TileTitle } from '../Tile/Tile'
 
 function fetchGoals() {
     return fetch(
@@ -75,7 +75,7 @@ function Goal({ slug, roadstatuscolor, safebuf, todayta }) {
         >
             <TileTitle>{slug}</TileTitle>
             <TileHeader>{todayta ? <FaCheck /> : ''}</TileHeader>
-            <TileFooter>due {getSafebufCopy(safebuf)} </TileFooter>
+            <TileContent>due {getSafebufCopy(safebuf)} </TileContent>
         </Tile>
     )
 }

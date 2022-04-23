@@ -35,7 +35,7 @@ export function TileHeader({ className, component, ...props }) {
     )
 }
 
-export function TileFooter({ className, center, component, ...props }) {
+export function TileContent({ className, center, component, ...props }) {
     const Component = component ? component : 'footer'
     return (
         <Component

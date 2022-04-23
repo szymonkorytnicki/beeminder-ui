@@ -14,6 +14,9 @@
 
     transition: border 500ms linear, color 500ms linear;
 }
+.tile + .tile {
+    margin-top: 16px;
+}
 .tileSplit {
     width: calc(50% - 10px);
     max-width: 350px;
