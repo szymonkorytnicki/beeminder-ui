@@ -3,6 +3,7 @@ import classNames from 'classnames'
 
 export function Modal({ className, onClose, ...props }) {
     // TODO add typings
+    // TODO add esc key support
     return (
         <div className={css.overlay} onClick={onClose}>
             <button onClick={onClose}>X</button>

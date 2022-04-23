@@ -34,6 +34,7 @@ export function GoalsWidget() {
 
     const tags = createTags(data)
 
+    // TODO smooth animation https://codesandbox.io/s/reorder-elements-with-slide-transition-and-react-hooks-flip-211f2
     return (
         <div>
             <div className={css.goals}>
