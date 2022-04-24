@@ -14,7 +14,7 @@
 
     transition: border 500ms linear, color 500ms linear;
 }
-.tile + .tile {
+.tile + .tile:not(.tileSplit) {
     margin-top: 16px;
 }
 .tileSplit {

@@ -10,6 +10,7 @@ import { CalendarHeatmap } from '../CalendarHeatmap/CalendarHeatmap'
 import { TilePledge, TileTitle, Tile, TileContent } from '../Tile/Tile'
 import { Modal } from '../Modal/Modal'
 import { ScatterChart } from '../ScatterChart/ScatterChart'
+import { HourlyBreakdown } from '../HourlyBreakdown/HourlyBreakdown'
 
 function fetchGoal(slug) {
     return fetch(
@@ -79,6 +80,10 @@ export function GoalPage() {
             <Tile>
                 <TileTitle>Calendar</TileTitle>
                 <CalendarHeatmap goalSlug={data.slug} />
+            </Tile>
+            <Tile>
+                <TileTitle>Hourly breakdown</TileTitle>
+                <HourlyBreakdown goalSlug={data.slug} />
             </Tile>
             <Tile>
                 <TileTitle>Recent datapoints</TileTitle>

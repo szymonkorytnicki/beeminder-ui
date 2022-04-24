@@ -1,25 +1,14 @@
 /* global G2PlotCalendar, G2Plot */
 // TODO globals
-import { useQuery } from 'react-query'
 import { format } from 'date-fns'
 import { useRef } from 'react'
 import { useEffect } from 'react'
-
-function fetchDatapoints(slug) {
-    return fetch(
-        `https://www.beeminder.com/api/v1/users/${process.env.REACT_APP_BEEMINDER_USERNAME}/goals/${slug}/datapoints.json?auth_token=${process.env.REACT_APP_BEEMINDER_APIKEY}&count=250`
-        // TODO magic number count
-        // TODO reuse this data
-    ).then((r) => r.json())
-}
+import { useDatapoints } from '../hooks/useDatapoints'
 
 export function CalendarHeatmap({ goalSlug }) {
     // TODO renders uselessly watching data
     const chartEl = useRef(null)
-    const { isLoading, data } = useQuery(['datapoints-' + goalSlug], () =>
-        // TODO use consistent naming of queries / some dictionary
-        fetchDatapoints(goalSlug)
-    )
+    const { isLoading, data } = useDatapoints(goalSlug)
 
     useEffect(() => {
         if (data && chartEl.current) {
@@ -56,14 +45,13 @@ export function CalendarHeatmap({ goalSlug }) {
         return (
             <div
                 style={{
-                    minHeight: '140px', // TODO
+                    minHeight: '160px', // TODO
                 }}
             />
         )
     }
 
-    // TODO split scatter and heatmap
-    // TODO lazy load / lazy render them
+    // TODO lazy load / lazy render it
     return (
         <div
             style={{
