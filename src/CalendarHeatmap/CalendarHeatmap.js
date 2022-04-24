@@ -21,6 +21,13 @@ export function CalendarHeatmap({ goalSlug }) {
                     ...G2PlotCalendar.defaultOptions,
                     width: 800,
                     height: 120,
+                    color: [
+                        '#ebedf0',
+                        '#a7c3fc',
+                        '#6495f9',
+                        '#4f86f5',
+                        '#0d5eff',
+                    ],
                     tooltip: {
                         customContent: () => '',
                         showMarkers: false,
