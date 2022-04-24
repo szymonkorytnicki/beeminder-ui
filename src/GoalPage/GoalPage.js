@@ -11,6 +11,7 @@ import { TilePledge, TileTitle, Tile, TileContent } from '../Tile/Tile'
 import { Modal } from '../Modal/Modal'
 import { ScatterChart } from '../ScatterChart/ScatterChart'
 import { HourlyBreakdown } from '../HourlyBreakdown/HourlyBreakdown'
+import { DailyBreakdown } from '../DailyBreakdown/DailyBreakdown'
 
 function fetchGoal(slug) {
     return fetch(
@@ -65,30 +66,34 @@ export function GoalPage() {
                 </TileContent>
                 <TilePledge>${data.pledge}</TilePledge>
             </Tile>
-            {showCreateDatapoint && ( // TODO modal
+            {showCreateDatapoint && (
                 <Modal>
                     <CreateDatapoint
-                        goalSlug={data.slug}
+                        goalSlug={goalSlug}
                         onCreate={() => setTimeout(refetch, 1500)}
                     />
                 </Modal>
             )}
             <Tile>
-                <TileTitle>Chart</TileTitle>
-                <ScatterChart goalSlug={data.slug} />
-            </Tile>
-            <Tile>
                 <TileTitle>Calendar</TileTitle>
-                <CalendarHeatmap goalSlug={data.slug} />
+                <CalendarHeatmap goalSlug={goalSlug} />
             </Tile>
             <Tile>
                 <TileTitle>Hourly breakdown</TileTitle>
-                <HourlyBreakdown goalSlug={data.slug} />
+                <HourlyBreakdown goalSlug={goalSlug} />
+            </Tile>
+            <Tile>
+                <TileTitle>Daily breakdown</TileTitle>
+                <DailyBreakdown goalSlug={goalSlug} />
+            </Tile>
+            <Tile>
+                <TileTitle>Chart</TileTitle>
+                <ScatterChart goalSlug={goalSlug} />
             </Tile>
             <Tile>
                 <TileTitle>Recent datapoints</TileTitle>
                 <RecentDatapoints
-                    goalSlug={data.slug}
+                    goalSlug={goalSlug}
                     datapoints={data.recent_data}
                     onDelete={() => setTimeout(refetch, 1500)} // TODO dummy workaround; instant refetch returns results which include removed datapoint
                 />

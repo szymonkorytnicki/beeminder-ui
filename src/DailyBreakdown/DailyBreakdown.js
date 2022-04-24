@@ -2,34 +2,8 @@
 import { format } from 'date-fns'
 import { useDatapoints } from '../hooks/useDatapoints'
 import { Column } from '@ant-design/plots'
-import { getAutoEnteredHour, isAutoEntered } from '../utils/autoEntered.ts'
-const HOURS = [
-    '00',
-    '01',
-    '02',
-    '03',
-    '04',
-    '05',
-    '06',
-    '07',
-    '08',
-    '09',
-    '10',
-    '11',
-    '12',
-    '13',
-    '14',
-    '15',
-    '16',
-    '17',
-    '18',
-    '19',
-    '20',
-    '21',
-    '22',
-    '23',
-]
-export function HourlyBreakdown({ goalSlug }) {
+const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+export function DailyBreakdown({ goalSlug }) {
     // TODO renders uselessly watching data
     const { isLoading, data } = useDatapoints(goalSlug)
 
@@ -44,21 +18,20 @@ export function HourlyBreakdown({ goalSlug }) {
         )
     }
     const config = {
-        data: HOURS.reduce((acc, current) => {
+        data: DAYS.reduce((acc, current) => {
             const value = {
-                hour: current,
+                day: current,
                 value: data
                     .filter((point) => point.value > 0)
-                    .filter((point) =>
-                        isAutoEntered(point)
-                            ? getAutoEnteredHour(point) == current
-                            : format(point.timestamp * 1000, 'HH') == current
+                    .filter(
+                        (point) =>
+                            format(point.timestamp * 1000, 'ccc') == current
                     ).length,
             }
             acc.push(value)
             return acc
         }, []),
-        xField: 'hour',
+        xField: 'day',
         yField: 'value',
         height: 160,
     }
