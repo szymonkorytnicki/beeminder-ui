@@ -12,6 +12,7 @@ import { Modal } from '../Modal/Modal'
 import { ScatterChart } from '../ScatterChart/ScatterChart'
 import { HourlyBreakdown } from '../HourlyBreakdown/HourlyBreakdown'
 import { DailyBreakdown } from '../DailyBreakdown/DailyBreakdown'
+import { Streak } from '../Streak/Streak'
 
 function fetchGoal(slug) {
     return fetch(
@@ -52,7 +53,7 @@ export function GoalPage() {
                 <Link to="/">{process.env.REACT_APP_BEEMINDER_USERNAME}</Link> /{' '}
                 {goalSlug}
             </PageHeader>
-            <CreateButton onClick={() => setShowCreateDatapoint(true)} />
+            {/* <CreateButton onClick={() => setShowCreateDatapoint(true)} /> */}
             <Tile color={data.roadstatuscolor}>
                 <TileTitle big>{data.slug}</TileTitle>
                 <TileContent>
@@ -92,6 +93,11 @@ export function GoalPage() {
                     <ScatterChart goalSlug={goalSlug} />
                 </Tile>
             )}
+            <Tile>
+                <TileTitle>
+                    Current streak: <Streak goalSlug={goalSlug} /> days
+                </TileTitle>
+            </Tile>
             <Tile>
                 <TileTitle>Recent datapoints</TileTitle>
                 <RecentDatapoints
