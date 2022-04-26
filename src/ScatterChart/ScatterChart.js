@@ -19,7 +19,7 @@ export function ScatterChart({ goalSlug }) {
     const config = {
         // TODO format datapoint tooltip
         smooth: true,
-        height: 350,
+        height: 150,
         data: data
             .sort((a, z) => (a.timestamp < z.timestamp ? -1 : 1))
             .reduce((acc, current, index) => {
@@ -31,27 +31,23 @@ export function ScatterChart({ goalSlug }) {
                 return acc
             }, []),
         xField: 'timestamp',
-        yField: 'total',
-        sizeField: 'value',
-        size: [2, 15],
-        // color: ({ timestamp }) => {
-        //     if (new Date(timestamp * 1000).getHours() < 12) {
-        //         return 'red'
-        //     }
-        //     return 'blue'
-        // },
+        yField: 'value',
         xAxis: {
             label: {
                 formatter: (v) => format(new Date(v * 1000), 'yyyy-MM-dd'),
             },
         },
         regressionLine: {
-            type: 'loess', // TODO allow to configure and persist - linear, exp, loess, log, poly, pow, quad
+            type: 'quad', // TODO allow to configure and persist - linear, exp, loess, log, poly, pow, quad
+            style: {
+                stroke: '#4f86f5',
+                lineWidth: '10',
+            },
         },
     }
 
     return (
-        <div style={{ marginTop: '15px', minHeight: '350px' }}>
+        <div style={{ marginTop: '15px', minHeight: '150px' }}>
             <Scatter {...config} />
         </div>
     )

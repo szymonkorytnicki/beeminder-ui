@@ -5,7 +5,7 @@ import { useRef } from 'react'
 import { useEffect } from 'react'
 import { useDatapoints } from '../hooks/useDatapoints'
 
-export function CalendarHeatmap({ goalSlug }) {
+export function CalendarHeatmap({ goalSlug, isOdometer }) {
     // TODO renders uselessly watching data
     const chartEl = useRef(null)
     const { isLoading, data } = useDatapoints(goalSlug)
@@ -22,7 +22,7 @@ export function CalendarHeatmap({ goalSlug }) {
                     width: 800,
                     height: 120,
                     color: [
-                        '#ebedf0',
+                        '#ebedf0', // TODO more contrast please
                         '#a7c3fc',
                         '#6495f9',
                         '#4f86f5',
@@ -39,7 +39,7 @@ export function CalendarHeatmap({ goalSlug }) {
                     autoFit: false,
                     data: data.map((point) => ({
                         date: format(point.timestamp * 1000, 'yyyy-MM-dd'),
-                        value: point.value,
+                        value: isOdometer ? 1 : point.value, // TODO fix odometer goals
                     })),
                 }
             )

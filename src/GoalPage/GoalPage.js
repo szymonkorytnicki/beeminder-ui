@@ -76,7 +76,7 @@ export function GoalPage() {
             )}
             <Tile>
                 <TileTitle>Calendar</TileTitle>
-                <CalendarHeatmap goalSlug={goalSlug} />
+                <CalendarHeatmap goalSlug={goalSlug} isOdometer={data.odom} />
             </Tile>
             <Tile>
                 <TileTitle>Hourly breakdown</TileTitle>
@@ -86,10 +86,12 @@ export function GoalPage() {
                 <TileTitle>Daily breakdown</TileTitle>
                 <DailyBreakdown goalSlug={goalSlug} />
             </Tile>
-            <Tile>
-                <TileTitle>Chart</TileTitle>
-                <ScatterChart goalSlug={goalSlug} />
-            </Tile>
+            {!data.odom && (
+                <Tile>
+                    <TileTitle>Trends</TileTitle>
+                    <ScatterChart goalSlug={goalSlug} />
+                </Tile>
+            )}
             <Tile>
                 <TileTitle>Recent datapoints</TileTitle>
                 <RecentDatapoints
