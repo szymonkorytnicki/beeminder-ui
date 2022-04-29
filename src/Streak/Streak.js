@@ -1,5 +1,5 @@
 import { useDatapoints } from '../hooks/useDatapoints'
-import { differenceInCalendarDays } from 'date-fns'
+import { differenceInCalendarDays, isToday } from 'date-fns'
 export function Streak({ goalSlug }) {
     const { isLoading, data } = useDatapoints(goalSlug)
 
@@ -12,6 +12,11 @@ export function Streak({ goalSlug }) {
         .sort((a, b) => (a.timestamp > b.timestamp ? -1 : 1))
 
     let currentStreak = 0
+
+    if (!isToday(datapoints[0].timestamp*1000)) {
+        return currentStreak;
+    }
+
     for (let i = 1; i < datapoints.length; i++) {
         const difference = differenceInCalendarDays(
             datapoints[i - 1].timestamp * 1000,
