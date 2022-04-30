@@ -1,0 +1,17 @@
+.footer {
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+
+.footerLink {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 0.9rem;
+    font-weight: bold;
+    display: block;
+}
+
+.footerLink + .footerLink {
+    margin-top: 15px;
+}

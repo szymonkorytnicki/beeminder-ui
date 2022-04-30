@@ -5,6 +5,10 @@
     padding: 10px;
 }
 
+body {
+    background: #f2f1f6;
+}
+
 input {
     color: rgb(104, 103, 103);
     border: 1px solid rgb(104, 103, 103);

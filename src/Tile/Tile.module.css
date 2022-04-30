@@ -1,5 +1,6 @@
 .tile {
     display: block;
+    background: white;
     text-decoration: none;
     position: relative;
     padding: 15px;
@@ -9,8 +10,8 @@
     overflow: hidden;
     white-space: nowrap;
 
-    border: 2px solid grey;
-    color: gray;
+    border: 0px solid grey;
+    color: rgb(108, 108, 108);
 
     transition: border 500ms linear, color 500ms linear;
 }
@@ -28,6 +29,9 @@
     font-weight: 700;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 1.15;
+    font-size: 1.05rem;
+    color: black;
 }
 .titleBig {
     font-size: 1.2rem;
@@ -58,23 +62,23 @@
 .center {
     text-align: center;
 }
-.green {
-    border: 2px solid green;
+.green .title {
+    border-color: green;
     color: green;
     background: white;
 }
-.blue {
-    border: 2px solid blue;
+.blue .title {
+    border-color: blue;
     color: blue;
     background: white;
 }
-.orange {
-    border: 2px solid orange;
+.orange .title {
+    border-color: orange;
     color: orange;
     background: white;
 }
-.red {
-    border: 2px solid red;
+.red .title {
+    border-color: red;
     color: red;
     background: white;
 }

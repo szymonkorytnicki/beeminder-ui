@@ -6,6 +6,7 @@ import { RecentDatapoints } from '../RecentDatapoints/RecentDatapoints.tsx'
 import { CreateDatapoint } from '../CreateDatapoint/CreateDatapoint.tsx'
 import { useState } from 'react'
 import { CreateButton } from '../CreateButton/CreateButton.tsx'
+import { Footer, FooterLink } from '../Footer/Footer'
 import { CalendarHeatmap } from '../CalendarHeatmap/CalendarHeatmap'
 import { TilePledge, TileTitle, Tile, TileContent } from '../Tile/Tile'
 import { Modal } from '../Modal/Modal'
@@ -106,6 +107,13 @@ export function GoalPage() {
                     onDelete={() => setTimeout(refetch, 1500)} // TODO dummy workaround; instant refetch returns results which include removed datapoint
                 />
             </Tile>
+            <Footer>
+                <FooterLink
+                    to={`http://beeminder.com/${process.env.REACT_APP_BEEMINDER_USERNAME}/${goalSlug}`}
+                >
+                    Manage goal
+                </FooterLink>
+            </Footer>
         </>
     )
 }
