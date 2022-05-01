@@ -1,9 +1,48 @@
 import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { useMutation } from 'react-query'
+import { useGoal } from '../hooks/useGoal'
 import css from './RecentDatapoints.module.css'
 
-export function RecentDatapoints({ goalSlug, datapoints, onDelete }) {
+const MOCK_DATAPOINTS = [
+    {
+        id: {'$oid': 1},
+        created_at: 0,
+        measured_at: 0,
+        comment: "Loading...",
+        value: 1
+    },
+    {
+        id: {'$oid': 2},
+        created_at: 1,
+        measured_at: 1,
+        comment: "Loading...",
+        value: 1
+    },
+    {
+        id: {'$oid': 3},
+        created_at: 2,
+        measured_at: 2,
+        comment: "Loading...",
+        value: 1
+    },
+    {
+        id: {'$oid': 4},
+        created_at: 3,
+        measured_at: 3,
+        comment: "Loading...",
+        value: 1
+    },
+    {
+        id: {'$oid': 5},
+        created_at: 4,
+        measured_at: 4,
+        comment: "Loading...",
+        value: 1
+    },
+]
+
+export function RecentDatapoints({ goalSlug, onDelete }) {
     // TODO goal as context
     // TODO naming and extraction to custom hook
     const { mutate } = useMutation((id) =>
@@ -15,9 +54,11 @@ export function RecentDatapoints({ goalSlug, datapoints, onDelete }) {
         )
     )
 
+    const {data} = useGoal(goalSlug);
+
     return (
         <div className={css.recentDatapoints}>
-            {datapoints.map((datapoint) => {
+            {(data ? data.recent_data : MOCK_DATAPOINTS).map((datapoint) => {
                 return (
                     <DatapointRow
                         key={datapoint.created_at}
@@ -49,7 +90,7 @@ function DatapointRow({ datapoint, onDelete }) {
 
     return (
         <div
-            hidden={isRemoving ? 'hidden' : undefined}
+            hidden={isRemoving}
             onTouchStart={(event) => {
                 setSwipeStart(event.changedTouches[0].clientX) // TODO changed vs targetTouches
             }}
