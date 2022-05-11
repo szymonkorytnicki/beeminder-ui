@@ -134,7 +134,7 @@ function DatapointRow({ datapoint, onDelete }) {
                 transition: 'transform 100ms linear',
             }}
         >
-            <span className={css.date}>
+            <span>
                 {format(new Date(datapoint.measured_at), 'yyyy-MM-dd')}
             </span>{' '}
             {Math.round(datapoint.value * 100) / 100} / {datapoint.comment}

@@ -9,18 +9,13 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-
-    border: 0px solid grey;
-    color: rgb(108, 108, 108);
-
-    transition: border 500ms linear, color 500ms linear;
 }
 .tile + .tile:not(.tileSplit) {
     margin-top: 16px;
 }
 .tileSplit {
     width: calc(50% - 10px);
-    max-width: 350px;
+    /* max-width: 350px; */
     margin-right: 10px;
     margin-bottom: 10px;
 }
@@ -33,6 +28,7 @@
     line-height: 1.15;
     font-size: 1.05rem;
     color: black;
+    position: relative;
 }
 .titleBig {
     font-size: 1.2rem;
@@ -48,6 +44,7 @@
     top: 3px;
     right: 3px;
     font-size: 0.825rem;
+    opacity: 0.2;
 }
 
 .pledge {
@@ -63,23 +60,49 @@
 .center {
     text-align: center;
 }
-.green .title {
-    border-color: green;
-    color: green;
-    background: white;
+
+.coloredTitle {
+    padding-left: 13px;
 }
-.blue .title {
-    border-color: blue;
-    color: blue;
-    background: white;
+
+.coloredTitle:before {
+    background: grey;
+    position: absolute;
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    left: 0px;
+    top: 50%;
+    transform: translateY(-4px);
+    transition: background 350ms linear;
 }
-.orange .title {
-    border-color: orange;
-    color: orange;
-    background: white;
+
+.green .title:before {
+    background-color: green;
 }
-.red .title {
-    border-color: red;
-    color: red;
-    background: white;
+.blue .title:before {
+    background-color: blue;
+}
+.orange .title:before {
+    background-color: orange;
+}
+.red .title:before {
+    background-color: red;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+.stat + .stat {
+    border-top: 1px solid #ccc;
+}
+
+.statLabel {
+    width: 50%;
+    color: #666;
 }

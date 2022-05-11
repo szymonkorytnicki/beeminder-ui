@@ -78,14 +78,8 @@ export function GoalsWidget() {
 
 function GoalTile({ slug, roadstatuscolor, limsum, todayta }) {
     return (
-        <Tile
-            split
-            // center
-            component={Link}
-            to={'/g/' + slug}
-            color={roadstatuscolor}
-        >
-            <TileTitle>{slug}</TileTitle>
+        <Tile split component={Link} to={'/g/' + slug} color={roadstatuscolor}>
+            <TileTitle colored>{slug}</TileTitle>
             <TileHeader>{todayta ? <FaCheck /> : ''}</TileHeader>
             <TileContent>{limsum}</TileContent>
         </Tile>

@@ -53,6 +53,17 @@ export function WeeklyScatterChart({ goalSlug }) {
                 },
             },
         },
+        annotations: [
+            {
+                type: 'line',
+                start: ['min', 'median'],
+                end: ['max', 'median'],
+                style: {
+                    stroke: 'red',
+                    lineDash: [5, 5],
+                },
+            },
+        ],
         regressionLine: {
             type: 'linear', // TODO allow to configure and persist - linear, exp, loess, log, poly, pow, quad
             style: {

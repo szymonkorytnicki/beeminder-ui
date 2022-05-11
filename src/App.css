@@ -1,5 +1,5 @@
 .App {
-    /* max-width: 960px; */
+    max-width: 960px;
     margin: 20px auto;
     margin-top: 20px;
     padding: 10px;
@@ -7,19 +7,4 @@
 
 body {
     background: #f2f1f6;
-}
-
-input {
-    color: rgb(104, 103, 103);
-    border: 1px solid rgb(104, 103, 103);
-    background: white;
-    border-radius: 3px;
-}
-
-.button {
-    /*TODO component*/
-    color: rgb(104, 103, 103);
-    border: 1px solid rgb(104, 103, 103);
-    background: white;
-    border-radius: 3px;
 }

@@ -18,12 +18,17 @@ export function Tile({ className, color, split, center, component, ...props }) {
 }
 
 // TODO big? maybe more size opts
-export function TileTitle({ className, big, component, ...props }) {
+export function TileTitle({ className, big, colored, component, ...props }) {
     const Component = component ? component : 'h1'
     return (
         <Component
             {...props}
-            className={classNames(css.title, big && css.titleBig, className)}
+            className={classNames(
+                css.title,
+                big && css.titleBig,
+                colored && css.coloredTitle,
+                className
+            )}
         />
     )
 }
@@ -50,5 +55,14 @@ export function TilePledge({ className, component, ...props }) {
     const Component = component ? component : 'div'
     return (
         <Component {...props} className={classNames(css.pledge, className)} />
+    )
+}
+
+export function TileStat({ label, value }) {
+    return (
+        <div className={css.stat}>
+            <div className={css.statLabel}>{label}</div>
+            <div>{value}</div>
+        </div>
     )
 }
