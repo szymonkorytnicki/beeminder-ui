@@ -9,6 +9,7 @@ export function CalendarHeatmap({ goalSlug, isOdometer }) {
     // TODO renders uselessly watching data
     const chartEl = useRef(null)
     const { isLoading, data } = useDatapoints(goalSlug)
+    // TODO isOdometer - compute datapoints value
 
     useEffect(() => {
         if (data && chartEl.current) {

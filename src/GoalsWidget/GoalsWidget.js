@@ -1,7 +1,6 @@
 import { useQuery } from 'react-query'
 import css from './GoalsWidget.module.css'
 import { Link } from 'react-router-dom'
-import { getSafebufCopy } from '../utils'
 import { FaCheck } from 'react-icons/fa'
 import { TileHeader, TileContent, Tile, TileTitle } from '../Tile/Tile'
 import { Footer, FooterLink } from '../Footer/Footer'
@@ -43,7 +42,7 @@ export function GoalsWidget() {
                     .filter((goal) => goal.tags.length === 0)
                     .filter((goal) => goal.secret === false)
                     .map((goal) => {
-                        return <Goal key={goal.slug} {...goal} />
+                        return <GoalTile key={goal.slug} {...goal} />
                     })}
             </div>
             {tags.map((tag) => {
@@ -55,7 +54,9 @@ export function GoalsWidget() {
                                 .filter((goal) => goal.tags.includes(tag))
                                 .filter((goal) => goal.secret === false)
                                 .map((goal) => {
-                                    return <Goal key={goal.slug} {...goal} />
+                                    return (
+                                        <GoalTile key={goal.slug} {...goal} />
+                                    )
                                 })}
                         </div>
                     </div>
@@ -75,18 +76,18 @@ export function GoalsWidget() {
     )
 }
 
-function Goal({ slug, roadstatuscolor, safebuf, todayta }) {
+function GoalTile({ slug, roadstatuscolor, limsum, todayta }) {
     return (
         <Tile
             split
-            center
+            // center
             component={Link}
             to={'/g/' + slug}
             color={roadstatuscolor}
         >
             <TileTitle>{slug}</TileTitle>
             <TileHeader>{todayta ? <FaCheck /> : ''}</TileHeader>
-            <TileContent>due {getSafebufCopy(safebuf)} </TileContent>
+            <TileContent>{limsum}</TileContent>
         </Tile>
     )
 }

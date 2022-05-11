@@ -20,16 +20,15 @@ export function ScatterChart({ goalSlug }) {
         // TODO format datapoint tooltip
         smooth: true,
         height: 150,
-        data: data
-            .sort((a, z) => (a.timestamp < z.timestamp ? -1 : 1))
-            .reduce((acc, current, index) => {
-                acc.push({
-                    ...current,
-                    total:
-                        current.value + (index > 0 ? acc[index - 1].total : 0),
-                })
-                return acc
-            }, []),
+        data: data.sort((a, z) => (a.timestamp < z.timestamp ? -1 : 1)),
+        // .reduce((acc, current, index) => {
+        //     acc.push({
+        //         ...current,
+        //         total:
+        //             current.value + (index > 0 ? acc[index - 1].total : 0),
+        //     })
+        //     return acc
+        // }, []),
         xField: 'timestamp',
         yField: 'value',
         xAxis: {

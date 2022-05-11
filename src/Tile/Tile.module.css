@@ -25,6 +25,7 @@
     margin-bottom: 10px;
 }
 .title {
+    transition: color 500ms linear;
     display: block;
     font-weight: 700;
     overflow: hidden;

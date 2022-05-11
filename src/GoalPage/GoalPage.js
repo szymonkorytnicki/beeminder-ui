@@ -10,6 +10,7 @@ import { HourlyBreakdown } from '../HourlyBreakdown/HourlyBreakdown'
 import { DailyBreakdown } from '../DailyBreakdown/DailyBreakdown'
 import { Streak } from '../Streak/Streak'
 import { useGoal } from '../hooks/useGoal'
+import { WeeklyScatterChart } from '../WeeklyScatterChart/WeeklyScatterChart'
 
 export function GoalPage() {
     // const [showCreateDatapoint, setShowCreateDatapoint] = useState(false)
@@ -26,9 +27,10 @@ export function GoalPage() {
             <MainTile goalSlug={goalSlug} />
             <Tile>
                 <TileTitle>Calendar</TileTitle>
-                <CalendarHeatmap goalSlug={goalSlug} isOdometer={false} />
-                {/* TODO isOdometer */}
+                <CalendarHeatmap goalSlug={goalSlug} />
             </Tile>
+            <WeeklyTrendsTile goalSlug={goalSlug} />
+            <TrendsTile goalSlug={goalSlug} />
             <Tile>
                 <TileTitle>Hourly breakdown</TileTitle>
                 <HourlyBreakdown goalSlug={goalSlug} />
@@ -37,7 +39,6 @@ export function GoalPage() {
                 <TileTitle>Daily breakdown</TileTitle>
                 <DailyBreakdown goalSlug={goalSlug} />
             </Tile>
-            <TrendsTile goalSlug={goalSlug} />
             <Tile>
                 <TileTitle>
                     Current streak: <Streak goalSlug={goalSlug} /> days
@@ -69,19 +70,22 @@ function MainTile({ goalSlug }) {
             <TileTitle big>{goalSlug}</TileTitle>
             {data ? (
                 <TileContent>
-                    {data.limsum}
-                    <br />
-                    total: {Math.round(data.curval * 100) / 100} {data.gunits}{' '}
-                    <br />
-                    {data.todayta
-                        ? `has datapoint today (${data.recent_data[0].value})`
-                        : 'no datapoints today'}
+                    <p>{data.limsum}</p>
+                    <p>
+                        total: {Math.round(data.curval * 100) / 100}{' '}
+                        {data.gunits}{' '}
+                    </p>
+                    <p>
+                        {data.todayta
+                            ? `has datapoint today (${data.recent_data[0].value})`
+                            : 'no datapoints today'}
+                    </p>
                 </TileContent>
             ) : (
                 <TileContent>
                     ...
                     <br />
-                    total: ...
+                    ...
                     <br />
                     ...
                 </TileContent>
@@ -95,8 +99,18 @@ function TrendsTile({ goalSlug }) {
     const { data } = useGoal(goalSlug)
     return data && data.odom ? null : (
         <Tile>
-            <TileTitle>Trends</TileTitle>
+            <TileTitle>Trend</TileTitle>
             <ScatterChart goalSlug={goalSlug} />
+        </Tile>
+    )
+}
+
+function WeeklyTrendsTile({ goalSlug }) {
+    const { data } = useGoal(goalSlug)
+    return data && data.odom ? null : (
+        <Tile>
+            <TileTitle>Week by week</TileTitle>
+            <WeeklyScatterChart goalSlug={goalSlug} />
         </Tile>
     )
 }
