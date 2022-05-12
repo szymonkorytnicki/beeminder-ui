@@ -121,6 +121,10 @@ function WeeklyTrendsTile({ goalSlug }) {
 
 function MetaTile({ goalSlug }) {
     const { data } = useGoal(goalSlug)
+
+    if (!data) {
+        return null
+    }
     return (
         <Tile>
             <TileTitle>Meta</TileTitle>
