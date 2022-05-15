@@ -41,11 +41,11 @@ export function TileHeader({ className, component, ...props }) {
 }
 
 export function TileContent({ className, center, component, ...props }) {
-    const Component = component ? component : 'footer'
+    const Component = component ? component : 'div'
     return (
         <Component
             {...props}
-            className={classNames(css.footer, center && css.center, className)}
+            className={classNames(css.content, center && css.center, className)}
         />
     )
 }

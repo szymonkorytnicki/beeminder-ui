@@ -10,6 +10,7 @@
     overflow: hidden;
     white-space: nowrap;
 }
+
 .tile + .tile:not(.tileSplit) {
     margin-top: 16px;
 }
@@ -34,9 +35,10 @@
     font-size: 1.2rem;
 }
 
-.footer {
+.content {
     font-size: 0.925rem;
     line-height: 1.2rem;
+    white-space: pre-wrap;
 }
 
 .header {

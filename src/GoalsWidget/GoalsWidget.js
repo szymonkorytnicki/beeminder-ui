@@ -3,7 +3,6 @@ import css from './GoalsWidget.module.css'
 import { Link } from 'react-router-dom'
 import { FaCheck } from 'react-icons/fa'
 import { TileHeader, TileContent, Tile, TileTitle } from '../Tile/Tile'
-import { Footer, FooterLink } from '../Footer/Footer'
 
 function fetchGoals() {
     return fetch(
@@ -62,16 +61,6 @@ export function GoalsWidget() {
                     </div>
                 )
             })}
-            <Footer>
-                <FooterLink to={'http://beeminder.com/new'}>
-                    Add new goal
-                </FooterLink>
-                <FooterLink
-                    to={`http://beeminder.com/${process.env.REACT_APP_BEEMINDER_USERNAME}/archived`}
-                >
-                    See archived goals
-                </FooterLink>
-            </Footer>
         </div>
     )
 }
