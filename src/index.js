@@ -5,7 +5,7 @@ import App from './App'
 import { BrowserRouter } from 'react-router-dom'
 import reportWebVitals from './reportWebVitals'
 import { QueryClient, QueryClientProvider } from 'react-query'
-
+import { ErrorBoundary } from './ErrorBoundary/ErrorBoundary'
 import { persistQueryClient } from 'react-query/persistQueryClient'
 import { createWebStoragePersister } from 'react-query/createWebStoragePersister'
 const localStoragePersister = createWebStoragePersister({
@@ -34,11 +34,13 @@ persistQueryClient({
 
 createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
-        </QueryClientProvider>
+        <ErrorBoundary>
+            <QueryClientProvider client={queryClient}>
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
+            </QueryClientProvider>
+        </ErrorBoundary>
     </React.StrictMode>
 )
 
