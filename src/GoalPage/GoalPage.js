@@ -19,8 +19,6 @@ import { useGoal } from '../hooks/useGoal'
 import { WeeklyScatterChart } from '../WeeklyScatterChart/WeeklyScatterChart'
 
 export function GoalPage() {
-    // const [showCreateDatapoint, setShowCreateDatapoint] = useState(false)
-    // TODO move to tile, not to whole view
     const { goalSlug } = useParams()
     const { refetch } = useGoal(goalSlug)
 

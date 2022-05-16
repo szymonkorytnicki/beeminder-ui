@@ -1,11 +1,13 @@
 import './App.css'
 import { useState, useEffect } from 'react'
-import { Routes, Route } from 'react-router'
+import { Route, Routes } from 'react-router'
 import { HomePage } from './HomePage/HomePage'
 import { GoalPage } from './GoalPage/GoalPage'
 import { SettingsPage } from './SettingsPage/SettingsPage'
 
 import { SettingsContext } from './contexts/SettingsContext.ts'
+import { usePageView } from './hooks/usePageView'
+import { sendAnalyticsEvent } from './utils/sendAnalyticsEvent'
 
 const DEFAULT_SETTINGS = {
     groupByTags: defaultToTrue('REACT_GROUPBYTAGS'),
@@ -14,12 +16,12 @@ const DEFAULT_SETTINGS = {
 
 function App() {
     const [settings, setSettings] = useState(DEFAULT_SETTINGS)
-
     useEffect(() => {
         localStorage.setItem('REACT_TWOCOLUMNLAYOUT', settings.twoColumnLayout)
         localStorage.setItem('REACT_GROUPBYTAGS', settings.groupByTags)
+        sendAnalyticsEvent('UPDATE_SETTINGS', settings)
     }, [settings])
-
+    usePageView()
     return (
         <div className="App">
             <SettingsContext.Provider value={{ ...settings, setSettings }}>

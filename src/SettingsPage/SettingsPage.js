@@ -4,6 +4,7 @@ import { Tile, TileTitle, TileContent } from '../Tile/Tile'
 import css from './SettingsPage.module.css'
 import { useContext } from 'react'
 import { SettingsContext } from '../contexts/SettingsContext.ts'
+
 export function SettingsPage() {
     const { setSettings, ...settings } = useContext(SettingsContext)
     return (
