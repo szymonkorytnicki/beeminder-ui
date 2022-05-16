@@ -7,11 +7,11 @@ import { SettingsPage } from './SettingsPage/SettingsPage'
 
 import { SettingsContext } from './contexts/SettingsContext.ts'
 import { usePageView } from './hooks/usePageView'
-import { sendAnalyticsEvent } from './utils/sendAnalyticsEvent'
 
 const DEFAULT_SETTINGS = {
     groupByTags: defaultToTrue('REACT_GROUPBYTAGS'),
     twoColumnLayout: defaultToTrue('REACT_TWOCOLUMNLAYOUT'),
+    showHiddenGoals: defaultToFalse('REACT_SHOWHIDDENGOALS'),
 }
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
     useEffect(() => {
         localStorage.setItem('REACT_TWOCOLUMNLAYOUT', settings.twoColumnLayout)
         localStorage.setItem('REACT_GROUPBYTAGS', settings.groupByTags)
-        sendAnalyticsEvent('UPDATE_SETTINGS', settings)
+        localStorage.setItem('REACT_SHOWHIDDENGOALS', settings.showHiddenGoals)
     }, [settings])
     usePageView()
     return (
@@ -44,4 +44,12 @@ function defaultToTrue(item) {
         return value === 'true'
     }
     return true
+}
+
+function defaultToFalse(item) {
+    const value = localStorage.getItem(item)
+    if (value) {
+        return value === 'true'
+    }
+    return false
 }

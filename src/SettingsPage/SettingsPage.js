@@ -54,6 +54,26 @@ export function SettingsPage() {
                     </TileContent>
                 </Tile>
                 <Tile>
+                    <TileTitle>Goals visibility</TileTitle>
+                    <TileContent>
+                        <input
+                            type="checkbox"
+                            id="settings_showHiddenGoals"
+                            value={settings.showHiddenGoals}
+                            checked={settings.showHiddenGoals}
+                            onChange={() =>
+                                setSettings({
+                                    ...settings,
+                                    showHiddenGoals: !settings.showHiddenGoals,
+                                })
+                            }
+                        />
+                        <label htmlFor="settings_showHiddenGoals">
+                            Show hidden goals
+                        </label>
+                    </TileContent>
+                </Tile>
+                <Tile>
                     <TileTitle>Manage tags</TileTitle>
                     <TileContent>
                         Organize your goals with tags using{' '}

@@ -24,7 +24,8 @@ function createTags(goals) {
 
 export function GoalsWidget() {
     const { isError, data } = useQuery(['goals'], () => fetchGoals())
-    const { groupByTags, twoColumnLayout } = useContext(SettingsContext)
+    const { groupByTags, twoColumnLayout, showHiddenGoals } =
+        useContext(SettingsContext)
 
     if (isError) {
         return 'Loading error'
@@ -32,6 +33,14 @@ export function GoalsWidget() {
 
     if (!data) {
         return ''
+    }
+
+    function shouldShowHiddenGoal(goal) {
+        if (showHiddenGoals) {
+            return true
+        }
+
+        return goal.secret === false
     }
 
     // TODO smooth animation https://codesandbox.io/s/reorder-elements-with-slide-transition-and-react-hooks-flip-211f2
@@ -43,7 +52,7 @@ export function GoalsWidget() {
                 <div className={twoColumnLayout ? css.goals : undefined}>
                     {data
                         .filter((goal) => goal.tags.length === 0)
-                        .filter((goal) => goal.secret === false)
+                        .filter(shouldShowHiddenGoal)
                         .map((goal) => {
                             return (
                                 <GoalTile
@@ -65,7 +74,7 @@ export function GoalsWidget() {
                             >
                                 {data
                                     .filter((goal) => goal.tags.includes(tag))
-                                    .filter((goal) => goal.secret === false)
+                                    .filter(shouldShowHiddenGoal)
                                     .map((goal) => {
                                         return (
                                             <GoalTile
@@ -85,17 +94,15 @@ export function GoalsWidget() {
 
     return (
         <div className={twoColumnLayout ? css.goals : undefined}>
-            {data
-                .filter((goal) => goal.secret === false)
-                .map((goal) => {
-                    return (
-                        <GoalTile
-                            key={goal.slug}
-                            {...goal}
-                            split={twoColumnLayout}
-                        />
-                    )
-                })}
+            {data.filter(shouldShowHiddenGoal).map((goal) => {
+                return (
+                    <GoalTile
+                        key={goal.slug}
+                        {...goal}
+                        split={twoColumnLayout}
+                    />
+                )
+            })}
         </div>
     )
 }
