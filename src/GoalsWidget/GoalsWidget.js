@@ -2,15 +2,16 @@ import { useQuery } from 'react-query'
 import css from './GoalsWidget.module.css'
 import { Link } from 'react-router-dom'
 import { FaCheck } from 'react-icons/fa'
-import { TileHeader, TileContent, Tile, TileTitle } from '../Tile/Tile'
+import {
+    TileHeader,
+    TileContent,
+    Tile,
+    TileTitle,
+    TileTitleDescription,
+} from '../Tile/Tile'
 import { useContext } from 'react'
 import { SettingsContext } from '../contexts/SettingsContext.ts'
-
-function fetchGoals() {
-    return fetch(
-        `https://www.beeminder.com/api/v1/users/${process.env.REACT_APP_BEEMINDER_USERNAME}/goals.json?auth_token=${process.env.REACT_APP_BEEMINDER_APIKEY}`
-    ).then((r) => r.json())
-}
+import { useGoals } from '../hooks/useGoals'
 
 function createTags(goals) {
     const tags = new Set()
@@ -23,7 +24,7 @@ function createTags(goals) {
 }
 
 export function GoalsWidget() {
-    const { isError, data } = useQuery(['goals'], () => fetchGoals())
+    const { isError, data } = useGoals()
     const { groupByTags, twoColumnLayout, showHiddenGoals } =
         useContext(SettingsContext)
 
@@ -43,8 +44,7 @@ export function GoalsWidget() {
         return goal.secret === false
     }
 
-    // TODO smooth animation https://codesandbox.io/s/reorder-elements-with-slide-transition-and-react-hooks-flip-211f2
-
+    // TODO smooth animation on update https://codesandbox.io/s/reorder-elements-with-slide-transition-and-react-hooks-flip-211f2
     if (groupByTags) {
         const tags = createTags(data)
         return (
@@ -107,7 +107,7 @@ export function GoalsWidget() {
     )
 }
 
-function GoalTile({ slug, split, roadstatuscolor, limsum, todayta }) {
+function GoalTile({ slug, split, roadstatuscolor, title, limsum, todayta }) {
     return (
         <Tile
             split={split}
@@ -115,7 +115,9 @@ function GoalTile({ slug, split, roadstatuscolor, limsum, todayta }) {
             to={'/g/' + slug}
             color={roadstatuscolor}
         >
-            <TileTitle colored>{slug}</TileTitle>
+            <TileTitle colored>
+                {slug} <TileTitleDescription>{title}</TileTitleDescription>
+            </TileTitle>
             <TileHeader>{todayta ? <FaCheck /> : ''}</TileHeader>
             <TileContent>{limsum}</TileContent>
         </Tile>

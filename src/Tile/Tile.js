@@ -32,6 +32,15 @@ export function TileTitle({ className, big, colored, component, ...props }) {
         />
     )
 }
+export function TileTitleDescription({ className, component, ...props }) {
+    const Component = component ? component : 'span'
+    return (
+        <Component
+            {...props}
+            className={classNames(css.titleDescription, className)}
+        />
+    )
+}
 
 export function TileHeader({ className, component, ...props }) {
     const Component = component ? component : 'header'

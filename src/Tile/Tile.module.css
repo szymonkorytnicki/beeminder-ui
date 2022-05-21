@@ -31,6 +31,9 @@
     color: black;
     position: relative;
 }
+.titleDescription {
+    font-weight: normal;
+}
 .titleBig {
     font-size: 1.2rem;
 }

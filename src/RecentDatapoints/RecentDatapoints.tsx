@@ -3,42 +3,43 @@ import { useEffect, useState } from 'react'
 import { useMutation } from 'react-query'
 import { useGoal } from '../hooks/useGoal'
 import css from './RecentDatapoints.module.css'
+import { Column } from '@ant-design/plots'
 
 const MOCK_DATAPOINTS = [
     {
-        id: {'$oid': 1},
+        id: { $oid: 1 },
         created_at: 0,
         measured_at: 0,
-        comment: "Loading...",
-        value: 1
+        comment: 'Loading...',
+        value: 1,
     },
     {
-        id: {'$oid': 2},
+        id: { $oid: 2 },
         created_at: 1,
         measured_at: 1,
-        comment: "Loading...",
-        value: 1
+        comment: 'Loading...',
+        value: 1,
     },
     {
-        id: {'$oid': 3},
+        id: { $oid: 3 },
         created_at: 2,
         measured_at: 2,
-        comment: "Loading...",
-        value: 1
+        comment: 'Loading...',
+        value: 1,
     },
     {
-        id: {'$oid': 4},
+        id: { $oid: 4 },
         created_at: 3,
         measured_at: 3,
-        comment: "Loading...",
-        value: 1
+        comment: 'Loading...',
+        value: 1,
     },
     {
-        id: {'$oid': 5},
+        id: { $oid: 5 },
         created_at: 4,
         measured_at: 4,
-        comment: "Loading...",
-        value: 1
+        comment: 'Loading...',
+        value: 1,
     },
 ]
 
@@ -54,26 +55,30 @@ export function RecentDatapoints({ goalSlug, onDelete }) {
         )
     )
 
-    const {data} = useGoal(goalSlug);
+    const { data } = useGoal(goalSlug)
 
     return (
-        <div className={css.recentDatapoints}>
-            {(data ? data.recent_data : MOCK_DATAPOINTS).map((datapoint) => {
-                return (
-                    <DatapointRow
-                        key={datapoint.created_at}
-                        onDelete={({ datapoint }) => {
-                            mutate(datapoint.id.$oid, {
-                                onSettled: () => {
-                                    onDelete()
-                                },
-                            })
-                        }}
-                        datapoint={datapoint}
-                    />
-                )
-            })}
-        </div>
+        <>
+            <div className={css.recentDatapoints}>
+                {(data ? data.recent_data : MOCK_DATAPOINTS).map(
+                    (datapoint) => {
+                        return (
+                            <DatapointRow
+                                key={datapoint.created_at}
+                                onDelete={({ datapoint }) => {
+                                    mutate(datapoint.id.$oid, {
+                                        onSettled: () => {
+                                            onDelete()
+                                        },
+                                    })
+                                }}
+                                datapoint={datapoint}
+                            />
+                        )
+                    }
+                )}
+            </div>
+        </>
     )
 }
 
@@ -134,9 +139,7 @@ function DatapointRow({ datapoint, onDelete }) {
                 transition: 'transform 100ms linear',
             }}
         >
-            <span>
-                {format(new Date(datapoint.measured_at), 'yyyy-MM-dd')}
-            </span>{' '}
+            <span>{format(new Date(datapoint.measured_at), 'yyyy-MM-dd')}</span>{' '}
             {Math.round(datapoint.value * 100) / 100} / {datapoint.comment}
         </div>
     )

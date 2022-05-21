@@ -1,4 +1,5 @@
 import React from 'react'
+import { sendAnalyticsEvent } from '../utils/sendAnalyticsEvent'
 
 export class ErrorBoundary extends React.Component {
     constructor(props) {
@@ -13,13 +14,24 @@ export class ErrorBoundary extends React.Component {
 
     componentDidCatch(error, errorInfo) {
         // You can also log the error to an error reporting service
-        // TODO
+        sendAnalyticsEvent('ERROR', { error, errorInfo })
     }
 
     render() {
         if (this.state.hasError) {
             // You can render any custom fallback UI
-            return <h1>Something went wrong.</h1>
+            return (
+                <>
+                    <h1 style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                        Something went wrong.
+                    </h1>
+                    Please{' '}
+                    <a href="https://github.com/szymonkorytnicki/beeminder-ui/issues">
+                        report the bug
+                    </a>{' '}
+                    providing as much description as possible. Thanks!
+                </>
+            )
         }
 
         return this.props.children
