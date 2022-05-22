@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Footer, FooterLink } from '../Footer/Footer'
 import { CirclePacking } from '@ant-design/plots'
 import { useGoals } from '../hooks/useGoals'
-import { Tile, TileTitle } from '../Tile/Tile'
+import { Tile, TileContent, TileTitle } from '../Tile/Tile'
 
 export function HomePage() {
     return (
@@ -73,7 +73,8 @@ function HeaderTile() {
         width: 80,
     }
 
-    const goalsInDanger = chartData.find(({ name }) => name === 'red').goals
+    const redGoals = chartData.find(({ name }) => name === 'red').goals
+    const orangeGoals = chartData.find(({ name }) => name === 'orange').goals
 
     return (
         <Tile style={{ marginBottom: '20px' }}>
@@ -88,19 +89,53 @@ function HeaderTile() {
                     <TileTitle>
                         Hey {process.env.REACT_APP_BEEMINDER_USERNAME}
                     </TileTitle>
-                    {goalsInDanger.length > 0 ? (
-                        <span>
-                            You have to complete {goalsInDanger.join(', ')}{' '}
-                            today!
-                        </span>
-                    ) : (
-                        <span>You are all good today!</span>
-                    )}
+                    <TileContent>
+                        {redGoals.length > 0 ? (
+                            <span>
+                                You have to complete{' '}
+                                {redGoals.map((slug) => (
+                                    <GoalLink key={slug} to={'/g/' + slug}>
+                                        {slug}
+                                    </GoalLink>
+                                ))}
+                                today!
+                            </span>
+                        ) : (
+                            <span>You are all safe today!</span>
+                        )}
+                        <br />
+                        {orangeGoals.length > 0 && (
+                            <span>
+                                Tomorrow,{' '}
+                                {orangeGoals.map((slug) => (
+                                    <GoalLink key={slug} to={'/g/' + slug}>
+                                        {slug}
+                                    </GoalLink>
+                                ))}{' '}
+                                {orangeGoals.length === 1 ? 'is' : 'are'} due.
+                            </span>
+                        )}
+                    </TileContent>
                 </div>
                 <div>
                     <CirclePacking {...config} />
                 </div>
             </div>
         </Tile>
+    )
+}
+
+function GoalLink(props) {
+    return (
+        <Link
+            style={{
+                backgroundColor: 'rgba(0,0,0,.05)',
+                borderRadius: '1px',
+                padding: '0.5px',
+                display: 'inline-block',
+                marginRight: '2px',
+            }}
+            {...props}
+        />
     )
 }

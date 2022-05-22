@@ -1,6 +1,6 @@
 import './App.css'
 import { useState, useEffect } from 'react'
-import { Route, Routes } from 'react-router'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { HomePage } from './HomePage/HomePage'
 import { GoalPage } from './GoalPage/GoalPage'
 import { SettingsPage } from './SettingsPage/SettingsPage'
@@ -25,6 +25,7 @@ function App() {
     return (
         <div className="App">
             <SettingsContext.Provider value={{ ...settings, setSettings }}>
+                <ScrollToTop />
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/settings" element={<SettingsPage />} />
@@ -35,8 +36,6 @@ function App() {
         </div>
     )
 }
-
-export default App
 
 function defaultToTrue(item) {
     const value = localStorage.getItem(item)
@@ -53,3 +52,14 @@ function defaultToFalse(item) {
     }
     return false
 }
+
+function ScrollToTop() {
+    const location = useLocation()
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [location])
+
+    return null
+}
+
+export default App
