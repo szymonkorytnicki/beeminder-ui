@@ -9,6 +9,7 @@ import { SettingsContext } from './contexts/SettingsContext.ts'
 import { usePageView } from './hooks/usePageView'
 
 const DEFAULT_SETTINGS = {
+    // TODO export this to file
     groupByTags: defaultToTrue('REACT_GROUPBYTAGS'),
     twoColumnLayout: defaultToTrue('REACT_TWOCOLUMNLAYOUT'),
     showHiddenGoals: defaultToFalse('REACT_SHOWHIDDENGOALS'),

@@ -17,6 +17,7 @@ import { DailyBreakdown } from '../DailyBreakdown/DailyBreakdown'
 import { Streak } from '../Streak/Streak'
 import { useGoal } from '../hooks/useGoal'
 import { WeeklyScatterChart } from '../WeeklyScatterChart/WeeklyScatterChart'
+import { LongestStreak } from '../Streak/LongestStreak'
 
 export function GoalPage() {
     const { goalSlug } = useParams()
@@ -131,6 +132,14 @@ function MetaTile({ goalSlug }) {
                 value={
                     <>
                         <Streak goalSlug={goalSlug} /> days
+                    </>
+                }
+            />
+            <TileStat
+                label="Longest streak"
+                value={
+                    <>
+                        <LongestStreak goalSlug={goalSlug} /> days
                     </>
                 }
             />

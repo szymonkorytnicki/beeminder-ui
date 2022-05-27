@@ -1,21 +1,18 @@
 import { useDatapoints } from '../hooks/useDatapoints'
-import { differenceInCalendarDays, isToday } from 'date-fns'
-export function Streak({ goalSlug }) {
+import { differenceInCalendarDays } from 'date-fns'
+export function LongestStreak({ goalSlug }) {
     const { isLoading, data } = useDatapoints(goalSlug)
 
     if (isLoading) {
         return 'Loading...'
     }
 
+    const streaks = [0]
     const datapoints = data
         .filter((point) => point.value > 0)
         .sort((a, b) => (a.timestamp > b.timestamp ? -1 : 1))
 
     let currentStreak = 0
-
-    if (datapoints.length === 0 || !isToday(datapoints[0].timestamp * 1000)) {
-        return currentStreak
-    }
 
     for (let i = 1; i < datapoints.length; i++) {
         const difference = differenceInCalendarDays(
@@ -24,11 +21,17 @@ export function Streak({ goalSlug }) {
         )
         if (difference <= 1) {
             if (difference === 1) {
-                currentStreak += 1
+                currentStreak = currentStreak + 1
             }
         } else {
-            return currentStreak + 1
+            console.log(
+                new Date(datapoints[i - 1].timestamp * 1000),
+                new Date(datapoints[i].timestamp * 1000)
+            )
+            streaks.push(currentStreak + 1)
+            currentStreak = 0
         }
     }
-    return (currentStreak >= 250 ? 'over ' : '') + (currentStreak + 1) // TODO magic number
+    const longestStreak = Math.max.apply(null, streaks)
+    return longestStreak >= 250 ? ' over 250 ' : longestStreak
 }
