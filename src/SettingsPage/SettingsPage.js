@@ -5,7 +5,7 @@ import css from './SettingsPage.module.css'
 import { useContext } from 'react'
 import { SettingsContext } from '../contexts/SettingsContext.ts'
 
-export function SettingsPage() {
+export default function SettingsPage() {
     const { setSettings, ...settings } = useContext(SettingsContext)
     return (
         <>

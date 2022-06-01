@@ -19,7 +19,7 @@ import { useGoal } from '../hooks/useGoal'
 import { WeeklyScatterChart } from '../WeeklyScatterChart/WeeklyScatterChart'
 import { LongestStreak } from '../Streak/LongestStreak'
 
-export function GoalPage() {
+export default function GoalPage() {
     const { goalSlug } = useParams()
     const { refetch } = useGoal(goalSlug)
 

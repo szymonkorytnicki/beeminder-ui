@@ -1,12 +1,12 @@
 import './App.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
-import { HomePage } from './HomePage/HomePage'
-import { GoalPage } from './GoalPage/GoalPage'
-import { SettingsPage } from './SettingsPage/SettingsPage'
-
 import { SettingsContext } from './contexts/SettingsContext.ts'
 import { usePageView } from './hooks/usePageView'
+
+const HomePage = lazy(() => import('./HomePage/HomePage'))
+const GoalPage = lazy(() => import('./GoalPage/GoalPage'))
+const SettingsPage = lazy(() => import('./SettingsPage/SettingsPage'))
 
 const DEFAULT_SETTINGS = {
     // TODO export this to file
@@ -27,12 +27,13 @@ function App() {
         <div className="App">
             <SettingsContext.Provider value={{ ...settings, setSettings }}>
                 <ScrollToTop />
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/settings" element={<SettingsPage />} />
-                    <Route path="/g/:goalSlug" element={<GoalPage />} />
-                    <Route path="/goal/:goalSlug" element={<GoalPage />} />
-                </Routes>
+                <Suspense>
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/settings" element={<SettingsPage />} />
+                        <Route path="/g/:goalSlug" element={<GoalPage />} />
+                    </Routes>
+                </Suspense>
             </SettingsContext.Provider>
         </div>
     )

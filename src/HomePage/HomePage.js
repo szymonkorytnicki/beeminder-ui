@@ -6,7 +6,7 @@ import { CirclePacking } from '@ant-design/plots'
 import { useGoals } from '../hooks/useGoals'
 import { Tile, TileContent, TileTitle } from '../Tile/Tile'
 
-export function HomePage() {
+export default function HomePage() {
     return (
         <>
             <PageHeader>
