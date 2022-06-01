@@ -17,7 +17,7 @@ export function WeeklyScatterChart({ goalSlug }) {
         return (
             <div
                 style={{
-                    minHeight: '365px', // TODO improve magic placeholders
+                    minHeight: '150px', // TODO improve magic placeholders
                 }}
             />
         )

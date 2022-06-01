@@ -1,9 +1,9 @@
-/* global G2PlotCalendar, G2Plot */
-// TODO globals
 import { format } from 'date-fns'
 import { useRef } from 'react'
 import { useEffect } from 'react'
 import { useDatapoints } from '../hooks/useDatapoints'
+import * as G2PlotCalendar from 'g2plot-calendar'
+import * as G2Plot from '@antv/g2plot'
 
 export function CalendarHeatmap({ goalSlug, isOdometer }) {
     // TODO renders uselessly watching data
