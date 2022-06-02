@@ -10,9 +10,9 @@ const SettingsPage = lazy(() => import('./SettingsPage/SettingsPage'))
 
 const DEFAULT_SETTINGS = {
     // TODO export this to file
-    groupByTags: defaultToTrue('REACT_GROUPBYTAGS'),
+    groupByTags: defaultToFalse('REACT_GROUPBYTAGS'),
     twoColumnLayout: defaultToTrue('REACT_TWOCOLUMNLAYOUT'),
-    showHiddenGoals: defaultToFalse('REACT_SHOWHIDDENGOALS'),
+    showHiddenGoals: defaultToTrue('REACT_SHOWHIDDENGOALS'),
 }
 
 function App() {

@@ -30,7 +30,10 @@ export default function GoalPage() {
                 {goalSlug}
             </PageHeader>
             <MainTile goalSlug={goalSlug} />
-            <CalendarHeatmapTile isOdometer={data.odom} goalSlug={goalSlug} />
+            <CalendarHeatmapTile
+                isOdometer={data ? data.odom : false}
+                goalSlug={goalSlug}
+            />
             <WeeklyTrendsTile goalSlug={goalSlug} />
             <TrendsTile goalSlug={goalSlug} />
             <Tile>
