@@ -38,10 +38,21 @@ export function CalendarHeatmap({ goalSlug, isOdometer }) {
                         title: null,
                     },
                     autoFit: false,
-                    data: data.map((point) => ({
-                        date: format(point.timestamp * 1000, 'yyyy-MM-dd'),
-                        value: isOdometer ? 1 : point.value, // TODO fix odometer goals
-                    })),
+                    data: data
+                        .map((point) => ({
+                            date: format(point.timestamp * 1000, 'yyyy-MM-dd'),
+                            value: isOdometer ? 1 : point.value, // TODO fix odometer goals
+                        }))
+                        .reduce((acc, point) => {
+                            const sameDatePoint = acc.find(
+                                (p) => p.date === point.date
+                            )
+                            if (sameDatePoint) {
+                                sameDatePoint.value += point.value
+                                return acc
+                            }
+                            return [...acc, point]
+                        }, []),
                 }
             )
             calendarPlot.render() // TODO update when datapoints updated
