@@ -24,13 +24,12 @@ export function LongestStreak({ goalSlug }) {
                 currentStreak = currentStreak + 1
             }
         } else {
-            console.log(
-                new Date(datapoints[i - 1].timestamp * 1000),
-                new Date(datapoints[i].timestamp * 1000)
-            )
             streaks.push(currentStreak + 1)
             currentStreak = 0
         }
+    }
+    if (currentStreak > 0) {
+        streaks.push(currentStreak + 1)
     }
     const longestStreak = Math.max.apply(null, streaks)
     return longestStreak >= 250 ? ' over 250 ' : longestStreak

@@ -44,6 +44,9 @@ export function CalendarHeatmap({ goalSlug, isOdometer }) {
                             value: isOdometer ? 1 : point.value, // TODO fix odometer goals
                         }))
                         .reduce((acc, point) => {
+                            if (isOdometer) {
+                                return [...acc, point]
+                            } // TODO fix odometer goals
                             const sameDatePoint = acc.find(
                                 (p) => p.date === point.date
                             )

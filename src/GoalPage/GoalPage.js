@@ -21,7 +21,7 @@ import { LongestStreak } from '../Streak/LongestStreak'
 
 export default function GoalPage() {
     const { goalSlug } = useParams()
-    const { refetch } = useGoal(goalSlug)
+    const { refetch, data } = useGoal(goalSlug)
 
     return (
         <>
@@ -30,10 +30,7 @@ export default function GoalPage() {
                 {goalSlug}
             </PageHeader>
             <MainTile goalSlug={goalSlug} />
-            <Tile>
-                <TileTitle>Calendar</TileTitle>
-                <CalendarHeatmap goalSlug={goalSlug} />
-            </Tile>
+            <CalendarHeatmapTile isOdometer={data.odom} goalSlug={goalSlug} />
             <WeeklyTrendsTile goalSlug={goalSlug} />
             <TrendsTile goalSlug={goalSlug} />
             <Tile>
@@ -80,7 +77,7 @@ function MainTile({ goalSlug }) {
                     </p>
                     <p>
                         {data.todayta
-                            ? `has datapoint today (${data.recent_data[0].value})`
+                            ? `has datapoint today`
                             : 'no datapoints today'}
                     </p>
                 </TileContent>
@@ -165,6 +162,15 @@ function MetaTile({ goalSlug }) {
                         : 'None'
                 }
             />
+        </Tile>
+    )
+}
+
+function CalendarHeatmapTile({ isOdometer, goalSlug }) {
+    return (
+        <Tile>
+            <TileTitle>Calendar</TileTitle>
+            <CalendarHeatmap isOdometer={isOdometer} goalSlug={goalSlug} />
         </Tile>
     )
 }
