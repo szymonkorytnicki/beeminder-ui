@@ -5,7 +5,7 @@ import { Footer, FooterLink } from '../Footer/Footer'
 import { CirclePacking } from '@ant-design/plots'
 import { useGoals } from '../hooks/useGoals'
 import { Tile, TileContent, TileTitle } from '../Tile/Tile'
-// import { AddDatapoint } from '../AddDatapoint/AddDatapoint'
+import { AddDatapoint } from '../AddDatapoint/AddDatapoint'
 
 export default function HomePage() {
     return (
@@ -14,7 +14,7 @@ export default function HomePage() {
                 <Link to="/">{process.env.REACT_APP_BEEMINDER_USERNAME}</Link>
             </PageHeader>
             <HeaderTile />
-            {/* <AddDatapoint /> */}
+            <AddDatapoint />
             <GoalsWidget />
             <Footer>
                 <FooterLink to={'/settings'} component={Link}>

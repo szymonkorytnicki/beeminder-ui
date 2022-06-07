@@ -6,5 +6,7 @@ function fetchGoal(slug) {
 }
 
 export function useGoal(goalSlug) {
-    return useQuery(['goal-' + goalSlug], () => fetchGoal(goalSlug))
+    return useQuery(['goal-' + goalSlug], () =>
+        goalSlug ? fetchGoal(goalSlug) : null
+    )
 }
