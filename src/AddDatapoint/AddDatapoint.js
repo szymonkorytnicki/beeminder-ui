@@ -3,6 +3,7 @@ import { useGoals } from '../hooks/useGoals'
 import { Tile, TileTitle } from '../Tile/Tile'
 import { useGoal } from '../hooks/useGoal'
 export function AddDatapoint() {
+    return null // poor mans feature flag
     const { data } = useGoals()
     const [goalSlug, setGoalSlug] = useState(null)
     const [value, setValue] = useState(0)
