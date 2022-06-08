@@ -23,12 +23,7 @@ export default function HomePage() {
                 <FooterLink to={'http://beeminder.com/new'} target="_blank">
                     Add new goal
                 </FooterLink>
-                <FooterLink
-                    to={`http://beeminder.com/${process.env.REACT_APP_BEEMINDER_USERNAME}/archived`}
-                    target="_blank"
-                >
-                    See archived goals
-                </FooterLink>
+                <FooterLink to={`/archived`}>See archived goals</FooterLink>
             </Footer>
         </>
     )
@@ -121,6 +116,7 @@ function HeaderTile() {
                 </div>
                 <div>
                     <CirclePacking {...config} />
+                    {/* TODO probably lazy loading this could speed up homepage a lot (antd) */}
                 </div>
             </div>
         </Tile>

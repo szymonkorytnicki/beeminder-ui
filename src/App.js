@@ -7,6 +7,7 @@ import { usePageView } from './hooks/usePageView'
 const HomePage = lazy(() => import('./HomePage/HomePage'))
 const GoalPage = lazy(() => import('./GoalPage/GoalPage'))
 const SettingsPage = lazy(() => import('./SettingsPage/SettingsPage'))
+const ArchivedPage = lazy(() => import('./ArchivedPage/ArchivedPage'))
 
 const DEFAULT_SETTINGS = {
     // TODO export this to file
@@ -30,6 +31,7 @@ function App() {
                 <Suspense>
                     <Routes>
                         <Route path="/" element={<HomePage />} />
+                        <Route path="/archived" element={<ArchivedPage />} />
                         <Route path="/settings" element={<SettingsPage />} />
                         <Route path="/g/:goalSlug" element={<GoalPage />} />
                     </Routes>

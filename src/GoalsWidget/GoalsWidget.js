@@ -23,8 +23,8 @@ function createTags(goals) {
     return Array.from(tags).sort((a, z) => a.localeCompare(z))
 }
 
-export function GoalsWidget() {
-    const { isError, data } = useGoals()
+export function GoalsWidget({ isArchived }) {
+    const { isError, data } = useGoals({ isArchived: isArchived })
     const { groupByTags, twoColumnLayout, showHiddenGoals } =
         useContext(SettingsContext)
 
