@@ -29,7 +29,9 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "tunnel": "./ngrok http 3001 --subdomain=beeminder-ui",
+        "server": "php -S localhost:3001 server.php"
     },
     "eslintConfig": {
         "extends": [
