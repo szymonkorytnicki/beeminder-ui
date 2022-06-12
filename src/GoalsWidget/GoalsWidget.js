@@ -1,7 +1,6 @@
-import { useQuery } from 'react-query'
 import css from './GoalsWidget.module.css'
 import { Link } from 'react-router-dom'
-import { FaCheck } from 'react-icons/fa'
+import { AiOutlineCheckCircle } from 'react-icons/ai'
 import {
     TileHeader,
     TileContent,
@@ -107,7 +106,15 @@ export function GoalsWidget({ isArchived }) {
     )
 }
 
-function GoalTile({ slug, split, roadstatuscolor, title, limsum, todayta }) {
+function GoalTile({
+    slug,
+    split,
+    roadstatuscolor,
+    pledge,
+    title,
+    limsum,
+    todayta,
+}) {
     return (
         <Tile
             split={split}
@@ -118,7 +125,16 @@ function GoalTile({ slug, split, roadstatuscolor, title, limsum, todayta }) {
             <TileTitle colored>
                 {slug} <TileTitleDescription>{title}</TileTitleDescription>
             </TileTitle>
-            <TileHeader>{todayta ? <FaCheck /> : ''}</TileHeader>
+            <TileHeader>
+                {todayta ? (
+                    <AiOutlineCheckCircle
+                        style={{ transform: 'translate(0,1.5px)' }}
+                    />
+                ) : (
+                    ''
+                )}{' '}
+                ${pledge}
+            </TileHeader>
             <TileContent>{limsum}</TileContent>
         </Tile>
     )
