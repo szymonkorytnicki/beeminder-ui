@@ -1,11 +1,12 @@
+import { lazy, Suspense } from 'react'
 import { GoalsWidget } from '../GoalsWidget/GoalsWidget'
 import { PageHeader } from '../Page/PageHeader'
 import { Link } from 'react-router-dom'
 import { Footer, FooterLink } from '../Footer/Footer'
-import { CirclePacking } from '@ant-design/plots'
 import { useGoals } from '../hooks/useGoals'
 import { Tile, TileContent, TileTitle } from '../Tile/Tile'
 import { AddDatapoint } from '../AddDatapoint/AddDatapoint'
+const CirclePackGoals = lazy(() => import('../CirclePackGoals/CirclePackGoals'))
 
 export default function HomePage() {
     return (
@@ -115,7 +116,9 @@ function HeaderTile() {
                     </TileContent>
                 </div>
                 <div>
-                    <CirclePacking {...config} />
+                    <Suspense>
+                        <CirclePackGoals {...config} />
+                    </Suspense>
                     {/* TODO probably lazy loading this could speed up homepage a lot (antd) */}
                 </div>
             </div>
