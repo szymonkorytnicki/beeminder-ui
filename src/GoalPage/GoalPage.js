@@ -86,6 +86,7 @@ function MainTile({ goalSlug }) {
                 </TileContent>
             ) : (
                 <TileContent>
+                    {/* TODO xd */}
                     ...
                     <br />
                     ...
