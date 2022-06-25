@@ -10,3 +10,9 @@ $dotenv->load();
 <?php
 echo "hello php my old friend I have server for you again";
 ?>
+
+<script>
+    fetch('/', {
+        credentials: "same-origin"
+    })
+</script>
