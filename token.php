@@ -1,9 +1,9 @@
 <?php
 require("config.php");
 
-function encryptToken($username, $apikey) {
+function encryptToken($username, $accessToken) {
     return openssl_encrypt(
-        json_encode(array("username" => $username, "apikey" => $apikey)),
+        json_encode(array("username" => $username, "accessToken" => $accessToken)),
         "AES-256-CBC",
         $_ENV['ENC_KEY'],
         0,

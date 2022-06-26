@@ -2,18 +2,17 @@
 require("config.php");
 require("token.php");
 
-// todo czech mistake rename auth_token with access_token
-// todo encode decode miszmasz
+header('X-Frame-Options: DENY');
+header('X-XSS-Protection: 1; mode=block');
+header('X-Content-Type-Options: nosniff');
 
 $routes = array(
     '/' => function () {
         return array('error' => 'No endpoint specified');
     },
-    '/goals' => function($params, $user, $authToken) {
-        echo $user;
-        echo $authToken;
-        $goalsUrl = "https://www.beeminder.com/api/v1/users/".$user."/goals.json?access_token=".$authToken;
-        $archivedGoalsUrl = "https://www.beeminder.com/api/v1/users/".$user."/goals/archived.json?access_token=".$authToken;
+    '/goals' => function($params, $user, $accessToken) {
+        $goalsUrl = "https://www.beeminder.com/api/v1/users/".$user."/goals.json?access_token=".$accessToken;
+        $archivedGoalsUrl = "https://www.beeminder.com/api/v1/users/".$user."/goals/archived.json?access_token=".$accessToken;
 
         if (isset($params['isArchived']) && $params['isArchived'] == 'true') {
             $url = $archivedGoalsUrl;
@@ -21,25 +20,31 @@ $routes = array(
             $url = $goalsUrl;
         }
 
-        $goals = file_get_contents($url);
+        $goals = json_decode(file_get_contents($url)); // todo error handling?
         return $goals;
     },
-    '/goal' => function($params, $user, $authToken) {
+    '/goal' => function($params, $user, $accessToken) {
+        if (!isset($params['slug'])) {
+            return array('error' => 'No goal slug specified');
+        }
         $slug = urlencode($params['slug']);
-        $goalsUrl = "https://www.beeminder.com/api/v1/users/".$user."/goals/".$slug.".json?access_token=".$authToken;
+        $goalsUrl = "https://www.beeminder.com/api/v1/users/".$user."/goals/".$slug.".json?access_token=".$accessToken;
 
         $goal = json_decode(file_get_contents($goalsUrl), true);
         return $goal;
-
     },
-    '/datapoints' => function($params, $user, $authToken) {
+    '/datapoints' => function($params, $user, $accessToken) {
+        if (!isset($params['slug'])) {
+            return array('error' => 'No goal slug specified');
+        }
         $slug = urlencode($params['slug']);
-        $url = "https://www.beeminder.com/api/v1/users/".$user."/goals/".$slug."/datapoints.json?access_token=".$authToken."&count=250";
+        $url = "https://www.beeminder.com/api/v1/users/".$user."/goals/".$slug."/datapoints.json?access_token=".$accessToken."&count=250";
         $datapoints = json_decode(file_get_contents($url), true);
+    
         return $datapoints;
     },
-    '/me' => function($params, $user, $authToken) {
-        $url = "https://www.beeminder.com/api/v1/users/me.json?access_token=".$authToken;
+    '/me' => function($params, $user, $accessToken) {
+        $url = "https://www.beeminder.com/api/v1/users/me.json?access_token=".$accessToken;
         $me = json_decode(file_get_contents($url), true);
         return $me;
     }
@@ -48,9 +53,12 @@ $routes = array(
 
 function handleRequest($routes, $path, $params) {
     $userData = decryptToken($_COOKIE['bui_token']);
+    if (!$userData) {
+        return array('error' => 'Invalid token');
+    }
     foreach ($routes as $route => $callback) {
         if ($route == $path) {
-            return $callback($params, $userData['username'], $userData['apikey']);
+            return $callback($params, $userData['username'], $userData['accessToken']);
         }
     }
     return array('error' => 'Not found');
