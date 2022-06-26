@@ -1,16 +1,16 @@
 import { PageHeader } from '../Page/PageHeader'
-import { Link } from 'react-router-dom'
 import { Tile, TileTitle, TileContent } from '../Tile/Tile'
 import css from './SettingsPage.module.css'
 import { useContext } from 'react'
 import { SettingsContext } from '../contexts/SettingsContext.ts'
+import { UsernameHeaderLink } from '../UsernameHeaderLink/UsernameHeaderLink'
 
 export default function SettingsPage() {
     const { setSettings, ...settings } = useContext(SettingsContext)
     return (
         <>
             <PageHeader>
-                <Link to="/">{process.env.REACT_APP_BEEMINDER_USERNAME}</Link>
+                <UsernameHeaderLink />
             </PageHeader>
             <div className={css.page}>
                 <Tile>

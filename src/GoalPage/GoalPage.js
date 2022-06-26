@@ -18,6 +18,8 @@ import { Streak } from '../Streak/Streak'
 import { useGoal } from '../hooks/useGoal'
 import { WeeklyScatterChart } from '../WeeklyScatterChart/WeeklyScatterChart'
 import { LongestStreak } from '../Streak/LongestStreak'
+import { UsernameHeaderLink } from '../UsernameHeaderLink/UsernameHeaderLink'
+import { useUser } from '../hooks/useUser'
 
 export default function GoalPage() {
     const { goalSlug } = useParams()
@@ -26,8 +28,7 @@ export default function GoalPage() {
     return (
         <>
             <PageHeader>
-                <Link to="/">{process.env.REACT_APP_BEEMINDER_USERNAME}</Link> /{' '}
-                {goalSlug}
+                <UsernameHeaderLink /> / {goalSlug}
             </PageHeader>
             <MainTile goalSlug={goalSlug} />
             <CalendarHeatmapTile
@@ -53,13 +54,22 @@ export default function GoalPage() {
                 />
             </Tile>
             <Footer>
-                <FooterLink
-                    to={`http://beeminder.com/${process.env.REACT_APP_BEEMINDER_USERNAME}/${goalSlug}`}
-                >
-                    Manage goal
-                </FooterLink>
+                <ManageGoalLink goalSlug={goalSlug} />
             </Footer>
         </>
+    )
+}
+
+function ManageGoalLink({ goalSlug }) {
+    const { data } = useUser()
+    return (
+        <FooterLink
+            to={`http://beeminder.com/${
+                data ? data.username : 'oopsie'
+            }/${goalSlug}`}
+        >
+            Manage goal
+        </FooterLink>
     )
 }
 

@@ -2,12 +2,13 @@ import { GoalsWidget } from '../GoalsWidget/GoalsWidget'
 import { PageHeader } from '../Page/PageHeader'
 import { Link } from 'react-router-dom'
 import { Footer, FooterLink } from '../Footer/Footer'
+import { UsernameHeaderLink } from '../UsernameHeaderLink/UsernameHeaderLink'
 
 export default function ArchivedPage() {
     return (
         <>
             <PageHeader>
-                <Link to="/">{process.env.REACT_APP_BEEMINDER_USERNAME}</Link>
+                <UsernameHeaderLink />
             </PageHeader>
             <GoalsWidget isArchived />
             <Footer>
