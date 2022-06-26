@@ -1,9 +1,5 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-
+require('config.php');
 ?>
 
 <a href="https://www.beeminder.com/apps/authorize?client_id=<?php echo $_ENV['CLIENT_ID']?>&redirect_uri=<?php echo $_ENV['CALLBACK_URL']?>&response_type=token">Authorise</a>

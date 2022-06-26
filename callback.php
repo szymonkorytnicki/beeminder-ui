@@ -12,4 +12,7 @@ setcookie(
 
 header('Location: https://beeminder-ui.ngrok.io/');
 exit;
+
+// TODOs
+// extract location to dotenv
 ?>
