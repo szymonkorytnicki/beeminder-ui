@@ -33,15 +33,13 @@ persistQueryClient({
 })
 
 createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
-        <ErrorBoundary>
-            <QueryClientProvider client={queryClient}>
-                <BrowserRouter>
-                    <App />
-                </BrowserRouter>
-            </QueryClientProvider>
-        </ErrorBoundary>
-    </React.StrictMode>
+    <ErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </QueryClientProvider>
+    </ErrorBoundary>
 )
 
 // If you want to start measuring performance in your app, pass a function

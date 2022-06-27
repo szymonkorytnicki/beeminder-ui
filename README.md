@@ -6,7 +6,7 @@ Alternative UI for beeminder.
 
 ### Development
 
-We'll use ngrok to allow to register application and be able to login on local machine.
+We'll use ngrok to allow to register application and to be able to login on local machine.
 
 Amend package.json to make sure it points to proper ports and ngrok domain.
 
@@ -19,6 +19,10 @@ Amend package.json to make sure it points to proper ports and ngrok domain.
 You should be able to see your-ngrok-domain.ngrok.io in the browser and be able to login and see goals.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+### Production
+
+TODO
 
 ## Available Scripts
 
