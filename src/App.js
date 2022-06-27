@@ -2,7 +2,6 @@ import './App.css'
 import { useState, useEffect, lazy, Suspense } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { SettingsContext } from './contexts/SettingsContext.ts'
-import { usePageView } from './hooks/usePageView'
 
 const HomePage = lazy(() => import('./HomePage/HomePage'))
 const GoalPage = lazy(() => import('./GoalPage/GoalPage'))

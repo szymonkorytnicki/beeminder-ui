@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App'
 import { BrowserRouter } from 'react-router-dom'
-import reportWebVitals from './reportWebVitals'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { persistQueryClient } from 'react-query/persistQueryClient'
 import { createWebStoragePersister } from 'react-query/createWebStoragePersister'
@@ -36,7 +35,7 @@ persistQueryClient({
 })
 
 Sentry.init({
-    dsn: process.env.SENTRY_DSN,
+    dsn: process.env.REACT_APP_SENTRY_DSN,
     integrations: [new BrowserTracing()],
 
     // Set tracesSampleRate to 1.0 to capture 100%
