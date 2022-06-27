@@ -83,61 +83,24 @@ export function RecentDatapoints({ goalSlug, onDelete }) {
 }
 
 function DatapointRow({ datapoint, onDelete }) {
-    const [swipeStart, setSwipeStart] = useState(null)
-    const [isTouching, setTouching] = useState(false)
-    const [isRemoving, setRemoving] = useState(false)
+    // const [swipeStart, setSwipeStart] = useState(null)
+    // const [isTouching, setTouching] = useState(false)
+    // const [isRemoving, setRemoving] = useState(false)
 
-    useEffect(() => {
-        setTimeout(() => {
-            setTouching(false)
-        }, 1000)
-    }, [isTouching])
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setTouching(false)
+    //     }, 1000)
+    // }, [isTouching])
 
     return (
         <div
-            hidden={isRemoving}
-            onTouchStart={(event) => {
-                setSwipeStart(event.changedTouches[0].clientX) // TODO changed vs targetTouches
-            }}
-            onTouchMove={(event) => {
-                const { clientX } = event.changedTouches[0]
-                if (
-                    swipeStart &&
-                    swipeStart < clientX &&
-                    clientX - swipeStart > 20
-                ) {
-                    setTouching(true)
-                }
-            }}
-            onTouchEnd={(event) => {
-                const { clientX } = event.changedTouches[0]
-                if (swipeStart && swipeStart < clientX) {
-                    setSwipeStart(null)
-                    setTouching(false)
-                    if (clientX - swipeStart > 20) {
-                        if (
-                            window.confirm(
-                                `Sure you wanna delete datapoint ${
-                                    datapoint.comment
-                                } with value ${
-                                    datapoint.value
-                                } created at ${format(
-                                    new Date(datapoint.created_at),
-                                    'yyyy-MM-dd'
-                                )}?`
-                            )
-                        ) {
-                            setRemoving(true)
-                            onDelete({ datapoint })
-                        }
-                    }
-                }
-            }}
+            // hidden={isRemoving}
             className={css.row}
-            style={{
-                transform: `translateX(${isTouching ? '20px' : '0px'})`,
-                transition: 'transform 100ms linear',
-            }}
+            // style={{
+            //     transform: `translateX(${isTouching ? '20px' : '0px'})`,
+            //     transition: 'transform 100ms linear',
+            // }}
         >
             <span>{format(new Date(datapoint.measured_at), 'yyyy-MM-dd')}</span>{' '}
             {Math.round(datapoint.value * 100) / 100} / {datapoint.comment}

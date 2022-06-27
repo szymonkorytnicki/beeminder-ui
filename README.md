@@ -4,14 +4,25 @@ Alternative UI for beeminder.
 
 ## Configuration
 
-Add .env file with params:
+### Development
 
-```
-REACT_APP_BEEMINDER_USERNAME=
-REACT_APP_BEEMINDER_APIKEY=
-```
+We'll use ngrok to allow to register application and to be able to login on local machine.
+
+Amend package.json to make sure it points to proper ports and ngrok domain.
+
+1. Register your development app in beeminder
+2. Fill .env file with relevant data.
+3. Run `npm run server` to start backend application
+4. Run `npm run tunnel` to start tunnel
+5. Run `npm run start` to start front-end application
+
+You should be able to see your-ngrok-domain.ngrok.io in the browser and be able to login and see goals.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+### Production
+
+TODO
 
 ## Available Scripts
 

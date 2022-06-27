@@ -1,6 +1,6 @@
 import './App.css'
 import { useState, useEffect, lazy, Suspense } from 'react'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { SettingsContext } from './contexts/SettingsContext.ts'
 import { usePageView } from './hooks/usePageView'
 
@@ -8,6 +8,7 @@ const HomePage = lazy(() => import('./HomePage/HomePage'))
 const GoalPage = lazy(() => import('./GoalPage/GoalPage'))
 const SettingsPage = lazy(() => import('./SettingsPage/SettingsPage'))
 const ArchivedPage = lazy(() => import('./ArchivedPage/ArchivedPage'))
+const LoginPage = lazy(() => import('./LoginPage/LoginPage'))
 
 const DEFAULT_SETTINGS = {
     // TODO export this to file
@@ -24,21 +25,73 @@ function App() {
         localStorage.setItem('REACT_SHOWHIDDENGOALS', settings.showHiddenGoals)
     }, [settings])
     usePageView()
+
     return (
         <div className="App">
             <SettingsContext.Provider value={{ ...settings, setSettings }}>
                 <ScrollToTop />
                 <Suspense>
                     <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/archived" element={<ArchivedPage />} />
-                        <Route path="/settings" element={<SettingsPage />} />
-                        <Route path="/g/:goalSlug" element={<GoalPage />} />
+                        <Route
+                            path="/"
+                            element={
+                                <LoginRedirect>
+                                    <HomePage />
+                                </LoginRedirect>
+                            }
+                        />
+                        <Route
+                            path="/archived"
+                            element={
+                                <LoginRedirect>
+                                    <ArchivedPage />
+                                </LoginRedirect>
+                            }
+                        />
+                        <Route
+                            path="/settings"
+                            element={
+                                <LoginRedirect>
+                                    <SettingsPage />
+                                </LoginRedirect>
+                            }
+                        />
+                        <Route
+                            path="/g/:goalSlug"
+                            element={
+                                <LoginRedirect>
+                                    <GoalPage />
+                                </LoginRedirect>
+                            }
+                        />
+                        <Route path="/login" element={<LoginPage />} />
                     </Routes>
                 </Suspense>
             </SettingsContext.Provider>
         </div>
     )
+}
+
+function LoginRedirect({ children }) {
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [checkedLogin, setLoginChecked] = useState(false)
+    useEffect(() => {
+        // TODO interval checking the token
+        fetch('/api.php/loggedIn')
+            .then((r) => r.json())
+            .then((r) => {
+                setLoginChecked(true)
+                setIsLoggedIn(r.loggedIn)
+            })
+    }, [])
+
+    return checkedLogin ? (
+        isLoggedIn ? (
+            children
+        ) : (
+            <Navigate replace to="/login" />
+        )
+    ) : null
 }
 
 function defaultToTrue(item) {

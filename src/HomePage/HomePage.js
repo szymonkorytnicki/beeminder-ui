@@ -6,13 +6,14 @@ import { Footer, FooterLink } from '../Footer/Footer'
 import { useGoals } from '../hooks/useGoals'
 import { Tile, TileContent, TileTitle } from '../Tile/Tile'
 import { AddDatapoint } from '../AddDatapoint/AddDatapoint'
+import { UsernameHeaderLink } from '../UsernameHeaderLink/UsernameHeaderLink'
 const CirclePackGoals = lazy(() => import('../CirclePackGoals/CirclePackGoals'))
 
 export default function HomePage() {
     return (
         <>
             <PageHeader>
-                <Link to="/">{process.env.REACT_APP_BEEMINDER_USERNAME}</Link>
+                <UsernameHeaderLink />
             </PageHeader>
             <HeaderTile />
             <AddDatapoint />
@@ -85,7 +86,7 @@ function HeaderTile() {
             >
                 <div>
                     <TileTitle>
-                        Hey {process.env.REACT_APP_BEEMINDER_USERNAME}
+                        Hey <UsernameHeaderLink />
                     </TileTitle>
                     <TileContent>
                         {redGoals.length > 0 ? (
