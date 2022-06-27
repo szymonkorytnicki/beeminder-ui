@@ -24,7 +24,7 @@ function App() {
         localStorage.setItem('REACT_GROUPBYTAGS', settings.groupByTags)
         localStorage.setItem('REACT_SHOWHIDDENGOALS', settings.showHiddenGoals)
     }, [settings])
-    usePageView()
+    // usePageView() TODO reenable if necessary
 
     return (
         <div className="App">

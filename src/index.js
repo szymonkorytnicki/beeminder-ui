@@ -5,9 +5,12 @@ import App from './App'
 import { BrowserRouter } from 'react-router-dom'
 import reportWebVitals from './reportWebVitals'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { ErrorBoundary } from './ErrorBoundary/ErrorBoundary'
 import { persistQueryClient } from 'react-query/persistQueryClient'
 import { createWebStoragePersister } from 'react-query/createWebStoragePersister'
+
+import * as Sentry from '@sentry/react'
+import { BrowserTracing } from '@sentry/tracing'
+
 const localStoragePersister = createWebStoragePersister({
     storage: window.localStorage,
 })
@@ -32,17 +35,40 @@ persistQueryClient({
     persister: localStoragePersister,
 })
 
+Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    integrations: [new BrowserTracing()],
+
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 1.0,
+})
+
+const FallbackComponent = (
+    <>
+        <h1 style={{ textAlign: 'center', fontWeight: 'bold' }}>
+            Something went wrong.
+        </h1>
+        Please{' '}
+        <a href="https://github.com/szymonkorytnicki/beeminder-ui/issues">
+            report the bug
+        </a>{' '}
+        providing as much description as possible. Thanks!
+    </>
+)
+
 createRoot(document.getElementById('root')).render(
-    <ErrorBoundary>
+    <Sentry.ErrorBoundary fallback={FallbackComponent} showDialog>
         <QueryClientProvider client={queryClient}>
             <BrowserRouter>
                 <App />
             </BrowserRouter>
         </QueryClientProvider>
-    </ErrorBoundary>
+    </Sentry.ErrorBoundary>
 )
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals()
+// reportWebVitals()
