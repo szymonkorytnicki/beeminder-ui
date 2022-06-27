@@ -50,7 +50,7 @@ $routes = array(
     },
     '/loggedIn' => function($params, $user, $accessToken) {
         $url = "https://www.beeminder.com/api/v1/users/me.json?access_token=".$accessToken;
-        $me = json_decode(file_get_contents($url), true);
+        $me = json_decode(@file_get_contents($url), true);
 
         return array('loggedIn' => isset($me['username']));
     }
@@ -58,7 +58,7 @@ $routes = array(
 );
 
 function handleRequest($routes, $path, $params) {
-    $userData = decryptToken($_COOKIE['bui_token']);
+    $userData = isset($_COOKIE['bui_token']) ? decryptToken($_COOKIE['bui_token']) : false;
     if (!$userData) {
         return array('error' => 'Invalid token', 'loggedIn' => false); // TODO ugly
     }
