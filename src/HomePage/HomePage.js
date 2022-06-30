@@ -7,6 +7,7 @@ import { useGoals } from '../hooks/useGoals'
 import { Tile, TileContent, TileTitle } from '../Tile/Tile'
 import { AddDatapoint } from '../AddDatapoint/AddDatapoint'
 import { UsernameHeaderLink } from '../UsernameHeaderLink/UsernameHeaderLink'
+import { useUser } from '../hooks/useUser'
 const CirclePackGoals = lazy(() => import('../CirclePackGoals/CirclePackGoals'))
 
 export default function HomePage() {
@@ -76,7 +77,7 @@ function HeaderTile() {
     const orangeGoals = chartData.find(({ name }) => name === 'orange').goals
 
     return (
-        <Tile style={{ marginBottom: '20px' }}>
+        <Tile style={{ marginBottom: '20px', minHeight: '110px' }}>
             <div
                 style={{
                     display: 'flex',
@@ -114,6 +115,7 @@ function HeaderTile() {
                                 {orangeGoals.length === 1 ? 'is' : 'are'} due.
                             </span>
                         )}
+                        <UrgencyLoad />
                     </TileContent>
                 </div>
                 <div>
@@ -140,4 +142,20 @@ function GoalLink(props) {
             {...props}
         />
     )
+}
+
+function UrgencyLoad() {
+    const { data } = useUser()
+    return data ? (
+        <span>
+            Your{' '}
+            <a
+                href="https://forum.beeminder.com/t/urgency-load-metric/5648"
+                target="_blank"
+            >
+                urgency load
+            </a>{' '}
+            is {data.urgency_load}.
+        </span>
+    ) : null
 }
