@@ -1,5 +1,5 @@
+import { useState } from 'react'
 import { useParams } from 'react-router'
-import { Link } from 'react-router-dom'
 import { PageHeader } from '../Page/PageHeader'
 import { RecentDatapoints } from '../RecentDatapoints/RecentDatapoints.tsx'
 import { Footer, FooterLink } from '../Footer/Footer'
@@ -20,6 +20,7 @@ import { WeeklyScatterChart } from '../WeeklyScatterChart/WeeklyScatterChart'
 import { LongestStreak } from '../Streak/LongestStreak'
 import { UsernameHeaderLink } from '../UsernameHeaderLink/UsernameHeaderLink'
 import { useUser } from '../hooks/useUser'
+import { parse, format } from 'date-fns'
 
 export default function GoalPage() {
     const { goalSlug } = useParams()
@@ -46,6 +47,7 @@ export default function GoalPage() {
                 <DailyBreakdown goalSlug={goalSlug} />
             </Tile>
             <MetaTile goalSlug={goalSlug} />
+            <DueByTile goalSlug={goalSlug} />
             <Tile>
                 <TileTitle>Recent datapoints</TileTitle>
                 <RecentDatapoints
@@ -187,4 +189,46 @@ function CalendarHeatmapTile({ isOdometer, goalSlug }) {
             <CalendarHeatmap isOdometer={isOdometer} goalSlug={goalSlug} />
         </Tile>
     )
+}
+
+function DueByTile({ goalSlug }) {
+    const { data } = useGoal(goalSlug)
+    const [displayTotal, setDisplayTotal] = useState(false)
+    return data ? (
+        <Tile>
+            <TileTitle>Amounts due by day</TileTitle>
+            <TileContent>
+                {Object.keys(data.dueby)
+                    .sort()
+                    .map((key) => {
+                        const {
+                            formatted_delta_for_beedroid,
+                            formatted_total_for_beedroid,
+                        } = data.dueby[key]
+                        const formattedDate = format(
+                            parse(key, 'yyyyMMdd', new Date()),
+                            'yyyy-MM-dd'
+                        )
+
+                        return (
+                            <TileStat
+                                key={key}
+                                label={formattedDate}
+                                value={
+                                    <span
+                                        onClick={() =>
+                                            setDisplayTotal(!displayTotal)
+                                        }
+                                    >
+                                        {displayTotal
+                                            ? formatted_total_for_beedroid
+                                            : formatted_delta_for_beedroid}
+                                    </span>
+                                }
+                            />
+                        )
+                    })}
+            </TileContent>
+        </Tile>
+    ) : null
 }

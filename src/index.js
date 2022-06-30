@@ -45,16 +45,14 @@ Sentry.init({
 })
 
 const FallbackComponent = (
-    <>
-        <h1 style={{ textAlign: 'center', fontWeight: 'bold' }}>
-            Something went wrong.
-        </h1>
+    <div style={{ textAlign: 'center' }}>
+        <h1 style={{ fontWeight: 'bold' }}>Something went wrong.</h1>
         Please{' '}
         <a href="https://github.com/szymonkorytnicki/beeminder-ui/issues">
             report the bug
         </a>{' '}
         providing as much description as possible. Thanks!
-    </>
+    </div>
 )
 
 createRoot(document.getElementById('root')).render(

@@ -67,9 +67,9 @@ export function TilePledge({ className, component, ...props }) {
     )
 }
 
-export function TileStat({ label, value }) {
+export function TileStat({ label, value, onClick }) {
     return (
-        <div className={css.stat}>
+        <div className={css.stat} onClick={onClick}>
             <div className={css.statLabel}>{label}</div>
             <div>{value}</div>
         </div>
