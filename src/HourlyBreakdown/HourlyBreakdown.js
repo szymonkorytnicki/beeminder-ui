@@ -52,7 +52,11 @@ export function HourlyBreakdown({ goalSlug }) {
                     .filter((point) => {
                         return isAutoEntered(point)
                             ? getAutoEnteredHour(point) == current // TODO type safety ==
-                            : format(point.updated_at * 1000, 'HH') == current // TODO timestamp
+                            : format(
+                                  Math.min(point.updated_at, point.timestamp) *
+                                      1000,
+                                  'HH'
+                              ) == current
                     }).length,
             }
 
