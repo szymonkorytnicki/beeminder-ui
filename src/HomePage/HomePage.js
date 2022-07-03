@@ -147,7 +147,7 @@ function GoalLink(props) {
 function UrgencyLoad() {
     const { data } = useUser()
     return data ? (
-        <span>
+        <div>
             Your{' '}
             <a
                 href="https://forum.beeminder.com/t/urgency-load-metric/5648"
@@ -156,6 +156,6 @@ function UrgencyLoad() {
                 urgency load
             </a>{' '}
             is {data.urgency_load}.
-        </span>
+        </div>
     ) : null
 }

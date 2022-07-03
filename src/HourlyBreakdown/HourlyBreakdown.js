@@ -49,12 +49,13 @@ export function HourlyBreakdown({ goalSlug }) {
                 hour: current,
                 value: data
                     .filter((point) => point.value > 0)
-                    .filter((point) =>
-                        isAutoEntered(point)
-                            ? getAutoEnteredHour(point) == current
-                            : format(point.timestamp * 1000, 'HH') == current
-                    ).length,
+                    .filter((point) => {
+                        return isAutoEntered(point)
+                            ? getAutoEnteredHour(point) == current // TODO type safety ==
+                            : format(point.updated_at * 1000, 'HH') == current // TODO timestamp
+                    }).length,
             }
+
             acc.push(value)
             return acc
         }, []),
