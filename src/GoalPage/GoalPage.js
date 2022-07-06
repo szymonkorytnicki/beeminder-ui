@@ -156,6 +156,10 @@ function MetaTile({ goalSlug }) {
                     </>
                 }
             />
+            <TileStat
+                label="Urgency score"
+                value={Math.max(7 - data.safebuf, 0)}
+            />
             <TileStat label="No. of datapoints" value={data.numpts} />
             <TileStat
                 label="Total value"
