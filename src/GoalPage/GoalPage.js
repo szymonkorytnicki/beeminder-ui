@@ -46,6 +46,7 @@ export default function GoalPage() {
                 <TileTitle>Daily breakdown</TileTitle>
                 <DailyBreakdown goalSlug={goalSlug} />
             </Tile>
+            <LongestStreak goalSlug={goalSlug} />
             <MetaTile goalSlug={goalSlug} />
             <DueByTile goalSlug={goalSlug} />
             <Tile>
@@ -145,14 +146,6 @@ function MetaTile({ goalSlug }) {
                 value={
                     <>
                         <Streak goalSlug={goalSlug} /> days
-                    </>
-                }
-            />
-            <TileStat
-                label="Longest streak"
-                value={
-                    <>
-                        <LongestStreak goalSlug={goalSlug} /> days
                     </>
                 }
             />
