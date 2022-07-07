@@ -145,8 +145,17 @@ function GoalLink(props) {
 }
 
 function UrgencyLoad() {
-    const { data } = useUser()
-    return data ? (
+    const { data } = useGoals()
+    if (!data) {
+        return null
+    }
+    const load = data.reduce((acc, goal) => {
+        if (!goal.won) {
+            acc += Math.max(7 - goal.safebuf, 0)
+        }
+        return acc
+    }, 0)
+    return (
         <div>
             Your{' '}
             <a
@@ -155,7 +164,7 @@ function UrgencyLoad() {
             >
                 urgency load
             </a>{' '}
-            is {data.urgency_load}.
+            is {load}.
         </div>
-    ) : null
+    )
 }
