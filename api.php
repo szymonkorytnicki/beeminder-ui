@@ -37,8 +37,12 @@ $routes = array(
         if (!isset($params['slug'])) {
             return array('error' => 'No goal slug specified');
         }
+        $limitDatapoints = false;
+        if (isset($params['limitDatapoints']) && $params['limitDatapoints'] == 'true') {
+            $limitDatapoints = true;
+        }
         $slug = urlencode($params['slug']);
-        $url = "https://www.beeminder.com/api/v1/users/".$user."/goals/".$slug."/datapoints.json?access_token=".$accessToken."&count=250";
+        $url = "https://www.beeminder.com/api/v1/users/".$user."/goals/".$slug."/datapoints.json?access_token=".$accessToken.($limitDatapoints ? "&count=250" : "");
         $datapoints = json_decode(file_get_contents($url), true);
     
         return $datapoints;

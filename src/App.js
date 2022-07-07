@@ -14,6 +14,7 @@ const DEFAULT_SETTINGS = {
     groupByTags: defaultToFalse('REACT_GROUPBYTAGS'),
     twoColumnLayout: defaultToTrue('REACT_TWOCOLUMNLAYOUT'),
     showHiddenGoals: defaultToTrue('REACT_SHOWHIDDENGOALS'),
+    limitDatapoints: defaultToFalse('REACT_LIMITDATAPOINTS'),
 }
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         localStorage.setItem('REACT_TWOCOLUMNLAYOUT', settings.twoColumnLayout)
         localStorage.setItem('REACT_GROUPBYTAGS', settings.groupByTags)
         localStorage.setItem('REACT_SHOWHIDDENGOALS', settings.showHiddenGoals)
+        localStorage.setItem('REACT_LIMITDATAPOINTS', settings.limitDatapoints)
     }, [settings])
     // usePageView() TODO reenable if necessary
 

@@ -49,7 +49,6 @@ export function LongestStreak({ goalSlug }) {
     const streaksData = streaks.sort((a, b) => b.days - a.days).slice(0, 6)
 
     let hasEnoughInfo = true
-    console.log(streaksData[0], 'test')
     if (streaksData.length < 2 || streaksData[0].days <= 2) {
         hasEnoughInfo = false
     }

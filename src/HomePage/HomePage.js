@@ -7,7 +7,6 @@ import { useGoals } from '../hooks/useGoals'
 import { Tile, TileContent, TileTitle } from '../Tile/Tile'
 import { AddDatapoint } from '../AddDatapoint/AddDatapoint'
 import { UsernameHeaderLink } from '../UsernameHeaderLink/UsernameHeaderLink'
-import { useUser } from '../hooks/useUser'
 const CirclePackGoals = lazy(() => import('../CirclePackGoals/CirclePackGoals'))
 
 export default function HomePage() {

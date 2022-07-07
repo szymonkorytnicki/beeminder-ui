@@ -93,8 +93,22 @@ export default function SettingsPage() {
                 <Tile>
                     <TileTitle>App limits</TileTitle>
                     <TileContent>
-                        Currently we fetch only 250 recent datapoints to make
-                        sure performance remains stable.
+                        <input
+                            type="checkbox"
+                            id="settings_limitDatapoints"
+                            value={settings.limitDatapoints}
+                            checked={settings.limitDatapoints}
+                            onChange={() =>
+                                setSettings({
+                                    ...settings,
+                                    limitDatapoints: !settings.limitDatapoints,
+                                })
+                            }
+                        />
+                        <label htmlFor="settings_limitDatapoints">
+                            Fetch only 250 recent datapoints to improve app's
+                            performance.
+                        </label>
                     </TileContent>
                 </Tile>
                 <Tile>
