@@ -2,7 +2,7 @@ import { useQuery } from 'react-query'
 import { useContext } from 'react'
 import { SettingsContext } from '../contexts/SettingsContext.ts'
 
-function fetchDatapoints(slug, limitDatapoints) {
+export function fetchDatapoints(slug, limitDatapoints) {
     return fetch(
         `${process.env.REACT_APP_ENDPOINT}/api.php/datapoints?slug=${slug}&limitDatapoints=${limitDatapoints}`
     ).then((r) => r.json())

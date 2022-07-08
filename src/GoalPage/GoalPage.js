@@ -12,7 +12,7 @@ import {
     TileStat,
 } from '../Tile/Tile'
 import { ScatterChart } from '../ScatterChart/ScatterChart'
-import { HourlyBreakdown } from '../HourlyBreakdown/HourlyBreakdown'
+import { HourlyBreakdownTile } from '../HourlyBreakdownTile/HourlyBreakdownTile'
 import { DailyBreakdown } from '../DailyBreakdown/DailyBreakdown'
 import { Streak } from '../Streak/Streak'
 import { useGoal } from '../hooks/useGoal'
@@ -38,10 +38,7 @@ export default function GoalPage() {
             />
             <WeeklyTrendsTile goalSlug={goalSlug} />
             <TrendsTile goalSlug={goalSlug} />
-            <Tile>
-                <TileTitle>Hourly breakdown</TileTitle>
-                <HourlyBreakdown goalSlug={goalSlug} />
-            </Tile>
+            <HourlyBreakdownTile goalSlug={goalSlug} />
             <Tile>
                 <TileTitle>Daily breakdown</TileTitle>
                 <DailyBreakdown goalSlug={goalSlug} />
