@@ -10,7 +10,7 @@ export function ScatterChart({ goalSlug }) {
         return (
             <div
                 style={{
-                    minHeight: '365px', // TODO improve magic placeholders
+                    minHeight: '160px', // TODO improve magic placeholders
                 }}
             />
         )
