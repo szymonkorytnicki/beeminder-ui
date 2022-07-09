@@ -139,3 +139,10 @@ a {
     text-decoration: none;
     color: black;
 }
+
+a:hover {
+    color: black;
+}
+a:focus {
+    outline: 2px solid #ccc;
+}
