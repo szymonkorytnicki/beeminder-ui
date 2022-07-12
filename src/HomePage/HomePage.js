@@ -1,23 +1,75 @@
-import { lazy, Suspense } from 'react'
+import { lazy, useState, Suspense } from 'react'
 import { GoalsWidget } from '../GoalsWidget/GoalsWidget'
 import { PageHeader } from '../Page/PageHeader'
 import { Link } from 'react-router-dom'
 import { Footer, FooterLink } from '../Footer/Footer'
 import { useGoals } from '../hooks/useGoals'
 import { Tile, TileContent, TileTitle } from '../Tile/Tile'
-import { AddDatapoint } from '../AddDatapoint/AddDatapoint'
 import { UsernameHeaderLink } from '../UsernameHeaderLink/UsernameHeaderLink'
 const CirclePackGoals = lazy(() => import('../CirclePackGoals/CirclePackGoals'))
+import { Radio, Input } from 'antd'
 
 export default function HomePage() {
+    const [range, setRange] = useState(null)
+    const [query, setQuery] = useState(null)
     return (
         <>
             <PageHeader>
                 <UsernameHeaderLink />
             </PageHeader>
             <HeaderTile />
-            <AddDatapoint />
-            <GoalsWidget />
+            {/* <AddDatapoint /> */}
+            <Radio.Group
+                onChange={(event) => setRange(event.target.value)}
+                defaultValue="ALL"
+            >
+                <Radio.Button value="1">
+                    <span
+                        style={{
+                            backgroundColor: 'red',
+                            borderRadius: '100%',
+                            width: '10px',
+                            height: '10px',
+                            display: 'inline-block',
+                        }}
+                    ></span>
+                </Radio.Button>
+                <Radio.Button value="2">
+                    <span
+                        style={{
+                            backgroundColor: 'orange',
+                            borderRadius: '100%',
+                            width: '10px',
+                            height: '10px',
+                            display: 'inline-block',
+                        }}
+                    ></span>
+                </Radio.Button>
+                <Radio.Button value="3">
+                    <span
+                        style={{
+                            backgroundColor: 'blue',
+                            borderRadius: '100%',
+                            width: '10px',
+                            height: '10px',
+                            display: 'inline-block',
+                        }}
+                    ></span>
+                </Radio.Button>
+                <Radio.Button value="7">This week</Radio.Button>
+                <Radio.Button value="ALL">All</Radio.Button>
+                <Radio.Button value="MAGIC">✨</Radio.Button>
+            </Radio.Group>
+            <Input.Search
+                placeholder="input search text"
+                onSearch={(value) => {
+                    setQuery(value)
+                }}
+                style={{
+                    width: 200,
+                }}
+            />
+            <GoalsWidget range={range} query={query} />
             <Footer>
                 <FooterLink to={'/settings'} component={Link}>
                     Settings

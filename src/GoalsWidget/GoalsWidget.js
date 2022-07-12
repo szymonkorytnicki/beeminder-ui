@@ -11,6 +11,7 @@ import {
 import { useContext } from 'react'
 import { SettingsContext } from '../contexts/SettingsContext.ts'
 import { useGoals } from '../hooks/useGoals'
+import { parse } from 'date-fns'
 
 function createTags(goals) {
     const tags = new Set()
@@ -22,7 +23,8 @@ function createTags(goals) {
     return Array.from(tags).sort((a, z) => a.localeCompare(z))
 }
 
-export function GoalsWidget({ isArchived }) {
+export function GoalsWidget({ isArchived, range, query }) {
+    // TODO this is GoalsPage
     const { isError, data } = useGoals({ isArchived: isArchived })
     const { groupByTags, twoColumnLayout, showHiddenGoals } =
         useContext(SettingsContext)
@@ -43,13 +45,20 @@ export function GoalsWidget({ isArchived }) {
         return goal.secret === false
     }
 
+    const filteredGoals = filterGoals(data, {
+        range,
+        query,
+    })
+
+    console.log('filteredGoals', filteredGoals, range)
+
     // TODO smooth animation on update https://codesandbox.io/s/reorder-elements-with-slide-transition-and-react-hooks-flip-211f2
     if (groupByTags) {
-        const tags = createTags(data)
+        const tags = createTags(filteredGoals)
         return (
             <>
                 <div className={twoColumnLayout ? css.goals : undefined}>
-                    {data
+                    {filteredGoals
                         .filter((goal) => goal.tags.length === 0)
                         .filter(shouldShowHiddenGoal)
                         .map((goal) => {
@@ -71,7 +80,7 @@ export function GoalsWidget({ isArchived }) {
                                     twoColumnLayout ? css.goals : undefined
                                 }
                             >
-                                {data
+                                {filteredGoals
                                     .filter((goal) => goal.tags.includes(tag))
                                     .filter(shouldShowHiddenGoal)
                                     .map((goal) => {
@@ -93,7 +102,7 @@ export function GoalsWidget({ isArchived }) {
 
     return (
         <div className={twoColumnLayout ? css.goals : undefined}>
-            {data.filter(shouldShowHiddenGoal).map((goal) => {
+            {filteredGoals.filter(shouldShowHiddenGoal).map((goal) => {
                 return (
                     <GoalTile
                         key={goal.slug}
@@ -104,6 +113,43 @@ export function GoalsWidget({ isArchived }) {
             })}
         </div>
     )
+}
+
+function filterGoals(goals, { query, range }) {
+    if (!query && !range) {
+        return goals
+    }
+
+    return goals
+        .filter((goal) => {
+            if (!query) {
+                return goal
+            }
+            return goal.slug.toLowerCase().includes(query.toLowerCase())
+        })
+        .filter((goal) => {
+            if (!range || range === 'ALL') {
+                return goal
+            }
+            if (range === 'MAGIC') {
+                console.log(goal)
+                return (
+                    goal.safebuf <= 1 ||
+                    goal.recent_data.reduce((acc, current) => {
+                        if (
+                            new Date(current.created_at).getTime() -
+                                Date.now() <
+                            -(1000 * 60 * 60 * 24 * 3)
+                        ) {
+                            return acc
+                        }
+                        return acc
+                    }, 0) >= (goal.odom ? 2 : 3)
+                )
+            }
+
+            return goal.safebuf < parseInt(range)
+        })
 }
 
 function GoalTile({
