@@ -136,12 +136,13 @@ function filterGoals(goals, { query, range }) {
                 return (
                     goal.safebuf <= 1 ||
                     goal.recent_data.reduce((acc, current) => {
+                        // recently has been on fire (logging often)
                         if (
                             new Date(current.created_at).getTime() -
-                                Date.now() <
+                                Date.now() >
                             -(1000 * 60 * 60 * 24 * 3)
                         ) {
-                            return acc
+                            return acc + 1
                         }
                         return acc
                     }, 0) >= (goal.odom ? 2 : 3)
