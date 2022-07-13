@@ -32,6 +32,7 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
+        "start:all": "npx concurrently \"npm run start\" \"npm run tunnel\" \"npm run server\"",
         "start": "react-scripts start",
         "build": "env-cmd -f .env.production react-scripts build",
         "eject": "react-scripts eject",

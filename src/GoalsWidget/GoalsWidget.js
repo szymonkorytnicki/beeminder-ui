@@ -23,7 +23,7 @@ function createTags(goals) {
     return Array.from(tags).sort((a, z) => a.localeCompare(z))
 }
 
-export function GoalsWidget({ isArchived, range, query }) {
+export function GoalsWidget({ isArchived, range, query, hideDone }) {
     // TODO this is GoalsPage
     const { isError, data } = useGoals({ isArchived: isArchived })
     const { groupByTags, twoColumnLayout, showHiddenGoals } =
@@ -48,6 +48,7 @@ export function GoalsWidget({ isArchived, range, query }) {
     const filteredGoals = filterGoals(data, {
         range,
         query,
+        hideDone,
     })
 
     console.log('filteredGoals', filteredGoals, range)
@@ -115,12 +116,14 @@ export function GoalsWidget({ isArchived, range, query }) {
     )
 }
 
-function filterGoals(goals, { query, range }) {
-    if (!query && !range) {
-        return goals
-    }
-
+function filterGoals(goals, { query, range, hideDone }) {
     return goals
+        .filter((goal) => {
+            if (hideDone) {
+                return goal.todayta === false
+            }
+            return true
+        })
         .filter((goal) => {
             if (!query) {
                 return goal
