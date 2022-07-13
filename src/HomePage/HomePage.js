@@ -7,7 +7,9 @@ import { useGoals } from '../hooks/useGoals'
 import { Tile, TileContent, TileTitle } from '../Tile/Tile'
 import { UsernameHeaderLink } from '../UsernameHeaderLink/UsernameHeaderLink'
 const CirclePackGoals = lazy(() => import('../CirclePackGoals/CirclePackGoals'))
-import { Radio, Input, Button } from 'antd'
+import { Select, Input, Button, Space } from 'antd'
+const { Option } = Select
+import { CheckCircleOutlined, IssuesCloseOutlined } from '@ant-design/icons'
 
 function debounce(func, timeout = 300) {
     let timer
@@ -28,62 +30,71 @@ export default function HomePage() {
             <PageHeader>
                 <UsernameHeaderLink />
             </PageHeader>
-            <HeaderTile />
-            <div>
-                <Radio.Group
-                    onChange={(event) => setRange(event.target.value)}
-                    defaultValue="ALL"
-                >
-                    <Radio.Button value="1">
-                        <span
-                            style={{
-                                backgroundColor: 'red',
-                                borderRadius: '100%',
-                                width: '10px',
-                                height: '10px',
-                                display: 'inline-block',
-                            }}
-                        ></span>
-                    </Radio.Button>
-                    <Radio.Button value="2">
-                        <span
-                            style={{
-                                backgroundColor: 'orange',
-                                borderRadius: '100%',
-                                width: '10px',
-                                height: '10px',
-                                display: 'inline-block',
-                            }}
-                        ></span>
-                    </Radio.Button>
-                    <Radio.Button value="3">
-                        <span
-                            style={{
-                                backgroundColor: 'blue',
-                                borderRadius: '100%',
-                                width: '10px',
-                                height: '10px',
-                                display: 'inline-block',
-                            }}
-                        ></span>
-                    </Radio.Button>
-                    <Radio.Button value="7">This week</Radio.Button>
-                    <Radio.Button value="ALL">All</Radio.Button>
-                    <Radio.Button value="MAGIC">✨</Radio.Button>
-                </Radio.Group>
+            <HeaderTile>
+                <Space>
+                    <Select
+                        defaultValue="ALL"
+                        style={{ width: 61 }}
+                        onChange={(value) => setRange(value)}
+                    >
+                        <Option value="ALL">All</Option>
+                        <Option value="1">
+                            <span
+                                style={{
+                                    backgroundColor: 'red',
+                                    borderRadius: '100%',
+                                    width: '10px',
+                                    height: '10px',
+                                    display: 'inline-block',
+                                }}
+                            ></span>
+                        </Option>
+                        <Option value="2">
+                            <span
+                                style={{
+                                    backgroundColor: 'orange',
+                                    borderRadius: '100%',
+                                    width: '10px',
+                                    height: '10px',
+                                    display: 'inline-block',
+                                }}
+                            ></span>
+                        </Option>
+                        <Option value="3">
+                            <span
+                                style={{
+                                    backgroundColor: 'blue',
+                                    borderRadius: '100%',
+                                    width: '10px',
+                                    height: '10px',
+                                    display: 'inline-block',
+                                }}
+                            ></span>
+                        </Option>
+                        <Option value="MAGIC">✨</Option>
+                    </Select>
+                    <Button
+                        onClick={() => setHideDone(!hideDone)}
+                        icon={
+                            hideDone ? (
+                                <IssuesCloseOutlined />
+                            ) : (
+                                <CheckCircleOutlined />
+                            )
+                        }
+                    ></Button>
+                </Space>
                 <Input
-                    placeholder="input search text"
+                    placeholder="Search"
                     onInput={(event) => {
                         debounceSetQuery(event.target.value)
                     }}
                     style={{
-                        width: 200,
+                        width: '100%',
                     }}
                 />
-                <Button onClick={() => setHideDone(!hideDone)}>
-                    {hideDone ? 'Show' : 'Hide'} done
-                </Button>
-            </div>
+            </HeaderTile>
+
             <GoalsWidget range={range} hideDone={hideDone} query={query} />
             <Footer>
                 <FooterLink to={'/settings'} component={Link}>
@@ -98,7 +109,7 @@ export default function HomePage() {
     )
 }
 
-function HeaderTile() {
+function HeaderTile({ children }) {
     const { data } = useGoals()
 
     if (!data) {
@@ -182,6 +193,7 @@ function HeaderTile() {
                             </span>
                         )}
                         <UrgencyLoad />
+                        {children}
                     </TileContent>
                 </div>
                 <div>
