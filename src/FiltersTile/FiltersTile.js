@@ -1,7 +1,7 @@
+import { Tile } from '../Tile/Tile'
+import { CheckCircleOutlined, IssuesCloseOutlined } from '@ant-design/icons'
 import { Select, Input, Button, Space } from 'antd'
 const { Option } = Select
-import { CheckCircleOutlined, IssuesCloseOutlined } from '@ant-design/icons'
-import { Tile } from '../Tile/Tile'
 
 export default function FiltersTile({
     onFiltersChange,
