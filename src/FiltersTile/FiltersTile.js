@@ -12,7 +12,7 @@ export default function FiltersTile({
         <Tile style={{ marginBottom: '20px' }}>
             <Space>
                 <Select
-                    style={{ width: 60 }}
+                    style={{ width: 65 }}
                     value={filters.range}
                     onChange={(value) =>
                         onFiltersChange({ ...filters, range: value })
