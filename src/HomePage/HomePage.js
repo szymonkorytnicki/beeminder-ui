@@ -7,9 +7,7 @@ import { useGoals } from '../hooks/useGoals'
 import { Tile, TileContent, TileTitle } from '../Tile/Tile'
 import { UsernameHeaderLink } from '../UsernameHeaderLink/UsernameHeaderLink'
 const CirclePackGoals = lazy(() => import('../CirclePackGoals/CirclePackGoals'))
-import { Select, Input, Button, Space } from 'antd'
-const { Option } = Select
-import { CheckCircleOutlined, IssuesCloseOutlined } from '@ant-design/icons'
+const FiltersTile = lazy(() => import('../FiltersTile/FiltersTile'))
 
 function debounce(func, timeout = 300) {
     let timer
@@ -21,81 +19,30 @@ function debounce(func, timeout = 300) {
     }
 }
 export default function HomePage() {
-    const [range, setRange] = useState(null)
     const [query, setQuery] = useState(null)
-    const [hideDone, setHideDone] = useState(false)
+    const [filters, setFilters] = useState({
+        range: 'ALL',
+        hideDone: null,
+        tags: [],
+    })
+
     const debounceSetQuery = debounce(setQuery, 300)
     return (
         <>
             <PageHeader>
                 <UsernameHeaderLink />
             </PageHeader>
-            <HeaderTile>
-                <Space>
-                    <Select
-                        defaultValue="ALL"
-                        style={{ width: 61 }}
-                        onChange={(value) => setRange(value)}
-                    >
-                        <Option value="ALL">All</Option>
-                        <Option value="1">
-                            <span
-                                style={{
-                                    backgroundColor: 'red',
-                                    borderRadius: '100%',
-                                    width: '10px',
-                                    height: '10px',
-                                    display: 'inline-block',
-                                }}
-                            ></span>
-                        </Option>
-                        <Option value="2">
-                            <span
-                                style={{
-                                    backgroundColor: 'orange',
-                                    borderRadius: '100%',
-                                    width: '10px',
-                                    height: '10px',
-                                    display: 'inline-block',
-                                }}
-                            ></span>
-                        </Option>
-                        <Option value="3">
-                            <span
-                                style={{
-                                    backgroundColor: 'blue',
-                                    borderRadius: '100%',
-                                    width: '10px',
-                                    height: '10px',
-                                    display: 'inline-block',
-                                }}
-                            ></span>
-                        </Option>
-                        <Option value="MAGIC">✨</Option>
-                    </Select>
-                    <Button
-                        onClick={() => setHideDone(!hideDone)}
-                        icon={
-                            hideDone ? (
-                                <IssuesCloseOutlined />
-                            ) : (
-                                <CheckCircleOutlined />
-                            )
-                        }
-                    ></Button>
-                </Space>
-                <Input
-                    placeholder="Search"
-                    onInput={(event) => {
-                        debounceSetQuery(event.target.value)
-                    }}
-                    style={{
-                        width: '100%',
-                    }}
-                />
-            </HeaderTile>
-
-            <GoalsWidget range={range} hideDone={hideDone} query={query} />
+            <HeaderTile />
+            <FiltersTile
+                onFiltersChange={(filters) => setFilters(filters)}
+                filters={filters}
+                onQueryChange={debounceSetQuery}
+            />
+            <GoalsWidget
+                range={filters.range}
+                hideDone={filters.hideDone}
+                query={query}
+            />
             <Footer>
                 <FooterLink to={'/settings'} component={Link}>
                     Settings
