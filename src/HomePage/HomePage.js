@@ -1,23 +1,48 @@
-import { lazy, Suspense } from 'react'
+import { lazy, useState, Suspense } from 'react'
 import { GoalsWidget } from '../GoalsWidget/GoalsWidget'
 import { PageHeader } from '../Page/PageHeader'
 import { Link } from 'react-router-dom'
 import { Footer, FooterLink } from '../Footer/Footer'
 import { useGoals } from '../hooks/useGoals'
 import { Tile, TileContent, TileTitle } from '../Tile/Tile'
-import { AddDatapoint } from '../AddDatapoint/AddDatapoint'
 import { UsernameHeaderLink } from '../UsernameHeaderLink/UsernameHeaderLink'
 const CirclePackGoals = lazy(() => import('../CirclePackGoals/CirclePackGoals'))
+const FiltersTile = lazy(() => import('../FiltersTile/FiltersTile'))
 
+function debounce(func, timeout = 300) {
+    let timer
+    return (...args) => {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+            func.apply(this, args)
+        }, timeout)
+    }
+}
 export default function HomePage() {
+    const [query, setQuery] = useState(null)
+    const [filters, setFilters] = useState({
+        range: 'ALL',
+        hideDone: null,
+        tags: [],
+    })
+
+    const debounceSetQuery = debounce(setQuery, 300)
     return (
         <>
             <PageHeader>
                 <UsernameHeaderLink />
             </PageHeader>
             <HeaderTile />
-            <AddDatapoint />
-            <GoalsWidget />
+            <FiltersTile
+                onFiltersChange={(filters) => setFilters(filters)}
+                filters={filters}
+                onQueryChange={debounceSetQuery}
+            />
+            <GoalsWidget
+                range={filters.range}
+                hideDone={filters.hideDone}
+                query={query}
+            />
             <Footer>
                 <FooterLink to={'/settings'} component={Link}>
                     Settings
@@ -31,7 +56,7 @@ export default function HomePage() {
     )
 }
 
-function HeaderTile() {
+function HeaderTile({ children }) {
     const { data } = useGoals()
 
     if (!data) {
@@ -115,6 +140,7 @@ function HeaderTile() {
                             </span>
                         )}
                         <UrgencyLoad />
+                        {children}
                     </TileContent>
                 </div>
                 <div>
