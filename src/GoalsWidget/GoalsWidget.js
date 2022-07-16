@@ -34,7 +34,7 @@ export function GoalsWidget({ isArchived, range, query, hideDone }) {
     }
 
     if (!data) {
-        return ''
+        return <div style={{ minHeight: '500px' }}></div>
     }
 
     function shouldShowHiddenGoal(goal) {
@@ -50,8 +50,6 @@ export function GoalsWidget({ isArchived, range, query, hideDone }) {
         query,
         hideDone,
     })
-
-    console.log('filteredGoals', filteredGoals, range)
 
     // TODO smooth animation on update https://codesandbox.io/s/reorder-elements-with-slide-transition-and-react-hooks-flip-211f2
     if (groupByTags) {

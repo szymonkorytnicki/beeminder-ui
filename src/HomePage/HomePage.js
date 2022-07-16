@@ -60,7 +60,9 @@ function HeaderTile({ children }) {
     const { data } = useGoals()
 
     if (!data) {
-        return null
+        return (
+            <Tile style={{ marginBottom: '20px', minHeight: '110px' }}></Tile>
+        )
     }
 
     const chartData = data.reduce(

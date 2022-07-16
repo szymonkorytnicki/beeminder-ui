@@ -1,5 +1,9 @@
 import { Tile } from '../Tile/Tile'
-import { CheckCircleOutlined, IssuesCloseOutlined } from '@ant-design/icons'
+import {
+    CheckCircleOutlined,
+    CloseCircleOutlined,
+    IssuesCloseOutlined,
+} from '@ant-design/icons'
 import { Select, Input, Button, Space } from 'antd'
 const { Option } = Select
 
@@ -92,6 +96,17 @@ export default function FiltersTile({
                         width: '100%',
                     }}
                 />
+                {/* <Button
+                    type="dashed"
+                    icon={<CloseCircleOutlined />}
+                    onClick={() => {
+                        onFiltersChange({
+                            range: 'ALL',
+                            hideDone: false,
+                        })
+                        onQueryChange('')
+                    }}
+                /> */}
             </Space>
         </Tile>
     )
