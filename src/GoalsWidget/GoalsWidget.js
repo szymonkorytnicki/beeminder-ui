@@ -11,7 +11,6 @@ import {
 import { useContext } from 'react'
 import { SettingsContext } from '../contexts/SettingsContext.ts'
 import { useGoals } from '../hooks/useGoals'
-import { parse } from 'date-fns'
 
 function createTags(goals) {
     const tags = new Set()
@@ -133,7 +132,6 @@ function filterGoals(goals, { query, range, hideDone }) {
                 return goal
             }
             if (range === 'MAGIC') {
-                console.log(goal)
                 return (
                     goal.safebuf <= 1 ||
                     goal.recent_data.reduce((acc, current) => {

@@ -16,7 +16,7 @@ export default function FiltersTile({
         <Tile style={{ marginBottom: '20px' }}>
             <Space>
                 <Select
-                    style={{ width: 65 }}
+                    style={{ width: 95 }}
                     value={filters.range}
                     onChange={(value) =>
                         onFiltersChange({ ...filters, range: value })
@@ -56,6 +56,7 @@ export default function FiltersTile({
                             }}
                         ></span>
                     </Option>
+                    <Option value="7">7 days</Option>
                     <Option value="MAGIC">✨</Option>
                 </Select>
                 <Button

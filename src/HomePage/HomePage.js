@@ -58,6 +58,7 @@ export default function HomePage() {
 
 function HeaderTile({ children }) {
     const { data } = useGoals()
+    const [akrasiaFilter, setAkrasiaFilter] = useState(false)
 
     if (!data) {
         return (
@@ -70,8 +71,11 @@ function HeaderTile({ children }) {
             const scoreData = acc.find(
                 ({ name }) => name === goal.roadstatuscolor
             )
-            scoreData.value += 1
-            scoreData.goals.push(goal.slug)
+
+            if (!akrasiaFilter || (akrasiaFilter && goal.safebuf <= 7)) {
+                scoreData.value += 1
+                scoreData.goals.push(goal.slug)
+            }
             return acc
         },
         [
@@ -145,7 +149,7 @@ function HeaderTile({ children }) {
                         {children}
                     </TileContent>
                 </div>
-                <div>
+                <div onClick={() => setAkrasiaFilter(!akrasiaFilter)}>
                     <Suspense>
                         <CirclePackGoals {...config} />
                     </Suspense>
