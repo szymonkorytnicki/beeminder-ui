@@ -41,21 +41,39 @@ export function CalendarHeatmap({ goalSlug, isOdometer }) {
                     data: data
                         .map((point) => ({
                             date: format(point.timestamp * 1000, 'yyyy-MM-dd'),
-                            value: isOdometer ? 1 : point.value, // TODO fix odometer goals
+                            value: point.value, //isOdometer ? 1 : point.value, // TODO fix odometer goals
                         }))
                         .reduce((acc, point) => {
-                            if (isOdometer) {
-                                return [...acc, point]
-                            } // TODO fix odometer goals
                             const sameDatePoint = acc.find(
                                 (p) => p.date === point.date
                             )
                             if (sameDatePoint) {
-                                sameDatePoint.value += point.value
+                                if (isOdometer) {
+                                    sameDatePoint.value = Math.max(
+                                        sameDatePoint.value,
+                                        point.value
+                                    )
+                                } else {
+                                    sameDatePoint.value += point.value
+                                }
                                 return acc
                             }
                             return [...acc, point]
-                        }, []),
+                        }, [])
+                        .map((point, index, arr) => {
+                            if (!isOdometer) {
+                                return point
+                            }
+                            const nextPoint = arr[index + 1]
+                            const hasItem = Boolean(nextPoint)
+
+                            return {
+                                ...point,
+                                value: hasItem
+                                    ? Math.abs(nextPoint.value - point.value)
+                                    : null,
+                            }
+                        }),
                 }
             )
             calendarPlot.render() // TODO update when datapoints updated
