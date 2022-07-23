@@ -1,9 +1,5 @@
 import { Tile } from '../Tile/Tile'
-import {
-    CheckCircleOutlined,
-    CloseCircleOutlined,
-    IssuesCloseOutlined,
-} from '@ant-design/icons'
+import { CheckCircleOutlined, IssuesCloseOutlined } from '@ant-design/icons'
 import { Select, Input, Button, Space } from 'antd'
 const { Option } = Select
 

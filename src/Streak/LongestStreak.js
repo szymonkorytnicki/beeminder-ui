@@ -6,7 +6,12 @@ export function LongestStreak({ goalSlug }) {
     const { isLoading, data } = useDatapoints(goalSlug)
 
     if (isLoading) {
-        return 'Loading...'
+        return (
+            <Tile>
+                <TileTitle>Longest streaks</TileTitle>
+                <TileContent>Analysing...</TileContent>
+            </Tile>
+        )
     }
 
     const streaks = []
