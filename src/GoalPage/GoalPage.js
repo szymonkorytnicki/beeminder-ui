@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, lazy } from 'react'
 import { useParams } from 'react-router'
 import { PageHeader } from '../Page/PageHeader'
 import { RecentDatapoints } from '../RecentDatapoints/RecentDatapoints.tsx'
@@ -21,6 +21,8 @@ import { LongestStreak } from '../Streak/LongestStreak'
 import { UsernameHeaderLink } from '../UsernameHeaderLink/UsernameHeaderLink'
 import { useUser } from '../hooks/useUser'
 import { parse, format } from 'date-fns'
+import { Space } from 'antd'
+const InboxerProgress = lazy(() => import('../InboxerProgress/InboxerProgress'))
 
 export default function GoalPage() {
     const { goalSlug } = useParams()
@@ -32,6 +34,33 @@ export default function GoalPage() {
                 <UsernameHeaderLink /> / {goalSlug}
             </PageHeader>
             <MainTile goalSlug={goalSlug} />
+            {data && data.goal_type === 'inboxer' ? (
+                <div
+                    style={{
+                        display: 'grid',
+                        gridTemplateColumns:
+                            'calc(50% - 10px) calc(50% - 10px)',
+                        gap: '20px',
+                        marginTop: '20px',
+                        marginBottom: '20px', // TODO magic variables everywhere
+                    }}
+                >
+                    <Tile>
+                        <TileTitle>Progress</TileTitle>
+                        <InboxerProgress
+                            progress={
+                                (data.initval - data.curval) / data.initval
+                            }
+                        />
+                    </Tile>
+                    <Tile style={{ marginTop: 0 }}>
+                        <TileTitle>Numbers</TileTitle>
+                        <TileStat label="Start" value={data.initval} />
+                        <TileStat label="Current" value={data.curval} />
+                        <TileStat label="Goal" value={data.goalval} />
+                    </Tile>
+                </div>
+            ) : null}
             <CalendarHeatmapTile
                 isOdometer={data ? data.odom : false}
                 goalSlug={goalSlug}
@@ -226,3 +255,4 @@ function DueByTile({ goalSlug }) {
         </Tile>
     ) : null
 }
+// TODO split components into files

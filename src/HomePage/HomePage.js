@@ -153,7 +153,6 @@ function HeaderTile({ children }) {
                     <Suspense>
                         <CirclePackGoals {...config} />
                     </Suspense>
-                    {/* TODO probably lazy loading this could speed up homepage a lot (antd) */}
                 </div>
             </div>
         </Tile>
