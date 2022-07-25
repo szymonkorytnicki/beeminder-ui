@@ -10,6 +10,7 @@ import {
     Tile,
     TileContent,
     TileStat,
+    TwoTiles,
 } from '../Tile/Tile'
 import { ScatterChart } from '../ScatterChart/ScatterChart'
 import { HourlyBreakdownTile } from '../HourlyBreakdownTile/HourlyBreakdownTile'
@@ -21,7 +22,7 @@ import { LongestStreak } from '../Streak/LongestStreak'
 import { UsernameHeaderLink } from '../UsernameHeaderLink/UsernameHeaderLink'
 import { useUser } from '../hooks/useUser'
 import { parse, format } from 'date-fns'
-import { Space } from 'antd'
+import { useDatapoints } from '../hooks/useDatapoints'
 const InboxerProgress = lazy(() => import('../InboxerProgress/InboxerProgress'))
 
 export default function GoalPage() {
@@ -35,16 +36,7 @@ export default function GoalPage() {
             </PageHeader>
             <MainTile goalSlug={goalSlug} />
             {data && data.goal_type === 'inboxer' ? (
-                <div
-                    style={{
-                        display: 'grid',
-                        gridTemplateColumns:
-                            'calc(50% - 10px) calc(50% - 10px)',
-                        gap: '20px',
-                        marginTop: '20px',
-                        marginBottom: '20px', // TODO magic variables everywhere
-                    }}
-                >
+                <TwoTiles>
                     <Tile>
                         <TileTitle>Progress</TileTitle>
                         <InboxerProgress
@@ -59,7 +51,7 @@ export default function GoalPage() {
                         <TileStat label="Current" value={data.curval} />
                         <TileStat label="Goal" value={data.goalval} />
                     </Tile>
-                </div>
+                </TwoTiles>
             ) : null}
             <CalendarHeatmapTile
                 isOdometer={data ? data.odom : false}
@@ -201,6 +193,9 @@ function MetaTile({ goalSlug }) {
                         : 'None'
                 }
             />
+            {!data?.odom && data?.goal_type !== 'inboxer' && (
+                <DatapointsStats goalSlug={goalSlug} />
+            )}
         </Tile>
     )
 }
@@ -256,3 +251,33 @@ function DueByTile({ goalSlug }) {
     ) : null
 }
 // TODO split components into files
+
+function DatapointsStats({ goalSlug }) {
+    const { data } = useDatapoints(goalSlug)
+    if (!data || data.length === 0) {
+        return null
+    }
+
+    const sortedData = data
+        .filter(({ canonical }) => canonical.includes('RECOMMITTED') === false)
+        .sort((a, b) => (a.value > b.value ? -1 : 1))
+    const top5 = sortedData.slice(0, 5)
+    const bottom5 = sortedData.slice(-5)
+    console.log(top5.map((d) => d.value).join(', '))
+    return (
+        <>
+            <TileStat
+                label="Top 5 biggest datapoints"
+                value={top5.map((d) => (
+                    <div key={d.canonical}>{d.value}</div>
+                ))}
+            />
+            <TileStat
+                label="Top 5 smallest datapoints"
+                value={bottom5.map((d) => (
+                    <div key={d.canonical}>{d.value}</div>
+                ))}
+            />
+        </>
+    )
+}

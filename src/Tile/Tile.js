@@ -1,7 +1,15 @@
 import css from './Tile.module.css'
 import classNames from 'classnames'
 
-export function Tile({ className, color, split, center, component, ...props }) {
+export function Tile({
+    className,
+    color,
+    split,
+    center,
+    noMargin,
+    component,
+    ...props
+}) {
     const Component = component ? component : 'div'
     return (
         <Component
@@ -11,6 +19,7 @@ export function Tile({ className, color, split, center, component, ...props }) {
                 split && css.tileSplit,
                 color && css[color],
                 center && css.center,
+                noMargin && css.noMargin,
                 className
             )}
         />
@@ -72,6 +81,22 @@ export function TileStat({ label, value, onClick }) {
         <div className={css.stat} onClick={onClick}>
             <div className={css.statLabel}>{label}</div>
             <div>{value}</div>
+        </div>
+    )
+}
+
+export function TwoTiles({ children }) {
+    return (
+        <div
+            style={{
+                display: 'grid',
+                gridTemplateColumns: 'calc(50% - 10px) calc(50% - 10px)',
+                gap: '20px',
+                marginTop: '20px',
+                marginBottom: '20px', // TODO magic variables everywhere
+            }}
+        >
+            {children}
         </div>
     )
 }
