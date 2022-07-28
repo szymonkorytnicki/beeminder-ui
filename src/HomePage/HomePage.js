@@ -22,7 +22,7 @@ export default function HomePage() {
     const [query, setQuery] = useState(null)
     const [filters, setFilters] = useState({
         range: 'ALL',
-        hideDone: null,
+        doneStatus: 'ALL',
         tags: [],
     })
 
@@ -40,7 +40,7 @@ export default function HomePage() {
             />
             <GoalsWidget
                 range={filters.range}
-                hideDone={filters.hideDone}
+                doneStatus={filters.doneStatus}
                 query={query}
             />
             <Footer>

@@ -1,0 +1,9 @@
+.filterWrapper {
+    border-radius: 2px;
+    background: #eee;
+}
+
+.iconWrapper {
+    padding-left:4px;
+    padding-right:4px;
+}

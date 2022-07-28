@@ -1,6 +1,11 @@
 import { Tile } from '../Tile/Tile'
-import { CheckCircleOutlined, IssuesCloseOutlined } from '@ant-design/icons'
+import {
+    CheckCircleOutlined,
+    IssuesCloseOutlined,
+    CalendarOutlined,
+} from '@ant-design/icons'
 import { Select, Input, Button, Space } from 'antd'
+import css from './FiltersTile.module.css'
 const { Option } = Select
 
 export default function FiltersTile({
@@ -11,65 +16,72 @@ export default function FiltersTile({
     return (
         <Tile style={{ marginBottom: '20px' }}>
             <Space>
-                <Select
-                    style={{ width: 95 }}
-                    value={filters.range}
-                    onChange={(value) =>
-                        onFiltersChange({ ...filters, range: value })
-                    }
-                >
-                    <Option value="ALL">All</Option>
-                    <Option value="1">
-                        <span
-                            style={{
-                                backgroundColor: 'red',
-                                borderRadius: '100%',
-                                width: '10px',
-                                height: '10px',
-                                display: 'inline-block',
-                            }}
-                        ></span>
-                    </Option>
-                    <Option value="2">
-                        <span
-                            style={{
-                                backgroundColor: 'orange',
-                                borderRadius: '100%',
-                                width: '10px',
-                                height: '10px',
-                                display: 'inline-block',
-                            }}
-                        ></span>
-                    </Option>
-                    <Option value="3">
-                        <span
-                            style={{
-                                backgroundColor: 'blue',
-                                borderRadius: '100%',
-                                width: '10px',
-                                height: '10px',
-                                display: 'inline-block',
-                            }}
-                        ></span>
-                    </Option>
-                    <Option value="7">7 days</Option>
-                    <Option value="MAGIC">✨</Option>
-                </Select>
-                <Button
-                    onClick={() =>
-                        onFiltersChange({
-                            ...filters,
-                            hideDone: !filters.hideDone,
-                        })
-                    }
-                    icon={
-                        filters.hideDone ? (
-                            <IssuesCloseOutlined />
-                        ) : (
-                            <CheckCircleOutlined />
-                        )
-                    }
-                ></Button>
+                <FilterWrapper>
+                    <IconWrapper>
+                        <CalendarOutlined />
+                    </IconWrapper>
+                    <Select
+                        style={{ width: 95 }}
+                        value={filters.range}
+                        onChange={(value) =>
+                            onFiltersChange({ ...filters, range: value })
+                        }
+                    >
+                        <Option value="ALL">All</Option>
+                        <Option value="1">
+                            <span
+                                style={{
+                                    backgroundColor: 'red',
+                                    borderRadius: '100%',
+                                    width: '10px',
+                                    height: '10px',
+                                    display: 'inline-block',
+                                }}
+                            ></span>
+                        </Option>
+                        <Option value="2">
+                            <span
+                                style={{
+                                    backgroundColor: 'orange',
+                                    borderRadius: '100%',
+                                    width: '10px',
+                                    height: '10px',
+                                    display: 'inline-block',
+                                }}
+                            ></span>
+                        </Option>
+                        <Option value="3">
+                            <span
+                                style={{
+                                    backgroundColor: 'blue',
+                                    borderRadius: '100%',
+                                    width: '10px',
+                                    height: '10px',
+                                    display: 'inline-block',
+                                }}
+                            ></span>
+                        </Option>
+                        <Option value="7">7 days</Option>
+                        <Option value="MAGIC">✨</Option>
+                    </Select>
+                </FilterWrapper>
+                <FilterWrapper>
+                    <IconWrapper>
+                        <CheckCircleOutlined />
+                    </IconWrapper>
+                    <Select
+                        style={{ width: 95 }}
+                        value={filters.doneStatus}
+                        onChange={(value) =>
+                            onFiltersChange({ ...filters, doneStatus: value })
+                        }
+                    >
+                        <Option value="ALL">All</Option>
+                        <Option value="DONE">Done</Option>
+                        <Option value="TODO">To do</Option>
+                    </Select>
+                </FilterWrapper>
+
                 {/* <Select
                     showSearch
                     placeholder="Select a person"
@@ -93,18 +105,15 @@ export default function FiltersTile({
                         width: '100%',
                     }}
                 />
-                {/* <Button
-                    type="dashed"
-                    icon={<CloseCircleOutlined />}
-                    onClick={() => {
-                        onFiltersChange({
-                            range: 'ALL',
-                            hideDone: false,
-                        })
-                        onQueryChange('')
-                    }}
-                /> */}
             </Space>
         </Tile>
     )
+}
+
+function FilterWrapper({ children }) {
+    return <div className={css.filterWrapper}>{children}</div>
+}
+
+function IconWrapper({ children }) {
+    return <span className={css.iconWrapper}>{children}</span>
 }

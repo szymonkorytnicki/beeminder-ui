@@ -22,7 +22,7 @@ function createTags(goals) {
     return Array.from(tags).sort((a, z) => a.localeCompare(z))
 }
 
-export function GoalsWidget({ isArchived, range, query, hideDone }) {
+export function GoalsWidget({ isArchived, range, query, doneStatus }) {
     // TODO this is GoalsPage
     const { isError, data } = useGoals({ isArchived: isArchived })
     const { groupByTags, twoColumnLayout, showHiddenGoals } =
@@ -47,7 +47,7 @@ export function GoalsWidget({ isArchived, range, query, hideDone }) {
     const filteredGoals = filterGoals(data, {
         range,
         query,
-        hideDone,
+        doneStatus,
     })
 
     // TODO smooth animation on update https://codesandbox.io/s/reorder-elements-with-slide-transition-and-react-hooks-flip-211f2
@@ -113,11 +113,14 @@ export function GoalsWidget({ isArchived, range, query, hideDone }) {
     )
 }
 
-function filterGoals(goals, { query, range, hideDone }) {
+function filterGoals(goals, { query, range, doneStatus }) {
     return goals
         .filter((goal) => {
-            if (hideDone) {
-                return goal.todayta === false
+            if (doneStatus === 'DONE') {
+                return goal.todayta === true
+            }
+            if (doneStatus === 'TODO') {
+                return goal.todayta !== true
             }
             return true
         })
