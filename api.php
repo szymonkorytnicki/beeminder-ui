@@ -58,7 +58,9 @@ $routes = array(
 
         return array('loggedIn' => isset($me['username']));
     }
-
+    // TODO create integration
+    // TODO edit integration
+    // TODO delete integration
 );
 
 function handleRequest($routes, $path, $params) {
