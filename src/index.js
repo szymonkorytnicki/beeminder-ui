@@ -49,7 +49,7 @@ const FallbackComponent = (
     <div style={{ textAlign: 'center' }}>
         <h1 style={{ fontWeight: 'bold' }}>Something went wrong.</h1>
         Please{' '}
-        <a href="https://github.com/szymonkorytnicki/beeminder-ui/issues">
+        <a href="https://forum.beeminder.com/t/bui-the-alternative-beeminder-ui-more-charts">
             report the bug
         </a>{' '}
         providing as much description as possible. Thanks!

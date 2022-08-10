@@ -15,7 +15,7 @@ export default function LoginPage() {
                             style={{ textDecoration: 'underline' }}
                             href={`https://www.beeminder.com/apps/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_CALLBACK_URL}&response_type=token`}
                         >
-                            Login in with beeminder
+                            Log in with Beeminder
                         </a>
                     </p>
                 </TileContent>

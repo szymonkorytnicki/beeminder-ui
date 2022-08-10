@@ -115,11 +115,7 @@ export default function SettingsPage() {
                     <TileTitle>Feedback and errors</TileTitle>
                     <TileContent>
                         Please report errors on{' '}
-                        <a href="https://github.com/szymonkorytnicki/beeminder-ui/issues/new">
-                            Github Issues
-                        </a>{' '}
-                        page or{' '}
-                        <a href="https://forum.beeminder.com/">
+                        <a href="https://forum.beeminder.com/t/bui-the-alternative-beeminder-ui-more-charts">
                             Beeminder Forum
                         </a>
                         .
