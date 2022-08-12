@@ -14,7 +14,7 @@ import {
 } from '../Tile/Tile'
 import { ScatterChart } from '../ScatterChart/ScatterChart'
 import { HourlyBreakdownTile } from '../HourlyBreakdownTile/HourlyBreakdownTile'
-import { DailyBreakdown } from '../DailyBreakdown/DailyBreakdown'
+import { DailyBreakdownTile } from '../DailyBreakdown/DailyBreakdownTile'
 import { Streak } from '../Streak/Streak'
 import { useGoal } from '../hooks/useGoal'
 import { WeeklyScatterChart } from '../WeeklyScatterChart/WeeklyScatterChart'
@@ -60,10 +60,7 @@ export default function GoalPage() {
             <WeeklyTrendsTile goalSlug={goalSlug} />
             <TrendsTile goalSlug={goalSlug} />
             <HourlyBreakdownTile goalSlug={goalSlug} />
-            <Tile>
-                <TileTitle>Daily breakdown</TileTitle>
-                <DailyBreakdown goalSlug={goalSlug} />
-            </Tile>
+            <DailyBreakdownTile goalSlug={goalSlug} />
             <LongestStreak goalSlug={goalSlug} />
             <MetaTile goalSlug={goalSlug} />
             <DueByTile goalSlug={goalSlug} />
@@ -263,7 +260,7 @@ function DatapointsStats({ goalSlug }) {
         .sort((a, b) => (a.value > b.value ? -1 : 1))
     const top5 = sortedData.slice(0, 5)
     const bottom5 = sortedData.slice(-5)
-    console.log(top5.map((d) => d.value).join(', '))
+
     return (
         <>
             <TileStat
