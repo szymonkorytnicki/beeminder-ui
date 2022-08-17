@@ -6,6 +6,8 @@ header('X-Frame-Options: DENY');
 header('X-XSS-Protection: 1; mode=block');
 header('X-Content-Type-Options: nosniff');
 
+// TODO allow only specific methods
+// TODO migrate to lightweight framework
 $routes = array(
     '/' => function () {
         return array('error' => 'No endpoint specified');
@@ -57,9 +59,34 @@ $routes = array(
         $me = json_decode(@file_get_contents($url), true);
 
         return array('loggedIn' => isset($me['username']));
-    }
-    // TODO create integration
-    // TODO edit integration
+    },
+    '/integrateGoal' => function($params, $user, $accessToken) {
+        if (!isset($params['slug'])) {
+            return array('error' => 'No goal slug specified');
+        }
+        $slug = urlencode($params['slug']);
+        $url = "https://www.beeminder.com/api/v1/users/".$user."/goals/".$slug.".json?access_token=".$accessToken;
+
+        //Initiate cURL
+        $ch = curl_init($url);
+
+        //Use the CURLOPT_PUT option to tell cURL that
+        //this is a PUT request.
+        curl_setopt($ch, CURLOPT_PUT, true);
+
+        //We want the result / output returned.
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        //Our fields.
+        $fields = array("datasource" => $_ENV['APP_NAME']);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($fields));
+
+        //Execute the request.
+        $response = curl_exec($ch);
+
+        return array('data' => $response, 'url' => $url, 'fields' => $fields);
+    },
+    // TODO create or edit integration
     // TODO delete integration
 );
 

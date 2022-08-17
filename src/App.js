@@ -8,6 +8,9 @@ const GoalPage = lazy(() => import('./GoalPage/GoalPage'))
 const SettingsPage = lazy(() => import('./SettingsPage/SettingsPage'))
 const ArchivedPage = lazy(() => import('./ArchivedPage/ArchivedPage'))
 const LoginPage = lazy(() => import('./LoginPage/LoginPage'))
+const IntegrationsPage = lazy(() =>
+    import('./IntegrationsPage/IntegrationsPage')
+)
 
 const DEFAULT_SETTINGS = {
     // TODO export this to file
@@ -62,6 +65,14 @@ function App() {
                             element={
                                 <LoginRedirect>
                                     <GoalPage />
+                                </LoginRedirect>
+                            }
+                        />
+                        <Route
+                            path="/integrations"
+                            element={
+                                <LoginRedirect>
+                                    <IntegrationsPage />
                                 </LoginRedirect>
                             }
                         />
