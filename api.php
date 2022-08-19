@@ -1,6 +1,7 @@
 <?php
 require("config.php");
 require("token.php");
+require("connection.php");
 
 header('X-Frame-Options: DENY');
 header('X-XSS-Protection: 1; mode=block');
@@ -61,30 +62,31 @@ $routes = array(
         return array('loggedIn' => isset($me['username']));
     },
     '/integrate' => function($params, $user, $accessToken) {
-        if (!isset($params['slug'])) {
-            return array('error' => 'No goal slug specified');
+        if (!isset($params['slug']) || !isset($params['integration'])) {
+            return array('error' => 'No goal slug or integration specified');
         }
         $slug = urlencode($params['slug']);
         $url = "https://www.beeminder.com/api/v1/users/".$user."/goals/".$slug.".json?access_token=".$accessToken."&datasource=". $_ENV['APP_NAME'];
 
-        //Initiate cURL
         $ch = curl_init($url);
-
-        //Use the CURLOPT_PUT option to tell cURL that
-        //this is a PUT request.
         curl_setopt($ch, CURLOPT_PUT, true);
-
-        //We want the result / output returned.
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        //Execute the request.
         $response = curl_exec($ch);
 
-        // TODO Save/Update details to DB
+        // Save to integrations table
+        $integration = array(
+            'username' => $user,
+            'goal' => $slug,
+            'integration' => $integration,
+            'integration_username' => $integrationUsername,
+            'integration_password' => encryptToken($integrationPassword),
+        );
+        $db->insert('integrations', $integration);
+
         return array('data' => json_decode($response));
     },
     '/deintegrate' => function($params, $user, $accessToken) {
-        if (!isset($params['slug'])) {
+        if (!isset($params['slug']) || !isset($params['integration'])) {
             return array('error' => 'No goal slug specified');
         }
         $slug = urlencode($params['slug']);
@@ -104,7 +106,9 @@ $routes = array(
         //Execute the request.
         $response = curl_exec($ch);
 
-        // TODO Remove from DB
+        // Remove from DB
+        $db->delete('integrations', array('username' => $user, 'goal' => $slug));
+
         return array('data' => json_decode($response));
     }
 );
