@@ -57,7 +57,7 @@ export default function IntegrationsPage() {
                         .map((goal) => {
                             return (
                                 <div key={goal.slug}>
-                                    {goal.slug} {goal.datasource}
+                                    {goal.slug} {goal.autodata}
                                     <Button
                                         onClick={() =>
                                             mutate({ slug: goal.slug })

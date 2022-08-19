@@ -60,12 +60,12 @@ $routes = array(
 
         return array('loggedIn' => isset($me['username']));
     },
-    '/integrateGoal' => function($params, $user, $accessToken) {
+    '/integrate' => function($params, $user, $accessToken) {
         if (!isset($params['slug'])) {
             return array('error' => 'No goal slug specified');
         }
         $slug = urlencode($params['slug']);
-        $url = "https://www.beeminder.com/api/v1/users/".$user."/goals/".$slug.".json?access_token=".$accessToken;
+        $url = "https://www.beeminder.com/api/v1/users/".$user."/goals/".$slug.".json?access_token=".$accessToken."&datasource=". $_ENV['APP_NAME'];
 
         //Initiate cURL
         $ch = curl_init($url);
@@ -77,17 +77,36 @@ $routes = array(
         //We want the result / output returned.
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        //Our fields.
-        $fields = array("datasource" => $_ENV['APP_NAME']);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($fields));
-
         //Execute the request.
         $response = curl_exec($ch);
 
-        return array('data' => $response, 'url' => $url, 'fields' => $fields);
+        // TODO Save/Update details to DB
+        return array('data' => json_decode($response));
     },
-    // TODO create or edit integration
-    // TODO delete integration
+    '/deintegrate' => function($params, $user, $accessToken) {
+        if (!isset($params['slug'])) {
+            return array('error' => 'No goal slug specified');
+        }
+        $slug = urlencode($params['slug']);
+        // Remove integration from goal - set to empty string
+        $url = "https://www.beeminder.com/api/v1/users/".$user."/goals/".$slug.".json?access_token=".$accessToken."&datasource=''";
+
+        //Initiate cURL
+        $ch = curl_init($url);
+
+        //Use the CURLOPT_PUT option to tell cURL that
+        //this is a PUT request.
+        curl_setopt($ch, CURLOPT_PUT, true);
+
+        //We want the result / output returned.
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        //Execute the request.
+        $response = curl_exec($ch);
+
+        // TODO Remove from DB
+        return array('data' => json_decode($response));
+    }
 );
 
 function handleRequest($routes, $path, $params) {

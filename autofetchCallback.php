@@ -27,9 +27,8 @@ if (!$token) {
     exit;
 }
 
-// 3. Fetch data from apify
+// 3. Fetch data from apify - execute function by goal type
 $integrationType = $integration['type'];
-$integrationURL = $integrations[$integrationType]['url'];
 
 // 4. Add datapoint to beeminder goal if necessary
 
