@@ -1,7 +1,7 @@
 <?php
 require 'config.php';
 
-function memrisePointsIntegration($integation) {
+function memrisePointsIntegration($integration) {
     $url =  "https://api.apify.com/v2/actor-tasks/skorytnicki~memrise-points/run-sync-get-dataset-items?token=".$_ENV['APIFY_TOKEN'];
     $body = [
         "startUrls" => [
@@ -23,5 +23,5 @@ function memrisePointsIntegration($integation) {
     
     $result = json_decode($result, true);
 
-    return $result['points'];
+    return $result[0]['points'];
 }

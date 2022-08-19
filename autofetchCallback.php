@@ -2,7 +2,7 @@
 require("config.php");
 require("connection.php");
 require("token.php");
-require("integrations.php");
+require("integrations/integrations.php");
 
 $username = $_POST['username'];
 $slug = $_POST['slug'];
@@ -34,8 +34,8 @@ $integrationType = $integration['integration'];
 $data = $integrations[$integrationType]($integration, $token);
 
 // 4. Add datapoint to beeminder API if necessary
-$accessToken = decodeToken($token['token']);
-$url = "https://www.beeminder.com/api/v1/users/".$user."/goals/".$slug."/datapoints.json?access_token=".$accessToken."&value=".$data."&comment=Synced with BUI";
+$accessToken = decryptToken($token['token'])['accessToken'];
+$url = "https://www.beeminder.com/api/v1/users/".$username."/goals/".$slug."/datapoints.json?access_token=".$accessToken."&value=".$data."&comment=Synced with BUI";
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

@@ -62,6 +62,7 @@ $routes = array(
         return array('loggedIn' => isset($me['username']));
     },
     '/integrate' => function($params, $user, $accessToken) {
+        global $db;
         if (!isset($params['slug']) || !isset($params['integration'])) {
             return array('error' => 'No goal slug or integration specified');
         }
@@ -73,15 +74,16 @@ $routes = array(
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($ch);
 
-        // Save to integrations table
+        // Save to integrations table using PDO
         $integration = array(
             'username' => $user,
             'goal' => $slug,
-            'integration' => $integration,
-            'integration_username' => $integrationUsername,
-            'integration_password' => encryptToken($integrationPassword),
+            'integration' => $params['integration'],
+            'integration_username' => $params['integration_username'],
+            'integration_password' => isset($params['integration_password']) ? encryptToken($user, $params['integration_password']) : null,
         );
-        $db->insert('integrations', $integration);
+        $stmt = $db->prepare("INSERT INTO integrations (username, goal, integration, integration_username, integration_password) VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([$integration['username'], $integration['goal'], $integration['integration'], $integration['integration_username'], $integration['integration_password']]);
 
         return array('data' => json_decode($response));
     },
