@@ -35,11 +35,12 @@ $data = $integrations[$integrationType]($integration, $token);
 
 // 4. Add datapoint to beeminder API if necessary
 $accessToken = decryptToken($token['token'])['accessToken'];
-$url = "https://www.beeminder.com/api/v1/users/".$username."/goals/".$slug."/datapoints.json?access_token=".$accessToken."&value=".$data."&comment=Synced with BUI";
+$url = "https://www.beeminder.com/api/v1/users/".$username."/goals/".$slug."/datapoints.json?access_token=".$accessToken."&value=".$data."&comment=".urlencode("via bui.interestingprojects.net");
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($ch);
+curl_close($ch);
 
 // 5. Respond with 200 OK
 header('Content-Type: application/json');

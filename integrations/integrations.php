@@ -3,7 +3,7 @@ require 'integrations/memrisePointsIntegration.php';
 
 $integrations = array(
     'memrise_points' => function($integration, $token) {
-        memrisePointsIntegration($integration);
+        return memrisePointsIntegration($integration);
     }
 );
 
