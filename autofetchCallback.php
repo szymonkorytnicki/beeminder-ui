@@ -44,6 +44,6 @@ curl_close($ch);
 
 // 5. Respond with 200 OK
 header('Content-Type: application/json');
-echo json_encode(array("status" => "ok", "url" => $url));
+echo json_encode(array("status" => "ok"));
 exit;
 ?>
