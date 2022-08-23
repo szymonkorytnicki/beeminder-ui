@@ -25,7 +25,7 @@ $token = $stmt->fetch();
 
 if (!$token) {
     header('Content-Type: application/json');
-    echo json_encode(array("error" => "No token found"));
+    echo json_encode(array("status" => "error", "error" => "No token found"));
     exit;
 }
 
