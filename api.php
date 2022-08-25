@@ -67,6 +67,7 @@ $routes = array(
             return array('error' => 'No goal slug or integration specified');
         }
         $slug = urlencode($params['slug']);
+        // TODO can use /me/ in every endpoint
         $url = "https://www.beeminder.com/api/v1/users/".$user."/goals/".$slug.".json?access_token=".$accessToken."&datasource=". $_ENV['APP_NAME'];
 
         $ch = curl_init($url);

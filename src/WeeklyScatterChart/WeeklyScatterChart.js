@@ -49,7 +49,7 @@ export function WeeklyScatterChart({ goalSlug }) {
             label: {
                 formatter: (v) => {
                     // TODO nice point tooltip
-                    return format(parseInt(v, 10), 'yyyy-I') // TODO ISO vs America
+                    return format(parseInt(v, 10), "yyyy-'W'I") // TODO ISO vs America
                 },
             },
         },

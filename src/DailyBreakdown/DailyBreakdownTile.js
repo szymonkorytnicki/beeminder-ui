@@ -48,7 +48,7 @@ export function DailyBreakdownTile({ goalSlug }) {
     return (
         <Tile>
             <TileTitle>
-                Daily breakdown
+                Daily breakdown{' '}
                 <Popover
                     content={
                         <>
