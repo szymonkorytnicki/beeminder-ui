@@ -8,6 +8,7 @@ const GoalPage = lazy(() => import('./GoalPage/GoalPage'))
 const SettingsPage = lazy(() => import('./SettingsPage/SettingsPage'))
 const ArchivedPage = lazy(() => import('./ArchivedPage/ArchivedPage'))
 const LoginPage = lazy(() => import('./LoginPage/LoginPage'))
+const UrgencyLoadPage = lazy(() => import('./UrgencyLoadPage/UrgencyLoadPage'))
 const IntegrationsPage = lazy(() =>
     import('./IntegrationsPage/IntegrationsPage')
 )
@@ -73,6 +74,14 @@ function App() {
                             element={
                                 <LoginRedirect>
                                     <IntegrationsPage />
+                                </LoginRedirect>
+                            }
+                        />
+                        <Route
+                            path="/urgency-load"
+                            element={
+                                <LoginRedirect>
+                                    <UrgencyLoadPage />
                                 </LoginRedirect>
                             }
                         />

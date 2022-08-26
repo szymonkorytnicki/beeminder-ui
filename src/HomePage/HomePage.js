@@ -187,14 +187,7 @@ function UrgencyLoad() {
     }, 0)
     return (
         <div>
-            Your{' '}
-            <a
-                href="https://forum.beeminder.com/t/urgency-load-metric/5648"
-                target="_blank"
-            >
-                urgency load
-            </a>{' '}
-            is {load}.
+            Your <Link to="/urgency-load">urgency load</Link> is {load}.
         </div>
     )
 }
