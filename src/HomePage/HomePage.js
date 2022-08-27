@@ -72,7 +72,10 @@ function HeaderTile({ children }) {
                 ({ name }) => name === goal.roadstatuscolor
             )
 
-            if (!akrasiaFilter || (akrasiaFilter && goal.safebuf <= 7)) {
+            if (
+                scoreData &&
+                (!akrasiaFilter || (akrasiaFilter && goal.safebuf <= 7))
+            ) {
                 scoreData.value += 1
                 scoreData.goals.push(goal.slug)
             }
