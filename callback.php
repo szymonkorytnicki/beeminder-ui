@@ -20,8 +20,8 @@ setcookie(
 );
 
 // insert token into db
-$stmt = $db->prepare("INSERT INTO tokens (username, token) VALUES (?, ?)");
-$stmt->execute([$_GET['username'], $encryptedToken]);
+// $stmt = $db->prepare("INSERT INTO tokens (username, token) VALUES (?, ?)");
+// $stmt->execute([$_GET['username'], $encryptedToken]);
 
 header('Location: '.$_ENV['REDIRECT_URL']);
 exit;

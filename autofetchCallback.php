@@ -36,6 +36,16 @@ $data = $integrations[$integrationType]($integration, $token);
 // 4. Add datapoint to beeminder API if necessary
 try {
     $accessToken = decryptToken($token['token'])['accessToken'];
+
+    $lastPointUrl = "https://www.beeminder.com/api/v1/users/".$username."/goals/".$slug."/datapoints.json?access_token=".$accessToken."&count=1";
+    $lastPoint = json_decode(file_get_contents($lastPointUrl));
+
+    if ($data == $lastPoint['value']) {
+        header('Content-Type: application/json');
+        echo json_encode(array("status" => "ok", "meta" => array("info" => "last datapoint equal to new data", "data" => $data, "slug" => $slug, "username" => $username)));
+        exit;
+    }
+
     $url = "https://www.beeminder.com/api/v1/users/".$username."/goals/".$slug."/datapoints.json?access_token=".$accessToken."&value=".$data."&comment=".urlencode("via bui.interestingprojects.net");
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_POST, true);
