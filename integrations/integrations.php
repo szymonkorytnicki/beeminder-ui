@@ -7,7 +7,7 @@ $integrations = array(
         return memrisePointsIntegration($integration);
     },
 
-    'memrise_points' => function($integration, $token) {
+    'anki_clear' => function($integration, $token) {
         return ankiClearIntegration($integration);
     }
 );
