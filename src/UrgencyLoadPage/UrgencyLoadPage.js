@@ -78,7 +78,7 @@ export default function UrgencyLoadPage() {
                     <p>
                         Each goal's urgency load is a{' '}
                         <code style={{ fontFamily: 'monospace' }}>
-                            max((safety buffer) - 7, 0)
+                            max(7 - (safety buffer), 0)
                         </code>
                         . In other words, if you have a safety buffer of 5 days,
                         it means that the urgency load of this goal equals 2. If

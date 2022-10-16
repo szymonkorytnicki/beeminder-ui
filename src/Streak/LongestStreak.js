@@ -7,7 +7,7 @@ export function LongestStreak({ goalSlug }) {
 
     if (isLoading) {
         return (
-            <Tile>
+            <Tile style={{ minHeight: '130px' }}>
                 <TileTitle>Longest streaks</TileTitle>
                 <TileContent>Analysing...</TileContent>
             </Tile>

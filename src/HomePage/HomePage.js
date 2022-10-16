@@ -190,7 +190,20 @@ function UrgencyLoad() {
     }, 0)
     return (
         <div>
-            Your <Link to="/urgency-load">urgency load</Link> is {load}.
+            Your{' '}
+            <Link
+                to="/urgency-load"
+                style={{
+                    backgroundColor: 'rgba(0,0,0,.05)',
+                    borderRadius: '1px',
+                    padding: '0.5px',
+                    display: 'inline-block',
+                    marginRight: '2px',
+                }}
+            >
+                urgency load
+            </Link>{' '}
+            is {load}.
         </div>
     )
 }

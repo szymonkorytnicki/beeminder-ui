@@ -41,7 +41,8 @@
 .content {
     font-size: 0.925rem;
     line-height: 1.2rem;
-    white-space: pre-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .header {

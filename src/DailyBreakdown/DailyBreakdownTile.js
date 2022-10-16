@@ -23,12 +23,14 @@ export function DailyBreakdownTile({ goalSlug }) {
     }
     if (isLoading) {
         return (
-            <div
+            <Tile
                 style={{
                     marginTop: '15px',
                     minHeight: '160px', // TODO
                 }}
-            />
+            >
+                <TileTitle title="Daily Breakdown" />
+            </Tile>
         )
     }
     const config = {
