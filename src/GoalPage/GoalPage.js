@@ -64,13 +64,13 @@ export default function GoalPage() {
             <LongestStreak goalSlug={goalSlug} />
             <MetaTile goalSlug={goalSlug} />
             <DueByTile goalSlug={goalSlug} />
-            <Tile>
+            {/* <Tile>
                 <TileTitle>Recent datapoints</TileTitle>
-                <RecentDatapoints
+                 <RecentDatapoints
                     goalSlug={goalSlug}
-                    onDelete={() => setTimeout(refetch, 1500)} // TODO dummy workaround; instant refetch returns results which include removed datapoint
+                    onDelete={() => setTimeout(refetch, 1500)} // TODO dummy workaround; instant refetch returns results which include removed datapoint 
                 />
-            </Tile>
+            </Tile> */}
             <Footer>
                 <ManageGoalLink goalSlug={goalSlug} />
             </Footer>
